@@ -72,7 +72,8 @@ const init = async () => {
     routes: {
         files: {
             relativeTo: Path.join(__dirname, 'client', 'build')
-        }
+        },
+        cors: true // testing locally between ports
     }
   });
   // include our module here ↓↓
