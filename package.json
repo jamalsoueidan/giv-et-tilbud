@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "start": "node index.js",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -12,7 +15,9 @@
     "dotenv": "^6.1.0",
     "hapi": "^17.6.0",
     "hapi-auth-jwt2": "^8.1.0",
+    "inert": "^5.1.0",
     "jsonwebtoken": "^8.3.0",
+    "path": "^0.12.7",
     "supertest": "^3.3.0"
   }
 }
