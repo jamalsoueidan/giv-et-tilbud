@@ -1,33 +1,33 @@
-import React from 'react';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import React from "react";
+import classNames from "classnames";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const styles = theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
   appBarShift: {
     marginLeft: 240,
     width: `calc(100% - ${240}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    ...theme.mixins.toolbar,
-  },
+    display: "flex",
+    alignItems: "center",
+    ...theme.mixins.toolbar
+  }
 });
 
 class TopBar extends React.Component {
@@ -35,16 +35,9 @@ class TopBar extends React.Component {
     const { classes, click } = this.props;
 
     return (
-      <AppBar
-        position="fixed"
-        className={classNames(classes.appBar)}
-      >
+      <AppBar position="fixed" className={classNames(classes.appBar)}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={click}
-          >
+          <IconButton color="inherit" aria-label="Open drawer" onClick={click}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" noWrap>
@@ -56,4 +49,4 @@ class TopBar extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(TopBar)
+export default withStyles(styles, { withTheme: true })(TopBar);
