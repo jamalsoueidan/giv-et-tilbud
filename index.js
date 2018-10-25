@@ -1,7 +1,4 @@
 const Hapi = require("hapi");
-const jwt = require("jsonwebtoken");
-const rp = require("request-promise");
-const Path = require("path");
 
 require("dotenv").load();
 
@@ -13,7 +10,7 @@ const people = {
   }
 };
 
-const token = jwt.sign({ id: 1 }, process.env.SECRET_KEY, {
+const token = require("jsonwebtoken").sign({ id: 1 }, process.env.SECRET_KEY, {
   algorithm: "HS256"
 });
 
@@ -27,90 +24,6 @@ const validate = async function(decoded, request) {
   }
 };
 
-const routes = [
-  {
-    method: "GET",
-    path: "/{param*}",
-    config: { auth: false },
-    handler: {
-      directory: {
-        path: ".",
-        redirectToSlash: true,
-        index: true
-      }
-    }
-  },
-  {
-    method: "GET",
-    path: "/api",
-    config: { auth: false },
-    handler: request => {
-      return { text: "Token not required" };
-    }
-  },
-  {
-    method: "GET",
-    path: "/api/restricted",
-    config: { auth: "jwt" },
-    handler: (req, h) => {
-      const response = h.response({ text: "You used a Token!" });
-      response.header("Authorization", "request.headers.authorization");
-      return response;
-    }
-  },
-  {
-    method: "GET",
-    path: "/api/createOrder",
-    config: { auth: false },
-    handler: async function(request) {
-      const options = {
-        uri: `https://${process.env.SHOPIFY_URL}/admin/orders.json`,
-        auth: {
-          user: process.env.SHOPIFY_USERNAME,
-          password: process.env.SHOPIFY_PASSWORD
-        },
-        json: true,
-        method: "POST",
-        body: {
-          order: {
-            email: "test@gmail.com",
-            fulfillment_status: "fulfilled",
-            send_receipt: true,
-            line_items: [
-              {
-                product_id: 1755803779183,
-                variant_id: 16460815564911,
-                quantity: 1
-              }
-            ],
-            note_attributes: [
-              {
-                device: "custom name",
-                model: "custom value",
-                color: "asddsa",
-                issue: "ok",
-                date: "asd",
-                time: "okasd"
-              }
-            ]
-          }
-        }
-      };
-      const body = await rp(options);
-      return body;
-    }
-  },
-  {
-    method: "POST",
-    path: "/api/login",
-    config: { auth: false },
-    handler: (req, h) => {
-      const payload = req.payload;
-      return "Ok";
-    }
-  }
-];
-
 const plugins = [require("inert"), require("hapi-auth-jwt2")];
 
 const init = async () => {
@@ -119,7 +32,7 @@ const init = async () => {
     port: port,
     routes: {
       files: {
-        relativeTo: Path.join(__dirname, "client", "build")
+        relativeTo: require("path").join(__dirname, "client", "build")
       },
       cors: true // testing locally between ports
     }
@@ -134,7 +47,7 @@ const init = async () => {
   });
 
   server.auth.default("jwt");
-  server.route(routes);
+  server.route(require("./routes.js")());
   await server.start();
   return server;
 };
