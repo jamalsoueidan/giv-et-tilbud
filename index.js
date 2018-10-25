@@ -1,5 +1,6 @@
 const Hapi = require("hapi");
 const jwt = require("jsonwebtoken");
+const rp = require("request-promise");
 const Path = require("path");
 
 require("dotenv").load();
@@ -55,6 +56,48 @@ const routes = [
       const response = h.response({ text: "You used a Token!" });
       response.header("Authorization", "request.headers.authorization");
       return response;
+    }
+  },
+  {
+    method: "GET",
+    path: "/api/createOrder",
+    config: { auth: false },
+    handler: async function(request) {
+      const options = {
+        uri: "https://givettilbud.myshopify.com/admin/orders.json",
+        auth: {
+          user: process.env.SHOPIFY_USERNAME,
+          password: process.env.SHOPIFY_PASSWORD
+        },
+        json: true,
+        method: "POST",
+        body: {
+          order: {
+            email: "test@gmail.com",
+            fulfillment_status: "fulfilled",
+            send_receipt: true,
+            line_items: [
+              {
+                product_id: 1755803779183,
+                variant_id: 16460815564911,
+                quantity: 1
+              }
+            ],
+            note_attributes: [
+              {
+                device: "custom name",
+                model: "custom value",
+                color: "asddsa",
+                issue: "ok",
+                date: "asd",
+                time: "okasd"
+              }
+            ]
+          }
+        }
+      };
+      const body = await rp(options);
+      return body;
     }
   },
   {
