@@ -5,18 +5,20 @@
   "proxy": "http://localhost:3000/",
   "dependencies": {
     "@material-ui/core": "^3.3.0",
+    "@material-ui/icons": "^3.0.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
+    "react-router5": "^6.5.3",
     "react-scripts": "2.0.5",
     "redux": "^4.0.1",
     "redux-api-middleware": "^2.3.0",
-    "redux-devtools": "^3.4.1",
     "redux-router5": "^6.0.5",
-    "router5": "^6.6.2"
+    "router5": "^6.6.2",
+    "router5-helpers": "^5.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -29,5 +31,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.5"
+  }
 }
