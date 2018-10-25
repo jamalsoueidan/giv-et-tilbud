@@ -64,7 +64,7 @@ const routes = [
     config: { auth: false },
     handler: async function(request) {
       const options = {
-        uri: "https://givettilbud.myshopify.com/admin/orders.json",
+        uri: `https://${process.env.SHOPIFY_URL}/admin/orders.json`,
         auth: {
           user: process.env.SHOPIFY_USERNAME,
           password: process.env.SHOPIFY_PASSWORD
