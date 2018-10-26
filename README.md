@@ -3,7 +3,7 @@
 ## How it works
 
 1.  Customer request 3 price offers, like a price on the cheapest "iphone screen repairs".
-2.  Shop owerns can now send an offer back to customer, maximum 3 offers.
+2.  Shop owners can now send an offer back to customer, max 1.
 
 ## Who, where
 
@@ -21,4 +21,4 @@ Node, Hapi, MongoDB, Mongoose, Joi
 
 ### Frontend
 
-React, Redux, Router5, MaterialUI
+React, Redux, Router5, Material-UI
