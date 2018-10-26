@@ -25,11 +25,10 @@ const defaultRoutes = [
     }
   },
   {
-    method: "POST",
+    method: "GET",
     path: "/api/login",
     config: { auth: false },
     handler: (req, h) => {
-      const payload = req.payload;
       return "Ok";
     }
   }

@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm start",
-    "server": "nodemon server.js",
+    "server": "nodemon index.js",
     "both": "concurrently \"npm run client\" \"npm run server\"",
     "start": "node index.js",
+    "test": "jest",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "author": "",
@@ -22,10 +23,10 @@
     "mongoose": "^5.3.6",
     "path": "^0.12.7",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "supertest": "^3.3.0"
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.0.1",
+    "jest": "^23.6.0"
   }
 }
