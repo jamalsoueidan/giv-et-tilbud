@@ -1,4 +1,5 @@
 const rp = require("request-promise");
+const Order = require(`./model`);
 
 module.exports = async req => {
   const payload = req.payload;
@@ -45,5 +46,7 @@ module.exports = async req => {
     }
   };
   const body = await rp(options);
+  const newOrder = new Order(body.order);
+  newOrder.save();
   return body;
 };

@@ -1,7 +1,7 @@
-const createOrder = require("./api/create_order");
+const Order = require("./api/orders");
 const Joi = require("joi");
 
-module.exports = () => [
+const defaultRoutes = [
   {
     method: "GET",
     path: "/{param*}",
@@ -16,47 +16,12 @@ module.exports = () => [
   },
   {
     method: "GET",
-    path: "/api",
-    config: { auth: false },
-    handler: request => {
-      return { text: "Token not required" };
-    }
-  },
-  {
-    method: "GET",
     path: "/api/restricted",
     config: { auth: "jwt" },
     handler: (req, h) => {
       const response = h.response({ text: "You used a Token!" });
       response.header("Authorization", "request.headers.authorization");
       return response;
-    }
-  },
-  {
-    method: "POST",
-    path: "/api/createOrder",
-    handler: createOrder,
-    options: {
-      auth: false,
-      validate: {
-        payload: {
-          customer: {
-            email: Joi.string()
-              .email()
-              .required(),
-            first_name: Joi.string()
-              .required()
-              .alphanum()
-              .min(3)
-              .max(30),
-            last_name: Joi.string()
-              .required()
-              .alphanum()
-              .min(3)
-              .max(30)
-          }
-        }
-      }
     }
   },
   {
@@ -69,3 +34,5 @@ module.exports = () => [
     }
   }
 ];
+
+module.exports = defaultRoutes.concat(Order);

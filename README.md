@@ -10,3 +10,4 @@ Web Application and Api running on heroku.
 - redux-api-middleware
 - material-ui
 - joi
+- mongoose

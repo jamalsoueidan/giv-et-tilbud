@@ -1,6 +1,13 @@
+"use strict";
 const Hapi = require("hapi");
 
 require("dotenv").load();
+
+var mongoose = require("mongoose");
+mongoose.connect(
+  `mongodb://${process.env.MONGODB_URI}`,
+  { useNewUrlParser: true }
+);
 
 const people = {
   // our "users database"
@@ -62,7 +69,7 @@ const init = async () => {
   });
 
   server.auth.default("jwt");
-  server.route(require("./routes.js")());
+  server.route(require("./routes.js"));
   await server.start();
   return server;
 };
