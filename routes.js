@@ -1,4 +1,5 @@
 const createOrder = require("./api/create_order");
+const Joi = require("joi");
 
 module.exports = () => [
   {
@@ -34,8 +35,29 @@ module.exports = () => [
   {
     method: "POST",
     path: "/api/createOrder",
-    config: { auth: false },
-    handler: createOrder
+    handler: createOrder,
+    options: {
+      auth: false,
+      validate: {
+        payload: {
+          customer: {
+            email: Joi.string()
+              .email()
+              .required(),
+            first_name: Joi.string()
+              .required()
+              .alphanum()
+              .min(3)
+              .max(30),
+            last_name: Joi.string()
+              .required()
+              .alphanum()
+              .min(3)
+              .max(30)
+          }
+        }
+      }
+    }
   },
   {
     method: "POST",

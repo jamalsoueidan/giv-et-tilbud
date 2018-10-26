@@ -34,7 +34,22 @@ const init = async () => {
       files: {
         relativeTo: require("path").join(__dirname, "client", "build")
       },
-      cors: true // testing locally between ports
+      cors: true, // testing locally between ports
+      validate: {
+        failAction: async (request, h, err) => {
+          //https://github.com/hapijs/hapi/issues/3706
+          if (process.env.NODE_ENV === "production") {
+            console.error("ValidationError:", err.message);
+            throw Boom.badRequest(`Invalid request payload input`);
+          } else {
+            console.error(err);
+            throw err;
+          }
+        },
+        options: {
+          allowUnknown: true //https://github.com/hapijs/hapi/issues/1308
+        }
+      }
     }
   });
   // include our module here ↓↓
