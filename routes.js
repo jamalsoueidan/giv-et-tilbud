@@ -1,4 +1,5 @@
-const Order = require("./api/orders");
+const Orders = require("./api/orders");
+const Offers = require("./api/offers");
 const Joi = require("joi");
 
 const defaultRoutes = [
@@ -34,4 +35,4 @@ const defaultRoutes = [
   }
 ];
 
-module.exports = defaultRoutes.concat(Order);
+module.exports = defaultRoutes.concat(Offers, Orders);

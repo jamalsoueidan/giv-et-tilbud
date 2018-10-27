@@ -1,27 +1,71 @@
+const test = require("ava");
 const Server = require("../server");
 const Database = require("../database");
 
-let server, database;
-
-beforeAll(async () => {
-  server = await Server();
-  database = await Database();
+test.before(async t => {
+  t.context.server = await Server();
+  t.context.database = await Database();
 });
 
-function sum(a, b) {
-  return a + b;
-}
-
-test("/api/login should return 200 status", async () => {
-  const response = await server.inject({
+test("/api/login should return 200 status", async t => {
+  const response = await t.context.server.inject({
     method: "GET",
     url: "/api/login"
   });
 
-  expect(response.statusCode).toBe(200);
+  t.is(response.statusCode, 200);
 });
 
-afterAll(async () => {
-  await server.stop();
-  await database.connection.close();
+test("it should create new order", async t => {
+  const response = await t.context.server.inject({
+    method: "POST",
+    url: "/api/orders",
+    payload: JSON.stringify({
+      customer: {
+        email: "asd@gmail.com",
+        phone: "20 51 75 95",
+        city: "Aarhus",
+        zip: "8000",
+        first_name: "jamal",
+        last_name: "soueidan"
+      },
+      properties: [
+        {
+          name: "custom engraving",
+          value: "Happy Birthday Mom!"
+        }
+      ]
+    })
+  });
+
+  t.is(response.statusCode, 200);
+});
+
+test("it should fail without email when creating new order", async t => {
+  const response = await t.context.server.inject({
+    method: "POST",
+    url: "/api/orders",
+    payload: JSON.stringify({
+      customer: {
+        phone: "20 51 75 95",
+        city: "Aarhus",
+        zip: "8000",
+        first_name: "jamal",
+        last_name: "soueidan"
+      },
+      properties: [
+        {
+          name: "custom engraving",
+          value: "Happy Birthday Mom!"
+        }
+      ]
+    })
+  });
+
+  t.is(response.statusCode, 400);
+});
+
+test.after.always("guaranteed cleanup", async t => {
+  await t.context.database.disconnect();
+  await t.context.server.stop();
 });

@@ -26,10 +26,10 @@ const server = new Hapi.Server({
       failAction: async (request, h, err) => {
         //https://github.com/hapijs/hapi/issues/3706
         if (process.env.NODE_ENV === "production") {
-          console.error("ValidationError:", err.message);
+          //console.error("ValidationError:", err.message);
           throw Boom.badRequest(`Invalid request payload input`);
         } else {
-          console.error(err);
+          //console.error(err);
           throw err;
         }
       },

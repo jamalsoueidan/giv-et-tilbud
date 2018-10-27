@@ -8,7 +8,7 @@
     "server": "nodemon index.js",
     "both": "concurrently \"npm run client\" \"npm run server\"",
     "start": "node index.js",
-    "test": "jest",
+    "test": "ava --tap | tap-nyan",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "author": "",
@@ -26,7 +26,9 @@
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
+    "ava": "1.0.0-rc.1",
     "concurrently": "^4.0.1",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "tap-nyan": "^1.1.0"
   }
 }
