@@ -9,6 +9,8 @@ import { routes } from "./core";
 
 const styles = theme => ({
   content: {
+    display: "flex",
+    flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
       paddingTop: "82px"
     },
