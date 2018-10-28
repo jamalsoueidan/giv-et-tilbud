@@ -2,7 +2,7 @@
 
 ## How it works
 
-1.  Customer request 3 price offers, like a price on the cheapest "iphone screen repairs".
+1.  Customer request 3 price offers, like the cheapest "iphone screen repairs".
 2.  Shop owners can now send an offer back to customer, max 1.
 
 ## Who, where
@@ -17,8 +17,8 @@ I'm using Heroku Cloud, because they make it easy to deploy and scale web applic
 
 ### Backend
 
-Node, Hapi, MongoDB, Mongoose, Joi
+Node, Hapi, MongoDB, Mongoose, Joi, Ava
 
 ### Frontend
 
-React, Redux, Router5, Material-UI
+React, Redux, Router5, Material-UI, Moment, Jest

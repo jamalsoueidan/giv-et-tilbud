@@ -1,12 +1,17 @@
 const Joi = require("joi");
 const Order = require("../../models/order");
 
+/**
+ * @todo validate that this order has been closed, and not receiving more offers by fulfillment_status
+ */
+
 module.exports = [
   {
     method: "POST",
     path: "/api/orders/{orderId}/offers",
     handler: async req => {
       const payload = req.payload;
+      const properties = payload.properties;
       const user = 435;
 
       const order = await Order.findOne({
@@ -30,6 +35,18 @@ module.exports = [
       order.save();
       return order;
     },
-    options: { auth: false }
+    options: {
+      auth: false,
+      validate: {
+        payload: {
+          properties: Joi.array()
+            .min(1)
+            .items({
+              name: Joi.string().required(),
+              value: Joi.string().required()
+            })
+        }
+      }
+    }
   }
 ];
