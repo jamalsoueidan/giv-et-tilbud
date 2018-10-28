@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import { createRouteNodeSelector } from "redux-router5";
 import { startsWithSegment } from "router5-helpers";
 import { TopBar, Navigation } from "./components";
+import { actions as OrdersActions } from "./store/orders";
 
-import { Home } from "./pages";
+import * as Pages from "./pages";
 
 const styles = theme => ({
   content: {
@@ -23,7 +24,8 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
   state = {
-    open: false
+    open: false,
+    loaded: false
   };
 
   handleDrawerOpen = () => {
@@ -34,25 +36,42 @@ class MiniDrawer extends React.Component {
     this.setState({ open: false });
   };
 
-  render() {
-    const { classes, route } = this.props;
-    const { params, name } = route;
+  componentDidMount() {
+    this.props.receive();
+  }
 
-    console.log(route);
+  get renderRoute() {
+    const route = this.props.route;
+    const { params, name } = route;
+    const pages = Object.keys(Pages).reduce((destination, key) => {
+      destination[key.toLowerCase()] = Pages[key];
+      return destination;
+    }, {});
+    const Component = pages[name];
+    return <Component params={params} />;
+  }
+
+  render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
         <CssBaseline />
         <TopBar click={this.handleDrawerOpen} />
 
         <Navigation open={this.state.open} click={this.handleDrawerOpen} />
-        <main className={classes.content}>
-          <Home params={params} />
-        </main>
+        <main className={classes.content}>{this.renderRoute}</main>
       </React.Fragment>
     );
   }
 }
 
-export default connect(createRouteNodeSelector(""))(
-  withStyles(styles, { withTheme: true })(MiniDrawer)
-);
+export default connect(
+  state => ({
+    orders: state.orders,
+    ...createRouteNodeSelector("")(state)
+  }),
+  {
+    receive: OrdersActions.receive
+  }
+)(withStyles(styles, { withTheme: true })(MiniDrawer));

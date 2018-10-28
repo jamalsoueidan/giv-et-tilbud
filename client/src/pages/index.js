@@ -1,3 +1,5 @@
-import Home from './home'
+import Home from "./home";
+import Incoming from "./incoming";
+import Outgoing from "./outgoing";
 
-export { Home }
+export { Home, Incoming, Outgoing };

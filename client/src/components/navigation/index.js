@@ -13,6 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
 import Badge from "@material-ui/core/Badge";
 
 const styles = theme => ({
@@ -54,10 +55,7 @@ const styles = theme => ({
 });
 
 class Navigation extends React.Component {
-  renderLink = itemProps => {
-    console.log(itemProps);
-    return <Link {...itemProps} />;
-  };
+  renderLink = itemProps => <Link {...itemProps} />;
 
   render() {
     const { classes, open, click } = this.props;
@@ -84,6 +82,12 @@ class Navigation extends React.Component {
         </div>
         <Divider />
         <List>
+          <ListItem button component={this.renderLink} routeName="home">
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
           <ListItem button component={this.renderLink} routeName="incoming">
             <ListItemIcon>
               <Badge badgeContent={4} color="primary">
