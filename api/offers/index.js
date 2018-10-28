@@ -2,7 +2,7 @@ const Joi = require("joi");
 const Order = require("../../models/order");
 
 /**
- * @todo validate that this order has been closed, and not receiving more offers by fulfillment_status
+ * @todo validate if this order has been closed, and cannot receiving more offers by fulfillment_status
  */
 
 module.exports = [

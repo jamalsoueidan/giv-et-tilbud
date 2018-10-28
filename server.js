@@ -40,6 +40,16 @@ const server = new Hapi.Server({
   }
 });
 
+//https://github.com/hapijs/inert#customized-file-response
+server.ext("onPreResponse", (request, h) => {
+  const response = request.response;
+  if (response.isBoom && response.output.statusCode === 404) {
+    return h.file("index.html");
+  }
+
+  return h.continue;
+});
+
 module.exports = async () => {
   await server.register([require("inert"), require("hapi-auth-jwt2")]);
 
