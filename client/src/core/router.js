@@ -6,7 +6,7 @@ let router;
 
 export default () => {
   if (router) return router;
-  router = createRouter(routes, { defaultRoute: "home" });
+  router = window.router = createRouter(routes, { defaultRoute: "home" });
   router.usePlugin(browserPlugin());
   return router;
 };

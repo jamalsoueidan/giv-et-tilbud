@@ -10,11 +10,8 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import MailIcon from "@material-ui/icons/Mail";
-import MenuIcon from "@material-ui/icons/Menu";
-import HomeIcon from "@material-ui/icons/Home";
 import Badge from "@material-ui/core/Badge";
+import { DraftsIcon, MailIcon, MenuIcon, HomeIcon, DoneIcon } from "../icons";
 
 const styles = theme => ({
   drawerPaper: {
@@ -55,8 +52,6 @@ const styles = theme => ({
 });
 
 class Navigation extends React.Component {
-  renderLink = itemProps => <Link {...itemProps} />;
-
   render() {
     const { classes, open, click } = this.props;
 
@@ -82,13 +77,13 @@ class Navigation extends React.Component {
         </div>
         <Divider />
         <List>
-          <ListItem button component={this.renderLink} routeName="home">
+          <ListItem button component={Link} routeName="home">
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component={this.renderLink} routeName="incoming">
+          <ListItem button component={Link} routeName="incoming">
             <ListItemIcon>
               <Badge badgeContent={4} color="primary">
                 <DraftsIcon />
@@ -96,11 +91,17 @@ class Navigation extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Incoming" />
           </ListItem>
-          <ListItem button component={this.renderLink} routeName="outgoing">
+          <ListItem button component={Link} routeName="outgoing">
             <ListItemIcon>
               <MailIcon />
             </ListItemIcon>
             <ListItemText primary="Outgoing" />
+          </ListItem>
+          <ListItem button component={Link} routeName="finished">
+            <ListItemIcon>
+              <DoneIcon />
+            </ListItemIcon>
+            <ListItemText primary="Finished" />
           </ListItem>
         </List>
       </Drawer>

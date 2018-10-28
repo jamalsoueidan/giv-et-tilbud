@@ -3,11 +3,9 @@ import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
 import { createRouteNodeSelector } from "redux-router5";
-import { startsWithSegment } from "router5-helpers";
 import { TopBar, Navigation } from "./components";
 import { actions as OrdersActions } from "./store/orders";
-
-import * as Pages from "./pages";
+import { routes } from "./core";
 
 const styles = theme => ({
   content: {
@@ -21,6 +19,10 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3
   }
 });
+
+const findRouteByName = (routeName, routes) => {
+  return routes.find(route => route.name === routeName);
+};
 
 class MiniDrawer extends React.Component {
   state = {
@@ -42,12 +44,9 @@ class MiniDrawer extends React.Component {
 
   get renderRoute() {
     const route = this.props.route;
-    const { params, name } = route;
-    const pages = Object.keys(Pages).reduce((destination, key) => {
-      destination[key.toLowerCase()] = Pages[key];
-      return destination;
-    }, {});
-    const Component = pages[name];
+    const params = route.route;
+    const selectNode = findRouteByName(route.name, routes);
+    const Component = selectNode.component;
     return <Component params={params} />;
   }
 
