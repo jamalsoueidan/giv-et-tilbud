@@ -19,7 +19,23 @@ I'm using Heroku in Cloud, Node in Backend and React on the Frontend.
 
 ### Backend
 
-Node, Hapi, MongoDB, Mongoose, Joi, Ava
+**Node**
+_Javascript running as standalone application_
+
+**Hapi**
+_Framework for building services (api)_
+
+**MongoDB**
+_Document database_
+
+**Mongoose**
+_ORM_
+
+**Joi**
+_Validator for payload, and parameters, works with Hapi._
+
+**Ava**
+_Testing Hapi requests_
 
 ### Frontend
 
