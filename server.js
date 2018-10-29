@@ -3,18 +3,6 @@ const Hapi = require("hapi");
 
 require("dotenv").load();
 
-const people = {
-  // our "users database"
-  1: {
-    id: 1,
-    name: "Jen Jones"
-  }
-};
-
-const token = require("jsonwebtoken").sign({ id: 1 }, process.env.SECRET_KEY, {
-  algorithm: "HS256"
-});
-
 const server = new Hapi.Server({
   port: process.env.PORT || 3000,
   routes: {
@@ -56,7 +44,7 @@ module.exports = async () => {
   server.auth.strategy("jwt", "jwt", {
     key: process.env.SECRET_KEY,
     validate: async (decoded, request) => {
-      if (!people[decoded.id]) {
+      if (!decoded._id) {
         return { isValid: false };
       } else {
         return { isValid: true };

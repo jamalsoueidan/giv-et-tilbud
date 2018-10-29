@@ -1,5 +1,7 @@
 const Orders = require("./api/orders");
 const Offers = require("./api/offers");
+const Users = require("./api/users");
+
 const Joi = require("joi");
 
 const defaultRoutes = [
@@ -49,15 +51,7 @@ const defaultRoutes = [
       response.header("Authorization", "request.headers.authorization");
       return response;
     }
-  },
-  {
-    method: "GET",
-    path: "/api/login",
-    config: { auth: false },
-    handler: (req, h) => {
-      return "Ok";
-    }
   }
 ];
 
-module.exports = defaultRoutes.concat(Offers, Orders);
+module.exports = defaultRoutes.concat(Offers, Orders, Users);
