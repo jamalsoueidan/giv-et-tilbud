@@ -22,11 +22,9 @@ const getLayout = layout => {
   return Layouts[capitalizeFirstLetter(layout)];
 };
 
-const getRoute = routeName => {
-  console.log(routeName);
-  return routeName
+const getRoute = routeName =>
+  routeName
     .split(".")
     .reduce((routes, name) => findRoute(name, routes), routes);
-};
 
 export default { getRoute, getPage, getLayout };
