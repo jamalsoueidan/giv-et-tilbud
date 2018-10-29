@@ -40,7 +40,7 @@ module.exports = [
         { email: user.email, _id: user._id },
         process.env.SECRET_KEY
       );
-      return { token };
+      return { token, email };
     },
     options: {
       auth: false,
