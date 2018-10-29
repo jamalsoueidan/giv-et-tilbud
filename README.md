@@ -21,4 +21,4 @@ Node, Hapi, MongoDB, Mongoose, Joi, Ava
 
 ### Frontend
 
-React, Redux, Router5, Material-UI, Moment, Jest
+React, Redux, Reselect, Router5, Material-UI, Moment, Jest

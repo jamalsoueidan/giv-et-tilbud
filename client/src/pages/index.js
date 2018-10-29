@@ -1,6 +1,7 @@
 import Home from "./home";
-import * as Incoming from "./incoming";
+import Incoming from "./incoming";
+import Login from "./login";
 import Outgoing from "./outgoing";
 import Finished from "./finished";
 
-export { Home, Incoming, Outgoing, Finished };
+export default { Home, Incoming, Outgoing, Finished, Login };
