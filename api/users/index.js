@@ -7,6 +7,14 @@ const JWT = require("jsonwebtoken");
 module.exports = [
   {
     method: "POST",
+    path: "/api/isAuthenticated",
+    config: { auth: "jwt" },
+    handler: (req, h) => {
+      return true;
+    }
+  },
+  {
+    method: "POST",
     path: "/api/login",
     handler: async (req, reply) => {
       const { email, password } = req.payload;

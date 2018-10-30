@@ -2,6 +2,8 @@ import createRouter from "router5";
 import browserPlugin from "router5/plugins/browser";
 import routes from "./routes";
 import store from "./store";
+import localStorage from "local-storage";
+import { actions as UserActions } from "../store/user";
 
 let router;
 
@@ -26,7 +28,8 @@ const routesToMap = routes => {
 
 const routesMap = routesToMap(routes);
 
-const onEnterMiddleware = routes => (router, dependencies) => (
+// https://github.com/router5/router5/issues/184
+const requireAuth = (router, dependencies) => async (
   toState,
   fromState,
   done
@@ -34,8 +37,19 @@ const onEnterMiddleware = routes => (router, dependencies) => (
   const userState = store().getState().user;
   const toRoute = routesMap[toState.name];
 
+  const user = JSON.parse(localStorage("user"));
+  if (user && !userState.token) {
+    const response = await store().dispatch(
+      UserActions.isAuthenticated(user.token)
+    );
+
+    if (!response.error) {
+      return done();
+    }
+  }
+
   if (toRoute.auth === undefined && !userState.token) {
-    done({
+    return done({
       redirect: {
         name: "login",
         params: {
@@ -44,15 +58,15 @@ const onEnterMiddleware = routes => (router, dependencies) => (
         }
       }
     });
-  } else {
-    done();
   }
+
+  return done();
 };
 
 export default () => {
   if (router) return router;
   router = window.router = createRouter(routes, { defaultRoute: "login" })
     .usePlugin(browserPlugin())
-    .useMiddleware(onEnterMiddleware(routes));
+    .useMiddleware(requireAuth);
   return router;
 };

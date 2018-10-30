@@ -41,16 +41,6 @@ const defaultRoutes = [
         ]
       };
     }
-  },
-  {
-    method: "GET",
-    path: "/api/restricted",
-    config: { auth: "jwt" },
-    handler: (req, h) => {
-      const response = h.response({ text: "You used a Token!" });
-      response.header("Authorization", "request.headers.authorization");
-      return response;
-    }
   }
 ];
 

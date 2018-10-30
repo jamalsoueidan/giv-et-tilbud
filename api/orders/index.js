@@ -6,8 +6,7 @@ module.exports = [
   {
     method: "GET",
     path: "/api/orders",
-    handler: Receive,
-    options: { auth: false }
+    handler: Receive
   },
   {
     method: "POST",

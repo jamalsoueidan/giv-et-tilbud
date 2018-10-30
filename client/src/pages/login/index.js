@@ -11,6 +11,7 @@ import * as yup from "yup";
 import { connect } from "react-redux";
 import { actions as UserActions } from "../../store/user";
 import { actions as RouterActions } from "redux-router5";
+import localStorage from "local-storage";
 
 const validationSchema = yup.object({
   email: yup
@@ -62,6 +63,9 @@ class Login extends React.Component {
 
     const nextRoute = route.params;
     if (!nextRoute.nextName) {
+      /**
+       * @todo Must be taken from router options, which route name is set as default
+       */
       nextRoute.nextName = "home";
     }
 
@@ -88,9 +92,10 @@ class Login extends React.Component {
               onSubmit={(values, action) => {
                 login(values.email, values.password).then(response => {
                   if (!response.error) {
+                    localStorage("user", JSON.stringify(response.payload));
                     this.redirectToApplication();
-                    action.setSubmitting(false);
                   }
+                  action.setSubmitting(false);
                 });
               }}
             />
