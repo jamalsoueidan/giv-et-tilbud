@@ -36,10 +36,12 @@ module.exports = [
       };
       const body = await rp(options);
       //check shopify if user exists?
-      const customers = JSON.parse(body);
+      const customers = JSON.parse(body).customers;
       if (customers.length === 0)
         return Boom.unauthorized("Bad email or password");
 
+      const customer = customers[0];
+      console.log(customers);
       //check if user have subscription from chargerabbit
       //...
 
@@ -49,11 +51,14 @@ module.exports = [
         return Boom.unauthorized("Bad email or password");
       }
 
-      const token = JWT.sign(
-        { email: user.email, _id: user._id },
-        process.env.SECRET_KEY
-      );
-      return { token, email };
+      const response = {
+        email: user.email,
+        customerId: customer.id,
+        id: user._id
+      };
+
+      const token = JWT.sign(response, process.env.SECRET_KEY);
+      return { ...response, token };
     },
     options: {
       auth: false,

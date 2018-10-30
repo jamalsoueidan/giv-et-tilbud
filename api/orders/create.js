@@ -1,9 +1,7 @@
 const rp = require("request-promise");
 const Order = require("../../models/order");
 
-module.exports = async req => {
-  const payload = req.payload;
-  const { customer, properties } = payload;
+const createShopifyOrder = async (customer, properties) => {
   const options = {
     uri: `https://${process.env.SHOPIFY_URL}/admin/orders.json`,
     auth: {
@@ -29,7 +27,9 @@ module.exports = async req => {
           country_code: "DK",
           address1: "---",
           city: customer.city,
-          zip: customer.zip
+          zip: customer.zip,
+          latitude: customer.latitude,
+          longitude: customer.longitude
         },
         fulfillment_status: "unfulfilled",
         send_receipt: true,
@@ -45,8 +45,37 @@ module.exports = async req => {
       }
     }
   };
-  const body = await rp(options);
-  const newOrder = new Order(body.order);
-  newOrder.save();
-  return body;
+  return await rp(options);
+};
+
+const getGeoLocation = async customer => {
+  const address = customer.address ? `${customer.address},` : "";
+
+  const options = {
+    uri: `https://${process.env.OPENCAGEDATA_URL}/json`,
+    json: true,
+    method: "GET",
+    qs: {
+      key: process.env.OPENCAGEDATA_KEY,
+      q: `${address}, ${customer.zip} ${customer.city}`
+    }
+  };
+  return await rp(options);
+};
+
+module.exports = async req => {
+  const payload = req.payload;
+  const { customer, properties } = payload;
+
+  const geoLocation = await getGeoLocation(customer);
+  if (geoLocation.results.length >= 0) {
+    const geometry = geoLocation.results[0].geometry;
+    customer.latitude = geometry.lat;
+    customer.longitude = geometry.lng;
+  }
+
+  const shopifyOrder = await createShopifyOrder(customer, properties);
+  const mongoOrder = new Order(shopifyOrder.order);
+  mongoOrder.save();
+  return shopifyOrder;
 };

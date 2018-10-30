@@ -44,7 +44,7 @@ module.exports = async () => {
   server.auth.strategy("jwt", "jwt", {
     key: process.env.SECRET_KEY,
     validate: async (decoded, request) => {
-      if (!decoded._id) {
+      if (!decoded.id) {
         return { isValid: false };
       } else {
         return { isValid: true };

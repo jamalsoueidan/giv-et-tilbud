@@ -9,27 +9,20 @@ const schema = new mongoose.Schema(
     fulfillment_status: String,
     phone: String,
     customer: {
+      id: Number,
       first_name: String,
       last_name: String,
       country_code: String
     },
     shipping_address: {
+      address1: String,
       city: String,
-      zip: Number
+      zip: Number,
+      latitude: Number,
+      longitude: Number
     },
     line_items: [
       {
-        properties: [
-          {
-            name: String,
-            value: String
-          }
-        ]
-      }
-    ],
-    offers: [
-      {
-        user: Number,
         properties: [
           {
             name: String,
