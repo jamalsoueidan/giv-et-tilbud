@@ -13,7 +13,10 @@ export default (state = initState, action) => {
       payload: action.payload
     };
   }
-  if (action.type === actions.LOGIN_SUCCESS) {
+  if (
+    action.type === actions.LOGIN_SUCCESS ||
+    action.type === actions.IS_AUTHENTICATED_SUCCESS
+  ) {
     const { token, email } = action.payload;
     return {
       token,
@@ -21,5 +24,6 @@ export default (state = initState, action) => {
       payload: null
     };
   }
+
   return state;
 };
