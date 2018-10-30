@@ -10,6 +10,7 @@ import Form from "./_form";
 import * as yup from "yup";
 import { connect } from "react-redux";
 import { actions as UserActions } from "../../store/user";
+import { actions as RouterActions } from "redux-router5";
 
 const validationSchema = yup.object({
   email: yup
@@ -56,6 +57,17 @@ const styles = theme => ({
 });
 
 class Login extends React.Component {
+  redirectToApplication() {
+    const { route, navigate } = this.props;
+
+    const nextRoute = route.params;
+    if (!nextRoute.nextName) {
+      nextRoute.nextName = "home";
+    }
+
+    navigate(nextRoute.nextName, nextRoute.nextParams);
+  }
+
   render() {
     const { classes, login } = this.props;
 
@@ -75,7 +87,10 @@ class Login extends React.Component {
               validationSchema={validationSchema}
               onSubmit={(values, action) => {
                 login(values.email, values.password).then(response => {
-                  action.setSubmitting(false);
+                  if (!response.error) {
+                    this.redirectToApplication();
+                    action.setSubmitting(false);
+                  }
                 });
               }}
             />
@@ -88,9 +103,11 @@ class Login extends React.Component {
 
 export default connect(
   state => ({
-    user: state.user
+    user: state.user,
+    route: state.router.route
   }),
   {
-    login: UserActions.login
+    login: UserActions.login,
+    navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Login));

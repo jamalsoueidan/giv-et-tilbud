@@ -40,7 +40,7 @@ class LoggedIn extends React.Component {
 
   render() {
     const { classes, children } = this.props;
-    console.log("default layout");
+
     return (
       <React.Fragment>
         <CssBaseline />

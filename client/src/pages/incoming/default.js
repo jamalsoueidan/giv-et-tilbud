@@ -107,7 +107,7 @@ class Incoming extends React.Component {
 
   render() {
     const classes = this.props.classes;
-    console.log("lets go", this.props.route);
+
     if (this.props.orders.length === 0) return <div>Zero orders</div>;
 
     return (

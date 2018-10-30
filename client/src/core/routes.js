@@ -15,6 +15,7 @@ export default [
   {
     name: "login",
     path: "/login",
-    layout: "empty"
+    layout: "empty",
+    auth: false
   }
 ];
