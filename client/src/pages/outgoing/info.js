@@ -1,13 +1,17 @@
 import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
 import moment from "moment";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { TextField, Typography, Button } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import { Confirm } from "../../components";
 import UserContext from "../../contexts/user";
+import {
+  actions as OrderActions,
+  selectors as OrderSelectors
+} from "../../store/orders";
 
 const styles = theme => ({
   textField: {
@@ -16,24 +20,26 @@ const styles = theme => ({
 });
 
 class Info extends React.Component {
-  static contextType = UserContext;
+  state = {
+    open: false
+  };
+
+  onCancel = () => {
+    this.setState({ open: false });
+  };
+
+  onConfirm = () => {
+    this.setState({ open: false });
+  };
+
+  openConfirm = () => {
+    this.setState({ open: true });
+  };
 
   render() {
-    const { classes, orders, route } = this.props;
+    const { classes, order, offer, route } = this.props;
 
-    const customerId = this.context.customerId;
-
-    const order = orders
-      .filter(order => order.id === Number(route.params.id))
-      .pop();
-    if (!order) {
-      //because orders is not loaded yet!
-      return null;
-    }
-
-    const offer = order.offers
-      .filter(offer => offer.customerId === customerId)
-      .pop();
+    if (!order) return null;
 
     const message = offer.properties
       .filter(prop => prop.name === "message")
@@ -63,7 +69,15 @@ class Info extends React.Component {
             <Typography component="p">{message.value}</Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Cancel offer</Button>
+            <Button size="small" onClick={this.openConfirm}>
+              Cancel offer
+            </Button>
+            <Confirm
+              open={this.state.open}
+              onCancel={this.onCancel}
+              onConfirm={this.onConfirm}
+              message="You want to cancel this offer"
+            />
           </CardActions>
         </Card>
       </React.Fragment>
@@ -71,4 +85,12 @@ class Info extends React.Component {
   }
 }
 
-export default withStyles(styles)(Info);
+export default connect(
+  state => ({
+    order: OrderSelectors.getOrder(state),
+    offer: OrderSelectors.getOffer(state)
+  }),
+  {
+    cancelOffer: OrderActions.cancelOffer
+  }
+)(withStyles(styles)(Info));

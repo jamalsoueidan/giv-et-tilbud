@@ -9,11 +9,11 @@ class Index extends React.Component {
   render() {
     const route = this.props.route;
     const data = RouterHelper.getRoute(route.name);
-
+    console.log(route);
     if (data.name === "incoming") {
       return <Default />;
     } else {
-      return <Send />;
+      return <Send route={route} />;
     }
   }
 }

@@ -1,21 +1,26 @@
-# Sales Promotion Application
+## Sales Promotion Application
 
-Customer get 3 offers, by creating a new order on the Shopify store.
+Customer gets 3 offers, by creating a new order on the Shopify store.
 
-## How it works
+### How it works
 
-1.  Customer request 3 price offers, like the cheapest "iphone screen repairs".
-2.  Shop owners can now send an offer back to customer, max 1.
+1.  Customer request 3 price offers, like where can I find the cheapest "iphone screen repairs" in my ciy.
+2.  Shop owners near the customer can now send an offer back, max 1 for each owner.
 
-## Who, where
+### Who, where
 
 This application will be used by different shop owners to send a offer to customers.
 
 The customers will use the **Shopify store** to request a offer by creating a order.
 
+## Demo?
+
+Platform for owners: https://givetttilbud.herokuapp.com/login
+Shop for customers: (coming soon)
+
 ## Installation
 
-You need shopify developer store, and mongodb up and running locally, and opencagedata api to get this project running.
+You need shopify development store, and mongodb up and running locally, and opencagedata api to run this project.
 
 Create .env file
 
@@ -33,53 +38,53 @@ OPENCAGEDATA_KEY=(key from opencagedata.com)
 
 ## Tech
 
-I'm using Heroku in Cloud, Node in Backend and React on the Frontend.
+I'm using Heroku for Cloud, Node in Backend and React on the Frontend!
 
 ### Backend
 
-**Node**
+**[Node](https://nodejs.org/en/)**
 _Javascript running as standalone application_
 
-**Hapi**
+**[Hapi](https://hapijs.com/)**
 _Framework for building services (api)_
 
-**MongoDB**
+**[MongoDB](https://www.mongodb.com/)**
 _Document database_
 
-**Mongoose**
+**[Mongoose](https://mongoosejs.com/)**
 _ORM_
 
-**Joi**
+**[Joi](https://github.com/joijs)**
 _Validator for payload, and parameters, works with Hapi._
 
-**Ava**
+**[Ava](https://github.com/avajs)**
 _Testing Hapi requests_
 
 ### Frontend
 
-**React**
+**[React](https://reactjs.org/)**
 _User interface_
 
-**Redux**
+**[Redux](https://redux.js.org/)**
 _State_
 
-**Reselect**
+**[Reselect](https://github.com/reduxjs/reselect)**
 _Computing state_
 
-**Router5**
+**[Router5](https://router5.js.org/)**
 _Universal router_
 
-**Material-UI**
+**[Material-UI](https://material-ui.com/)**
 _Google's Material Design Components_
 
-**Formik**
+**[Formik](https://github.com/jaredpalmer/formik)**
 _Forms in React, work with material ui components._
 
-**Yup**
+**[Yup](https://github.com/jquense/yup)**
 _Validator for forms, work with formik_
 
-**Moment**
+**[Moment](https://momentjs.com/)**
 _Dates and times_
 
-**Jest**
+**[Jest](https://jestjs.io/)**
 _Testing_

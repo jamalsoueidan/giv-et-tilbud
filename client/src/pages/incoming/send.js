@@ -1,8 +1,11 @@
 import React from "react";
-import classNames from "classnames";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { TextField, Typography, Button, Grid } from "@material-ui/core";
-import { SaveIcon, CancelIcon } from "../../components/icons";
+import { Typography } from "@material-ui/core";
+import Form from "./_form";
+import * as yup from "yup";
+import { Formik } from "formik";
+import { actions as OrderActions } from "../../store/orders";
 
 const styles = theme => ({
   textField: {
@@ -10,67 +13,38 @@ const styles = theme => ({
   }
 });
 
+const validationSchema = yup.object({
+  message: yup.string("Enter your message").required("Email is required"),
+  price: yup.number("").required("Enter your price")
+});
+
 class Send extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { route, sendOffer } = this.props;
+    const orderId = route.params.id;
 
     return (
       <React.Fragment>
         <Typography component="h2" variant="h4" gutterBottom>
           Send offer
         </Typography>
-        <form className={classes.form} noValidate autoComplete="off">
-          <Grid container>
-            <TextField
-              required
-              id="message"
-              label="Besked"
-              multiline
-              className={classes.textField}
-              rows="10"
-              variant="filled"
-            />
-          </Grid>
-          <Grid container>
-            <TextField
-              required
-              id="price"
-              label="Pris"
-              type="number"
-              margin="normal"
-              variant="filled"
-            />
-          </Grid>
-          <Grid container spacing={8}>
-            <Grid item>
-              <Button
-                variant="contained"
-                size="small"
-                className={classes.button}
-              >
-                <CancelIcon
-                  className={classNames(classes.leftIcon, classes.iconSmall)}
-                />
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                size="small"
-                className={classes.button}
-              >
-                <SaveIcon
-                  className={classNames(classes.leftIcon, classes.iconSmall)}
-                />
-                Send
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
+        <Formik
+          render={props => <Form {...props} />}
+          validationSchema={validationSchema}
+          onSubmit={(values, action) => {
+            sendOffer(orderId, values.message, values.price).then(response => {
+              action.setSubmitting(false);
+            });
+          }}
+        />
       </React.Fragment>
     );
   }
 }
 
-export default withStyles(styles)(Send);
+export default connect(
+  null,
+  {
+    sendOffer: OrderActions.sendOffer
+  }
+)(withStyles(styles)(Send));

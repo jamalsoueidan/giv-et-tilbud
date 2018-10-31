@@ -14,7 +14,7 @@ class Index extends React.Component {
     if (data.name === "outgoing") {
       return <Default {...this.props} />;
     } else {
-      return <Info {...this.props} />;
+      return <Info route={route} />;
     }
   }
 }
