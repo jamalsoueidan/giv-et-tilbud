@@ -31,7 +31,7 @@ module.exports = [
           customerId: credentials.customerId
         },
         {
-          $set: { properties: properties }
+          $set: { created_at: new Date(), properties: properties }
         },
         {
           new: true,

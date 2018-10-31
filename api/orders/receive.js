@@ -9,8 +9,8 @@ module.exports = async req => {
     {
       $lookup: {
         from: "offers",
-        localField: "orderId",
-        foreignField: "id",
+        localField: "id",
+        foreignField: "orderId",
         as: "offers"
       }
     }

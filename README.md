@@ -13,6 +13,24 @@ This application will be used by different shop owners to send a offer to custom
 
 The customers will use the **Shopify store** to request a offer by creating a order.
 
+## Installation
+
+You need shopify developer store, and mongodb up and running locally, and opencagedata api to get this project running.
+
+Create .env file
+
+```javascript
+SECRET_KEY=(random key for token)
+SHOPIFY_USERNAME=(shopify user)
+SHOPIFY_PASSWORD=(shopify pass)
+SHOPIFY_URL=(shopify url)
+SHOPIFY_PRODUCT_ID=(product_id)
+SHOPIFY_VARIANT_ID=(variant_id)
+MONGODB_URI=user:password@url:port/database
+OPENCAGEDATA_URL=api.opencagedata.com/geocode/v1/
+OPENCAGEDATA_KEY=(key from opencagedata.com)
+```
+
 ## Tech
 
 I'm using Heroku in Cloud, Node in Backend and React on the Frontend.
