@@ -53,7 +53,7 @@ const styles = theme => ({
 
 class Navigation extends React.Component {
   render() {
-    const { classes, open, click } = this.props;
+    const { classes, open, click, stats } = this.props;
 
     return (
       <Drawer
@@ -85,7 +85,7 @@ class Navigation extends React.Component {
           </ListItem>
           <ListItem button component={Link} routeName="incoming">
             <ListItemIcon>
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={stats.incomingOrdersCount} color="primary">
                 <DraftsIcon />
               </Badge>
             </ListItemIcon>
@@ -93,7 +93,9 @@ class Navigation extends React.Component {
           </ListItem>
           <ListItem button component={Link} routeName="outgoing">
             <ListItemIcon>
-              <MailIcon />
+              <Badge badgeContent={stats.outgoingOrdersCount} color="primary">
+                <MailIcon />
+              </Badge>
             </ListItemIcon>
             <ListItemText primary="Outgoing" />
           </ListItem>

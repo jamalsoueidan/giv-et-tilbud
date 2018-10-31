@@ -6,6 +6,7 @@ import Form from "./_form";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { actions as OrderActions } from "../../store/orders";
+import { actions as RouterActions } from "redux-router5";
 
 const styles = theme => ({
   textField: {
@@ -33,6 +34,7 @@ class Send extends React.Component {
           validationSchema={validationSchema}
           onSubmit={(values, action) => {
             sendOffer(orderId, values.message, values.price).then(response => {
+              this.props.navigate("outgoing.info", { id: orderId });
               action.setSubmitting(false);
             });
           }}
@@ -45,6 +47,7 @@ class Send extends React.Component {
 export default connect(
   null,
   {
-    sendOffer: OrderActions.sendOffer
+    sendOffer: OrderActions.sendOffer,
+    navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Send));

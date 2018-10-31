@@ -2,12 +2,15 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
-import { TopBar, Navigation } from "../components";
-import { actions as OrdersActions } from "../store/orders";
+import { TopBar, Navigation, Notification } from "../components";
+import {
+  actions as OrdersActions,
+  selectors as OrdersSelectors
+} from "../store/orders";
 import { actions as UserActions } from "../store/user";
-import localStorage from "local-storage";
+import { actions as NotificationActions } from "../store/notification";
 import { actions as RouterActions } from "redux-router5";
-import UserContext from "../contexts/user";
+import localStorage from "local-storage";
 
 const styles = theme => ({
   content: {
@@ -26,16 +29,12 @@ const styles = theme => ({
 
 class LoggedIn extends React.Component {
   state = {
-    open: false,
+    openNavigation: false,
     loaded: false
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: !this.state.open });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
+  toggleNavigation = () => {
+    this.setState({ openNavigation: !this.state.openNavigation });
   };
 
   logout = () => {
@@ -50,28 +49,37 @@ class LoggedIn extends React.Component {
   }
 
   render() {
-    const { classes, children, user } = this.props;
+    const { classes, children, statsOrders } = this.props;
 
     return (
-      <UserContext.Provider value={user}>
+      <React.Fragment>
         <CssBaseline />
-        <TopBar click={this.handleDrawerOpen} logout={this.logout} />
+        <TopBar click={this.toggleNavigation} logout={this.logout} />
 
-        <Navigation open={this.state.open} click={this.handleDrawerOpen} />
+        <Navigation
+          open={this.state.openNavigation}
+          click={this.toggleNavigation}
+          stats={statsOrders}
+        />
         <main className={classes.content}>{children}</main>
-      </UserContext.Provider>
+        <Notification
+          hide={this.props.hideNotification}
+          notification={this.props.notification}
+        />
+      </React.Fragment>
     );
   }
 }
 
 export default connect(
   state => ({
-    user: state.user,
-    orders: state.orders
+    statsOrders: OrdersSelectors.statsOrders(state),
+    notification: state.notification
   }),
   {
     receive: OrdersActions.receive,
     logout: UserActions.logout,
-    navigate: RouterActions.navigateTo
+    navigate: RouterActions.navigateTo,
+    hideNotification: NotificationActions.hideNotification
   }
 )(withStyles(styles, { withTheme: true })(LoggedIn));

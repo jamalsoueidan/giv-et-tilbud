@@ -107,7 +107,8 @@ class Outgoing extends React.Component {
   render() {
     const classes = this.props.classes;
 
-    if (this.props.orders.length === 0) return <div>Zero orders</div>;
+    if (this.props.orders.length === 0)
+      return <div>No outgoing orders, go and send offers</div>;
 
     return (
       <React.Fragment>

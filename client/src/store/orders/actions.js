@@ -1,8 +1,8 @@
 import { RSAA } from "redux-api-middleware";
 
-export const RECEIVE_REQUEST = "orders/receive/request";
-export const RECEIVE_SUCCESS = "orders/receive/success";
-export const RECEIVE_FAILURE = "orders/receive/failure";
+export const RECEIVE_REQUEST = "@@orders/RECEIVE_REQUEST";
+export const RECEIVE_SUCCESS = "@@orders/RECEIVE_SUCCESS";
+export const RECEIVE_FAILURE = "@@orders/RECEIVE_FAILURE";
 
 export const SEND_OFFER_REQUEST = "@@orders/SEND_OFFER_REQUEST";
 export const SEND_OFFER_SUCCESS = "@@orders/SEND_OFFER_SUCCESS";

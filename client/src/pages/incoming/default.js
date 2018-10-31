@@ -109,7 +109,7 @@ class Incoming extends React.Component {
   render() {
     const classes = this.props.classes;
 
-    if (this.props.orders.length === 0) return <div>Zero orders</div>;
+    if (this.props.orders.length === 0) return <div>No incoming orders!</div>;
 
     return (
       <React.Fragment>

@@ -7,7 +7,8 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { Confirm } from "../../components";
-import UserContext from "../../contexts/user";
+import { actions as RouterActions } from "redux-router5";
+
 import {
   actions as OrderActions,
   selectors as OrderSelectors
@@ -29,7 +30,11 @@ class Info extends React.Component {
   };
 
   onConfirm = () => {
-    this.setState({ open: false });
+    const { cancelOffer, navigate, order } = this.props;
+    cancelOffer(order.id).then(response => {
+      this.setState({ open: false });
+      navigate("outgoing");
+    });
   };
 
   openConfirm = () => {
@@ -37,9 +42,9 @@ class Info extends React.Component {
   };
 
   render() {
-    const { classes, order, offer, route } = this.props;
+    const { classes, order, offer } = this.props;
 
-    if (!order) return null;
+    if (!order || !offer) return null;
 
     const message = offer.properties
       .filter(prop => prop.name === "message")
@@ -91,6 +96,7 @@ export default connect(
     offer: OrderSelectors.getOffer(state)
   }),
   {
-    cancelOffer: OrderActions.cancelOffer
+    cancelOffer: OrderActions.cancelOffer,
+    navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Info));

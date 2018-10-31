@@ -40,6 +40,19 @@ export const getFinishedOrders = createSelector(
   }
 );
 
+export const statsOrders = createSelector(
+  getIncomingOrders,
+  getOutgoingOrders,
+  getFinishedOrders,
+  (iOrders, oOrders, fOrders) => {
+    return {
+      incomingOrdersCount: iOrders.length,
+      outgoingOrdersCount: oOrders.length,
+      finishedOrdersCount: fOrders.length
+    };
+  }
+);
+
 export const getOrder = createSelector(getOrders, route, (orders, route) => {
   const orderId = Number(route.params.id);
   return orders.find(order => order.id === orderId);
