@@ -29,38 +29,39 @@ const routesToMap = routes => {
 const routesMap = routesToMap(routes);
 
 // https://github.com/router5/router5/issues/184
-const requireAuth = (router, dependencies) => async (
-  toState,
-  fromState,
-  done
-) => {
+const requireAuth = (router, dependencies) => (toState, fromState, done) => {
   const userState = store().getState().user;
   const toRoute = routesMap[toState.name];
 
+  const redirect = {
+    redirect: {
+      name: "login",
+      params: {
+        nextName: toState.name,
+        nextParams: toState.params
+      }
+    }
+  };
+
+  // on browser refresh, token exist in storage but user must authorize again to make sure he is logged in.
   const user = JSON.parse(localStorage("user"));
   if (user && !userState.token) {
-    const response = await store().dispatch(
-      UserActions.isAuthenticated(user.token)
-    );
-
-    if (!response.error) {
-      return done();
-    }
-  }
-
-  if (toRoute.auth === undefined && !userState.token) {
-    return done({
-      redirect: {
-        name: "login",
-        params: {
-          nextName: toState.name,
-          nextParams: toState.params
+    store()
+      .dispatch(UserActions.isAuthenticated(user.token))
+      .then(response => {
+        if (!response.error) {
+          done();
+        } else {
+          done(redirect);
         }
-      }
-    });
+      });
   }
-
-  return done();
+  // if he must login and the state token is empty, redirect to login page.
+  else if (toRoute.auth === undefined && !userState.token) {
+    return done(redirect);
+  } else {
+    return done();
+  }
 };
 
 export default () => {

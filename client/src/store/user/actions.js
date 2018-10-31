@@ -8,6 +8,10 @@ export const IS_AUTHENTICATED_REQUEST = "@@user/IS_AUTHENTICATED_REQUEST";
 export const IS_AUTHENTICATED_SUCCESS = "@@user/IS_AUTHENTICATED_SUCCESS";
 export const IS_AUTHENTICATED_FAILURE = "@@user/IS_AUTHENTICATED_FAILURE";
 
+export const LOGOUT_REQUEST = "@@user/LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "@@user/LOGOUT_SUCCESS";
+export const LOGOUT_FAILURE = "@@user/LOGOUT_FAILURE";
+
 const login = (email, password) => ({
   [RSAA]: {
     types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
@@ -34,4 +38,12 @@ const isAuthenticated = token => ({
   }
 });
 
-export { login, isAuthenticated };
+const logout = () => ({
+  [RSAA]: {
+    types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
+    endpoint: "/api/logout",
+    method: "GET"
+  }
+});
+
+export { login, isAuthenticated, logout };

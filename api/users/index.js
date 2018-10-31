@@ -19,6 +19,14 @@ module.exports = [
     }
   },
   {
+    method: "GET",
+    path: "/api/logout",
+    handler: async (req, h) => {
+      // JWT should be connected with REDIS to validate the tokens, so we can create logout!
+      return {};
+    }
+  },
+  {
     method: "POST",
     path: "/api/login",
     handler: async (req, reply) => {
@@ -41,7 +49,6 @@ module.exports = [
         return Boom.unauthorized("Bad email or password");
 
       const customer = customers[0];
-      console.log(customers);
       //check if user have subscription from chargerabbit
       //...
 

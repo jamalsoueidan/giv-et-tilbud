@@ -20,9 +20,9 @@ const apiAuthInjector = () => next => action => {
     if (!headers["Content-Type"])
       callApi.headers["Content-Type"] = "application/json";
 
-    const user = JSON.parse(localStorage("user"));
-    if (!headers["Authorization"])
-      callApi.headers["Authorization"] = `Bearer ${user.token}`;
+    const isLoggedIn = JSON.parse(localStorage("user"));
+    if (!headers["Authorization"] && isLoggedIn)
+      callApi.headers["Authorization"] = `Bearer ${isLoggedIn.token}`;
   }
 
   return next(action);

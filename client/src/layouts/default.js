@@ -4,6 +4,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
 import { TopBar, Navigation } from "../components";
 import { actions as OrdersActions } from "../store/orders";
+import { actions as UserActions } from "../store/user";
+import localStorage from "local-storage";
+import { actions as RouterActions } from "redux-router5";
 
 const styles = theme => ({
   content: {
@@ -34,6 +37,13 @@ class LoggedIn extends React.Component {
     this.setState({ open: false });
   };
 
+  logout = () => {
+    this.props.logout().then(response => {
+      localStorage.remove("user");
+      this.props.navigate("login");
+    });
+  };
+
   componentDidMount() {
     this.props.receive();
   }
@@ -44,7 +54,7 @@ class LoggedIn extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <TopBar click={this.handleDrawerOpen} />
+        <TopBar click={this.handleDrawerOpen} logout={this.logout} />
 
         <Navigation open={this.state.open} click={this.handleDrawerOpen} />
         <main className={classes.content}>{children}</main>
@@ -58,6 +68,8 @@ export default connect(
     orders: state.orders
   }),
   {
-    receive: OrdersActions.receive
+    receive: OrdersActions.receive,
+    logout: UserActions.logout,
+    navigate: RouterActions.navigateTo
   }
 )(withStyles(styles, { withTheme: true })(LoggedIn));

@@ -64,7 +64,8 @@ class Login extends React.Component {
     const nextRoute = route.params;
     if (!nextRoute.nextName) {
       /**
-       * @todo Must be taken from router options, which route name is set as default
+       * @todo Must be taken from router options in the core/router.js, which route name is set as default
+       * createRouter(routes, { defaultRoute: "login" })
        */
       nextRoute.nextName = "home";
     }

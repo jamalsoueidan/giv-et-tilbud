@@ -5,4 +5,5 @@ html {
 
 #root {
   display: flex;
+  height: 100%;
 }

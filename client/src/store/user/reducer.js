@@ -25,5 +25,9 @@ export default (state = initState, action) => {
     };
   }
 
+  if (action.type === actions.LOGOUT_SUCCESS) {
+    return initState;
+  }
+
   return state;
 };
