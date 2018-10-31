@@ -1,6 +1,5 @@
 import React from "react";
 import moment from "moment";
-import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -12,7 +11,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router5";
-import { selectors as OrderSelectors } from "../../store/orders";
 
 const styles = theme => ({
   root: {
@@ -31,7 +29,7 @@ const styles = theme => ({
   }
 });
 
-class Incoming extends React.Component {
+class Outgoing extends React.Component {
   get renderHeader() {
     const { orders } = this.props;
     const columns = orders[0].line_items[0].properties;
@@ -92,10 +90,10 @@ class Incoming extends React.Component {
                   color="primary"
                   className={classes.button}
                   component={Link}
-                  routeName="incoming.send"
+                  routeName="outgoing.info"
                   routeParams={{ id: row.id }}
                 >
-                  Send et tilbud
+                  Se info
                   <EditIcon className={classes.extendedIcon} />
                 </Button>
               </TableCell>
@@ -114,7 +112,7 @@ class Incoming extends React.Component {
     return (
       <React.Fragment>
         <Typography component="h2" variant="h1" gutterBottom>
-          Incoming orders
+          Outgoing orders
         </Typography>
         <Paper className={classes.root}>
           <Table className={classes.table}>
@@ -127,6 +125,4 @@ class Incoming extends React.Component {
   }
 }
 
-export default connect(state => ({
-  orders: OrderSelectors.getIncomingOrders(state)
-}))(withStyles(styles)(Incoming));
+export default withStyles(styles)(Outgoing);

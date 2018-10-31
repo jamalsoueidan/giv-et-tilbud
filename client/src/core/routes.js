@@ -10,7 +10,16 @@ export default [
       }
     ]
   },
-  { name: "outgoing", path: "/outgoing" },
+  {
+    name: "outgoing",
+    path: "/outgoing",
+    children: [
+      {
+        name: "info",
+        path: "/:id/info"
+      }
+    ]
+  },
   { name: "finished", path: "/finished" },
   {
     name: "login",

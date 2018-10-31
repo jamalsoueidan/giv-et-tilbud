@@ -7,6 +7,7 @@ import { actions as OrdersActions } from "../store/orders";
 import { actions as UserActions } from "../store/user";
 import localStorage from "local-storage";
 import { actions as RouterActions } from "redux-router5";
+import UserContext from "../contexts/user";
 
 const styles = theme => ({
   content: {
@@ -49,22 +50,23 @@ class LoggedIn extends React.Component {
   }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, user } = this.props;
 
     return (
-      <React.Fragment>
+      <UserContext.Provider value={user}>
         <CssBaseline />
         <TopBar click={this.handleDrawerOpen} logout={this.logout} />
 
         <Navigation open={this.state.open} click={this.handleDrawerOpen} />
         <main className={classes.content}>{children}</main>
-      </React.Fragment>
+      </UserContext.Provider>
     );
   }
 }
 
 export default connect(
   state => ({
+    user: state.user,
     orders: state.orders
   }),
   {
