@@ -13,6 +13,20 @@ This application will be used by different shop owners to send a offer to custom
 
 The customers will use the **Shopify store** to request a offer by creating a order.
 
+### What is what
+
+#### /client
+
+Location of the platform for shop owerns to use
+
+#### /shopify
+
+Location of the small react appication for the shopify frontend store, so customers can create an order.
+
+#### /api + /models + /test
+
+Api server
+
 ## Demo?
 
 Platform for owners: https://givetttilbud.herokuapp.com/login
@@ -34,6 +48,13 @@ SHOPIFY_VARIANT_ID=(variant_id)
 MONGODB_URI=user:password@url:port/database
 OPENCAGEDATA_URL=api.opencagedata.com/geocode/v1/
 OPENCAGEDATA_KEY=(key from opencagedata.com)
+```
+
+### Run
+
+```javascript
+// npm install ..
+npm run both
 ```
 
 ## Tech
