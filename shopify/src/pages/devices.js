@@ -1,12 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
+import { toggleProperty } from "../store";
+import data from "../data";
 
 class Devices extends React.Component {
   onClick = evt => {
-    const { onData, data } = this.props;
-    const target = evt.target;
-    const property = { name: "device", value: target.dataset.name };
-    data.properties.push(property);
-    onData(data, "models");
+    evt.stopPropagation();
+    const { toggleProperty, next } = this.props;
+    const target = evt.currentTarget;
+    toggleProperty("device", target.dataset.value);
+    next();
   };
 
   render() {
@@ -14,16 +17,23 @@ class Devices extends React.Component {
       <div>
         <h1>Vælge din telefon</h1>
         <ul id="devices">
-          <li data-name="iphone" onClick={this.onClick}>
-            iphone
-          </li>
-          <li data-name="samsung" onClick={this.onClick}>
-            samsung
-          </li>
+          {data.map(device => (
+            <li
+              key={device.value}
+              data-value={device.value}
+              onClickCapture={this.onClick}
+            >
+              <img alt="" src={device.image} />
+              <span>{device.value}</span>
+            </li>
+          ))}
         </ul>
       </div>
     );
   }
 }
 
-export default Devices;
+export default connect(
+  null,
+  { toggleProperty }
+)(Devices);

@@ -1,26 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
+import { toggleProperty } from "../store";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
-  zip: Yup.number()
-    .test("len", "Postnummer er 4 cifre", val => val.toString().length === 4)
+  zip: Yup.number("")
+    .test(
+      "len",
+      "Postnummer er 4 cifre",
+      val => val && val.toString().length === 4
+    )
     .required("Zip is required!")
 });
 
 class Zip extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  onSubmit(evt) {
-    const { onData, data } = this.props;
-    data.customer.zip = 12345;
-    onData(data, "devices");
-  }
-
   render() {
     return (
       <div>
@@ -29,11 +23,9 @@ class Zip extends React.Component {
           initialValues={{ zip: "" }}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
-            this.props.history.push("?page=devices");
-            /*setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);*/
+            const { toggleProperty, next } = this.props;
+            toggleProperty("zip", values.zip);
+            next();
           }}
         >
           {({
@@ -66,4 +58,7 @@ class Zip extends React.Component {
   }
 }
 
-export default Zip;
+export default connect(
+  null,
+  { toggleProperty }
+)(Zip);

@@ -1,33 +1,49 @@
 import React from "react";
+import { connect } from "react-redux";
+import { toggleProperty } from "../store";
+import data from "../data";
 
 class Models extends React.Component {
-  constructor(props) {
-    super(props);
+  onClick = evt => {
+    evt.stopPropagation();
+    const { toggleProperty, next } = this.props;
+    const target = evt.currentTarget;
+    toggleProperty("model", target.dataset.value);
+    next();
+  };
 
-    this.onSubmit = this.onSubmit.bind(this);
+  get renderModels() {
+    const device = this.props.device;
+
+    return (
+      <ul>
+        {data.find(d => d.value === device.value).models.map(model => (
+          <li
+            key={model.value}
+            data-value={model.value}
+            onClickCapture={this.onClick}
+          >
+            <img alt="" src={model.image} />
+            <span>{model.value}</span>
+          </li>
+        ))}
+      </ul>
+    );
   }
-
-  onSubmit(evt) {}
 
   render() {
     return (
       <div>
         <h1>Hvilken model har du</h1>
-        <ul id="iphone">
-          <li data-model="iphone8plus">8</li>
-          <li data-model="iphone8plus">8 plus</li>
-          <li data-model="iphone8plus">7 plus</li>
-        </ul>
-
-        <ul id="samsung">
-          <li data-model="samsung8">Note 8</li>
-          <li data-model="samsung8">S8+</li>
-          <li data-model="samsung7">S7</li>
-          <li data-model="samsung8">Note 4</li>
-        </ul>
+        {this.renderModels}
       </div>
     );
   }
 }
 
-export default Models;
+export default connect(
+  state => ({
+    device: state.properties.find(p => p.name === "device")
+  }),
+  { toggleProperty }
+)(Models);
