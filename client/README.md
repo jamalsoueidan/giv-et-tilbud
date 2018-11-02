@@ -1,3 +1,5 @@
+## Platform used by owners, it runs on Heroku cloud.
+
 Developing "get 3 offers" sales promotion application, by using Shopify API.
 
 https://givetttilbud.herokuapp.com/
