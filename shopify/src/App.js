@@ -6,6 +6,7 @@ import Colors from "./pages/colors";
 import Issues from "./pages/issues";
 import Breadcrumbs from "./components/breadcrumbs";
 import createHistory from "history/createBrowserHistory";
+import Booking from "./pages/booking";
 
 const history = createHistory();
 
@@ -67,6 +68,7 @@ class App extends Component {
     return (
       <Breadcrumbs>
         <Component {...props} />
+        <Booking />
       </Breadcrumbs>
     );
   }

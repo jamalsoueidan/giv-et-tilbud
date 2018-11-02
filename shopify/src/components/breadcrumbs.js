@@ -12,6 +12,7 @@ class Breadcrumbs extends React.Component {
     return (
       <React.Fragment>
         <ul>{this.renderList}</ul>
+        <div id="progressbar" className="progressbar-progress" />
         {this.props.children}
       </React.Fragment>
     );
