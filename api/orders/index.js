@@ -23,13 +23,11 @@ module.exports = [
             first_name: Joi.string()
               .required()
               .alphanum()
-              .min(3)
-              .max(30),
+              .min(2),
             last_name: Joi.string()
               .required()
               .alphanum()
-              .min(3)
-              .max(30)
+              .min(2)
           }
         }
       }

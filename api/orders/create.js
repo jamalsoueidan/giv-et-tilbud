@@ -1,5 +1,6 @@
 const rp = require("request-promise");
 const Order = require("../../models/order");
+const Boom = require("boom");
 
 const createShopifyOrder = async (customer, properties) => {
   const options = {
@@ -18,15 +19,15 @@ const createShopifyOrder = async (customer, properties) => {
           email: customer.email,
           accepts_marketing: true,
           first_name: customer.first_name,
-          last_name: customer.last_name,
-          country_code: "DK"
+          last_name: customer.last_name
         },
         shipping_address: {
           first_name: customer.first_name,
           last_name: customer.last_name,
-          country_code: "DK",
-          address1: "---",
-          city: customer.city,
+          address1: customer.address || "---",
+          phone: customer.phone,
+          city: customer.city || "---",
+          country: "DK",
           zip: customer.zip,
           latitude: customer.latitude,
           longitude: customer.longitude
@@ -50,14 +51,13 @@ const createShopifyOrder = async (customer, properties) => {
 
 const getGeoLocation = async customer => {
   const address = customer.address ? `${customer.address},` : "";
-
   const options = {
     uri: `https://${process.env.OPENCAGEDATA_URL}/json`,
     json: true,
     method: "GET",
     qs: {
       key: process.env.OPENCAGEDATA_KEY,
-      q: `${address}, ${customer.zip} ${customer.city}`
+      q: `${address} ${customer.zip}` //${customer.city}` //get list of postal code and convert to city
     }
   };
   return await rp(options);
@@ -74,8 +74,12 @@ module.exports = async req => {
     customer.longitude = geometry.lng;
   }
 
-  const shopifyOrder = await createShopifyOrder(customer, properties);
-  const mongoOrder = new Order(shopifyOrder.order);
-  mongoOrder.save();
-  return shopifyOrder;
+  try {
+    const shopifyOrder = await createShopifyOrder(customer, properties);
+    const mongoOrder = new Order(shopifyOrder.order);
+    mongoOrder.save();
+    return shopifyOrder;
+  } catch (error) {
+    return Boom.badData(error.message);
+  }
 };
