@@ -11,8 +11,7 @@ const schema = new mongoose.Schema(
     customer: {
       id: Number,
       first_name: String,
-      last_name: String,
-      country_code: String
+      last_name: String
     },
     shipping_address: {
       address1: String,
