@@ -30,6 +30,14 @@ const styles = theme => ({
 });
 
 class Outgoing extends React.Component {
+  renderCell(value, key) {
+    return (
+      <TableCell component="th" scope="row" key={key}>
+        {value}
+      </TableCell>
+    );
+  }
+
   get renderHeader() {
     const { orders } = this.props;
     const columns = orders[0].line_items[0].properties;
@@ -37,22 +45,10 @@ class Outgoing extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          {columns.map(c => {
-            return (
-              <TableCell component="th" scope="row" key={c._id}>
-                {c.name}
-              </TableCell>
-            );
-          })}
-          <TableCell component="th" scope="row">
-            By
-          </TableCell>
-          <TableCell component="th" scope="row">
-            PostNummer
-          </TableCell>
-          <TableCell component="th" scope="row">
-            Dato oprettet
-          </TableCell>
+          {columns.map(c => this.renderCell(c.name, c._id))}
+          {this.renderCell("By")}
+          {this.renderCell("PostNummer")}
+          {this.renderCell("Dato oprettet")}
           <TableCell component="th" scope="row" />
         </TableRow>
       </TableHead>
@@ -69,22 +65,12 @@ class Outgoing extends React.Component {
         {orders.map(row => {
           return (
             <TableRow key={row._id} hover>
-              {row.line_items[0].properties.map(c => {
-                return (
-                  <TableCell component="th" scope="row" key={c._id}>
-                    {c.value}
-                  </TableCell>
-                );
-              })}
-              <TableCell component="th" scope="row">
-                {row.shipping_address.city}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {row.shipping_address.zip}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {moment(row.created_at).fromNow()}
-              </TableCell>
+              {row.line_items[0].properties.map(c =>
+                this.renderCell(c.value, c._id)
+              )}
+              {this.renderCell(row.shipping_address.city)}
+              {this.renderCell(row.shipping_address.zip)}
+              {this.renderCell(moment(row.created_at).fromNow())}
               <TableCell component="th" scope="row">
                 <Button
                   color="primary"
