@@ -40,7 +40,7 @@ class Zip extends React.Component {
           }) => (
             <form onSubmit={handleSubmit}>
               <input
-                type="zip"
+                type="text"
                 name="zip"
                 onChange={handleChange}
                 onBlur={handleBlur}

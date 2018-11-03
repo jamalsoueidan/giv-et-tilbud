@@ -147,6 +147,12 @@ class Book extends React.Component {
     this.props.toggleProperty("datetime", time.format());
   };
 
+  onClick = evt => {
+    evt.stopPropagation();
+    const next = this.props.next;
+    next();
+  };
+
   render() {
     const datetime = this.props.datetime ? this.props.datetime.value : null;
 
@@ -154,6 +160,9 @@ class Book extends React.Component {
       <React.Fragment>
         <PickDay onSubmit={this.onDay} selectedDay={datetime} />
         <PickTime onSubmit={this.onTime} selectedDay={datetime} />
+        <button disabled={datetime ? false : true} onClick={this.onClick}>
+          Confirm booking time
+        </button>
       </React.Fragment>
     );
   }
