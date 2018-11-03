@@ -34,6 +34,7 @@ const fromToday = () => {
   }
 
   return moment()
+    .add(1, "hours")
     .set("minute", 0)
     .set("second", 0);
 };

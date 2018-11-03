@@ -14,7 +14,7 @@ const history = createHistory();
 
 class App extends Component {
   state = {
-    page: "done"
+    page: "zip"
   };
 
   componentDidMount() {

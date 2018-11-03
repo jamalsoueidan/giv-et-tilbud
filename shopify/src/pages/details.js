@@ -43,6 +43,7 @@ class Details extends React.Component {
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit}>
+              first name:{" "}
               <input
                 type="text"
                 name="first_name"
@@ -52,6 +53,7 @@ class Details extends React.Component {
               />
               {errors.first_name && touched.first_name && errors.first_name}
               <br />
+              last name:{" "}
               <input
                 type="text"
                 name="last_name"
@@ -61,6 +63,7 @@ class Details extends React.Component {
               />
               {errors.last_name && touched.last_name && errors.last_name}
               <br />
+              address:{" "}
               <input
                 type="text"
                 name="address"
@@ -70,6 +73,7 @@ class Details extends React.Component {
               />
               {errors.address && touched.address && errors.address}
               <br />
+              email:{" "}
               <input
                 type="text"
                 name="email"
@@ -79,6 +83,7 @@ class Details extends React.Component {
               />
               {errors.email && touched.email && errors.email}
               <br />
+              phone number:{" "}
               <input
                 type="text"
                 name="phone"

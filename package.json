@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm start",
+    "shopify": "cd shopify && npm start",
     "server": "nodemon index.js",
-    "both": "concurrently \"npm run client\" \"npm run server\"",
+    "both": "concurrently \"npm run client\" \"npm run shopify\" \"npm run server\"",
     "start": "node index.js",
     "test": "ava --tap | tap-nyan",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
