@@ -45,10 +45,10 @@ class Done extends React.Component {
 
     return (
       <div className="page-done">
-        <h1>Din anmodning er oprettet!</h1>
+        <h1 className="page-title">Din anmodning er oprettet!</h1>
         <div>
-          Vi sender opgaven videre til alle værksteder i nærheden af dig og
-          giver dig det bedste bud du kan få! <br />
+          Vi sender din anmodning videre til alle værksteder i nærheden af dig
+          og giver dig det bedste bud du kan få! <br />
           Din order nummer: <strong>{order.id}</strong>
         </div>
         <div className="details">
