@@ -31,6 +31,7 @@
       align-content: center
       cursor: pointer
       padding: 20px
+      box-sizing: border-box
 
   .page-models,
   .page-colors,
@@ -40,10 +41,14 @@
         text-decoration: none
         border: 3px solid #3b5998
         border-radius: 15px
-
         margin-right: 10px
         margin-bottom: 10px
         max-width: calc(25% - 10px)
+
+        @media only screen and (max-width: 600px)
+          flex: 1 0 100%
+          margin-right: 0px
+          max-width: none
 
         &:hover
           background-color: #3b5998

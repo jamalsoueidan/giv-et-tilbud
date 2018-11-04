@@ -76,10 +76,6 @@ const store = createStore(
         value: "battery"
       },
       {
-        name: "datetime",
-        value: "2018-11-05T15:00:00+01:00"
-      },
-      {
         name: "customer",
         value: {
           first_name: "jamal",

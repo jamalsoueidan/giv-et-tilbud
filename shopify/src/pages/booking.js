@@ -8,13 +8,21 @@ import "./booking.sass";
 const TIME_OPEN = 10;
 const TIME_CLOSE = 18;
 
-const fromToday = () => {
-  const endOfDay = moment()
+const openingTime = datetime =>
+  moment()
+    .set("hour", TIME_OPEN)
     .set("minute", 0)
-    .set("hour", TIME_CLOSE); // set atleast 1 hour before shop closes same day
+    .set("second", 0);
 
+const closingTime = () =>
+  moment()
+    .set("minute", 0)
+    .set("hour", TIME_CLOSE)
+    .set("second", 0);
+
+const fromToday = () => {
   // time already after closing time?
-  if (moment().isAfter(endOfDay)) {
+  if (moment().isAfter(closingTime())) {
     return moment()
       .add(1, "days")
       .set("hour", TIME_OPEN)
@@ -22,14 +30,9 @@ const fromToday = () => {
       .set("second", 0);
   }
 
-  // start counting from 10:00
-  const startOfDay = moment()
-    .set("hour", TIME_OPEN)
-    .set("minute", 0)
-    .set("second", 0);
-
-  if (moment().isBefore(startOfDay)) {
-    return startOfDay;
+  if (moment().isBefore(openingTime())) {
+    console.log("start of day");
+    return openingTime();
   }
 
   return moment()
@@ -43,7 +46,7 @@ class PickDay extends React.Component {
     super(props);
 
     this.state = {
-      fromDate: props.selectedDay || fromToday()
+      fromDate: fromToday()
     };
   }
 
@@ -51,14 +54,14 @@ class PickDay extends React.Component {
     const behind = moment(this.state.fromDate).isBefore(fromToday());
     if (!behind) {
       this.setState({
-        fromDate: moment(this.state.fromDate).subtract(5, "days")
+        fromDate: moment(this.state.fromDate).subtract(3, "days")
       });
     }
   };
 
   forward = () => {
     this.setState({
-      fromDate: moment(this.state.fromDate).add(5, "days")
+      fromDate: moment(this.state.fromDate).add(3, "days")
     });
   };
 
@@ -71,8 +74,11 @@ class PickDay extends React.Component {
     const selectedDay = this.props.selectedDay;
 
     let dates = [this.state.fromDate];
-    for (let i = 1; i < 5; i++) {
-      dates.push(moment(this.state.fromDate).add(i, "days"));
+    for (let i = 1; i < 3; i++) {
+      const nextDay = moment(this.state.fromDate)
+        .set("hour", TIME_OPEN)
+        .add(i, "days");
+      dates.push(nextDay);
     }
 
     return (
@@ -109,11 +115,21 @@ class PickTime extends React.Component {
     this.props.onSubmit(date);
   };
 
+  checkTime(hour) {
+    const timeNow = moment();
+    return moment(hour).isBefore(timeNow);
+  }
+
   render() {
     const selectedDay = this.props.selectedDay;
+    const dayOfMonth = moment(selectedDay).date();
 
-    const startDay = moment(fromToday().date(moment(selectedDay).format("D")));
-    const endToday = moment(startDay).set("hour", TIME_CLOSE);
+    const startDay = moment()
+      .date(dayOfMonth)
+      .set("hour", TIME_OPEN);
+    const endToday = moment()
+      .date(dayOfMonth)
+      .set("hour", TIME_CLOSE);
     const hoursDuration =
       moment.duration(endToday.diff(startDay)).asHours() + 1;
 
@@ -130,9 +146,15 @@ class PickTime extends React.Component {
             return (
               <li
                 key={hour}
-                className={classnames("time", {
-                  selected: moment(hour).isSame(moment(selectedDay), "hour")
-                })}
+                className={classnames(
+                  "time",
+                  {
+                    selected: moment(hour).isSame(moment(selectedDay), "hour")
+                  },
+                  {
+                    unselectable: this.checkTime(hour)
+                  }
+                )}
                 onClickCapture={this.onClick(moment(hour)).bind(this)}
               >
                 {moment(hour).format("HH")}
