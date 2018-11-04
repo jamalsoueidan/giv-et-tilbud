@@ -1,6 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 
+const progress = [
+  "zip",
+  "devices",
+  "models",
+  "colors",
+  "issues",
+  "booking",
+  "details",
+  "done"
+];
+
+const progressWidth = page => {
+  return (progress.indexOf(page) + 1) * (100 / progress.length);
+};
+
 class Breadcrumbs extends React.Component {
   get renderList() {
     const properties = this.props.properties;
@@ -19,7 +34,7 @@ class Breadcrumbs extends React.Component {
             <div
               id="progressbar"
               className="progressbar-progress"
-              style={{ width: "width 400ms ease 0s" }}
+              style={{ width: `${progressWidth(page)}%` }}
             />
           </React.Fragment>
         )}
