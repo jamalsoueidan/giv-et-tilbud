@@ -29,7 +29,7 @@ const styles = theme => ({
 
 class LoggedIn extends React.Component {
   state = {
-    openNavigation: false,
+    openNavigation: true,
     loaded: false
   };
 

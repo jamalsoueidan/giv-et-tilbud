@@ -81,7 +81,13 @@ class Navigation extends React.Component {
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Home" />
+            <ListItemText primary="Din forside" />
+          </ListItem>
+          <ListItem button component={Link} routeName="home">
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Din profil" />
           </ListItem>
           <ListItem button component={Link} routeName="incoming">
             <ListItemIcon>
@@ -89,7 +95,7 @@ class Navigation extends React.Component {
                 <DraftsIcon />
               </Badge>
             </ListItemIcon>
-            <ListItemText primary="Incoming" />
+            <ListItemText primary="Nye opgaver" />
           </ListItem>
           <ListItem button component={Link} routeName="outgoing">
             <ListItemIcon>
@@ -97,13 +103,13 @@ class Navigation extends React.Component {
                 <MailIcon />
               </Badge>
             </ListItemIcon>
-            <ListItemText primary="Outgoing" />
+            <ListItemText primary="Dine bud" />
           </ListItem>
           <ListItem button component={Link} routeName="finished">
             <ListItemIcon>
               <DoneIcon />
             </ListItemIcon>
-            <ListItemText primary="Finished" />
+            <ListItemText primary="Afsluttede opgaver" />
           </ListItem>
         </List>
       </Drawer>
