@@ -13,15 +13,18 @@ class Breadcrumbs extends React.Component {
   render() {
     const page = this.props.page;
     return (
-      <React.Fragment>
+      <div className="repair">
         {page !== "done" && (
           <React.Fragment>
-            <ul>{this.renderList}</ul>
-            <div id="progressbar" className="progressbar-progress" />
+            <div
+              id="progressbar"
+              className="progressbar-progress"
+              style={{ width: "width 400ms ease 0s" }}
+            />
           </React.Fragment>
         )}
         {this.props.children}
-      </React.Fragment>
+      </div>
     );
   }
 }

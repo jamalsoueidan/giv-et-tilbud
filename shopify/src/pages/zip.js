@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { toggleProperty } from "../store";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import "./zip.sass";
 
 const validationSchema = Yup.object().shape({
   zip: Yup.number("")
@@ -17,8 +18,13 @@ const validationSchema = Yup.object().shape({
 class Zip extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Indtast din by</h1>
+      <div className="page-zip">
+        <h1 className="page-title">Indtast din postnummer</h1>
+        <p>
+          Vi har over 100 værksteder i hele Danmark, som står klar til at
+          reparere din telefon! Alle værksteder kan reparer din telefon eller
+          bærbar hvor som helst og når som helst
+        </p>
         <Formik
           initialValues={{ zip: "" }}
           validationSchema={validationSchema}
@@ -26,6 +32,7 @@ class Zip extends React.Component {
             const { toggleProperty, next } = this.props;
             toggleProperty("zip", values.zip);
             next();
+            setSubmitting(false);
           }}
         >
           {({
@@ -39,17 +46,32 @@ class Zip extends React.Component {
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="zip"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.zip}
-              />
-              {errors.zip && touched.zip && errors.zip}
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  name="zip"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.zip}
+                  className="input-field"
+                  placeholder="Indtast din postnummer..."
+                />
+              </div>
+              {errors.zip && (
+                <div className="error">
+                  <div className="title">Fejl!</div>
+                  <div className="message">Postnummer er forkert!</div>
+                </div>
+              )}
+              <div className="input-wrapper">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="button"
+                >
+                  Forsæt
+                </button>
+              </div>
             </form>
           )}
         </Formik>

@@ -16,7 +16,7 @@ class Models extends React.Component {
     const device = this.props.device;
 
     return (
-      <ul>
+      <ul className="models">
         {data.find(d => d.value === device.value).models.map(model => (
           <li
             key={model.value}
@@ -33,8 +33,8 @@ class Models extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Hvilken model har du</h1>
+      <div className="page-models">
+        <h1 className="page-title">Hvilken model har du</h1>
         {this.renderModels}
       </div>
     );

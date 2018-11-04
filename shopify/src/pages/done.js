@@ -39,7 +39,7 @@ class Done extends React.Component {
       });
 
     return (
-      <div className="pageDone">
+      <div className="page-done">
         <h1>Din anmodning er oprettet!</h1>
         <div>
           Vi sender opgaven videre til alle værksteder i nærheden af dig og

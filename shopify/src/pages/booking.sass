@@ -1,0 +1,57 @@
+.repair
+  .page-booking
+    .page-picktime
+      padding-top: 40px
+      margin-top: 40px
+      border-top: 1px solid #e8eced
+
+    ul
+      li
+        flex: 1
+        text-decoration: none
+        border: 3px solid #3b5998
+        border-radius: 15px
+        margin-right: 10px
+        margin-bottom: 10px
+
+        &:hover
+          background-color: #3b5998
+          color: #fff
+
+      .time.selected
+        background-color: #3b5998
+        color: #fff
+
+    .days
+      display: flex
+      align-items: center
+      justify-content: center
+      text-decoration: none
+
+      .day
+        display: flex
+        flex-direction: column
+        align-items: center
+        cursor: pointer
+        border-radius: 100px
+        flex: 1 0 calc(60px - 10px)
+        padding: 10px
+        border: 3px solid #3b5998
+        margin-right: 10px
+        max-width: calc(112px - 10px)
+
+        &.selected
+          background-color: #3b5998
+          color: #fff
+
+        .dayName
+          font-size: 18px
+
+        .dayNumber
+          font-size: 35px
+          font-weight: 700
+
+      .forward, .back
+        cursor: pointer
+        width: 60px
+        padding: 10px

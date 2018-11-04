@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { toggleProperty } from "../store";
 import data from "../data";
-
+import "./devices.sass";
 class Devices extends React.Component {
   onClick = evt => {
     evt.stopPropagation();
@@ -14,8 +14,8 @@ class Devices extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Vælge din telefon</h1>
+      <div className="page-devices">
+        <h1 className="page-title">Vælge din telefon</h1>
         <ul id="devices">
           {data.map(device => (
             <li

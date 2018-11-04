@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import classnames from "classnames";
 import { toggleProperty } from "../store";
-
-window.moment = moment;
+import "./booking.sass";
 
 const TIME_OPEN = 10;
 const TIME_CLOSE = 18;
@@ -78,21 +77,27 @@ class PickDay extends React.Component {
 
     return (
       <div className="pickDay">
-        <h1>Vælge en day</h1>
-        <div onClick={this.back}>Back</div>
-        {dates.map(day => (
-          <div
-            key={day}
-            className={classnames("day", {
-              selected: moment(selectedDay).isSame(moment(day), "day")
-            })}
-            onClickCapture={this.onClick(moment(day)).bind(this)}
-          >
-            <div className="dayName">{moment(day).format("ddd")}</div>
-            <div className="dayNumber">{moment(day).format("DD")}</div>
+        <h1 className="page-title">Vælge en dag</h1>
+        <div className="days">
+          <div onClick={this.back} className="back">
+            Back
           </div>
-        ))}
-        <div onClick={this.forward}>forward</div>
+          {dates.map(day => (
+            <div
+              key={day}
+              className={classnames("day", {
+                selected: moment(selectedDay).isSame(moment(day), "day")
+              })}
+              onClickCapture={this.onClick(moment(day)).bind(this)}
+            >
+              <div className="dayName">{moment(day).format("ddd")}</div>
+              <div className="dayNumber">{moment(day).format("D")}</div>
+            </div>
+          ))}
+          <div onClick={this.forward} className="forward">
+            forward
+          </div>
+        </div>
       </div>
     );
   }
@@ -118,22 +123,24 @@ class PickTime extends React.Component {
     }
 
     return (
-      <div className="pickDay">
-        <h1>Vælge en tid {moment(selectedDay).format()}</h1>
-        {hours.map(hour => {
-          return (
-            <div
-              key={hour}
-              className={classnames("time", {
-                selected: moment(hour).isSame(moment(selectedDay), "hour")
-              })}
-              onClickCapture={this.onClick(moment(hour)).bind(this)}
-            >
-              {moment(hour).format("HH")}
-              :00
-            </div>
-          );
-        })}
+      <div className="page-picktime">
+        <h1 className="page-title">Vælge en tid</h1>
+        <ul className="hour">
+          {hours.map(hour => {
+            return (
+              <li
+                key={hour}
+                className={classnames("time", {
+                  selected: moment(hour).isSame(moment(selectedDay), "hour")
+                })}
+                onClickCapture={this.onClick(moment(hour)).bind(this)}
+              >
+                {moment(hour).format("HH")}
+                :00
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }
@@ -158,13 +165,19 @@ class Book extends React.Component {
     const datetime = this.props.datetime ? this.props.datetime.value : null;
 
     return (
-      <React.Fragment>
+      <div className="page-booking">
         <PickDay onSubmit={this.onDay} selectedDay={datetime} />
         <PickTime onSubmit={this.onTime} selectedDay={datetime} />
-        <button disabled={datetime ? false : true} onClick={this.onClick}>
-          Confirm booking time
-        </button>
-      </React.Fragment>
+        <div className="input-wrapper">
+          <button
+            disabled={datetime ? false : true}
+            onClick={this.onClick}
+            className="button"
+          >
+            Confirm booking time
+          </button>
+        </div>
+      </div>
     );
   }
 }

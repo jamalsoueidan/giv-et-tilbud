@@ -35,8 +35,8 @@ class Issues extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Hvilken farver er din telefon?</h1>
+      <div className="page-issues">
+        <h1 className="page-title">Hvilken problem har din telefon?</h1>
         {this.renderColors}
       </div>
     );

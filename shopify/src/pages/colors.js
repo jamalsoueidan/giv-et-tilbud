@@ -35,8 +35,8 @@ class Colors extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Hvilken farver er din telefon?</h1>
+      <div className="page-colors">
+        <h1 className="page-title">Hvilken farver er din telefon?</h1>
         {this.renderColors}
       </div>
     );

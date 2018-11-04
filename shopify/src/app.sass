@@ -1,0 +1,50 @@
+.repair
+  .progressbar-progress
+    animation: slide 10s infinite linear forwards
+
+    background-size: 500vw 100% !important
+    position: fixed
+    top: 161px
+    left: 0px
+    height: 5px
+    width: 13%
+    z-index: 100000
+
+  .input-wrapper
+    display: flex
+    align-items: center
+    justify-content: center
+
+  ul
+    display: flex
+    flex-wrap: wrap
+    margin: 0
+    padding: 0
+    align-items: center
+    justify-content: center
+
+    li
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      align-content: center
+      cursor: pointer
+      padding: 20px
+
+  .page-models,
+  .page-colors,
+  .page-issues,
+      li
+        flex: 1 0 calc(25% - 10px)
+        text-decoration: none
+        border: 3px solid #3b5998
+        border-radius: 15px
+
+        margin-right: 10px
+        margin-bottom: 10px
+        max-width: calc(25% - 10px)
+
+        &:hover
+          background-color: #3b5998
+          color: #fff
