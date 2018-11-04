@@ -1,7 +1,12 @@
 .repair
   .page-zip
     .input-field
-      width: 30%
+      @media screen and (max-width: 600)
+        width: 100%
+
+      @media screen and (min-width: 601)
+        width: 30%
+      
 
     div.error
       width: 30%
