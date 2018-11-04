@@ -2,48 +2,54 @@ import React from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import data from "../data";
-import axios from "axios";
+import { createOrder } from "../store";
 
 class Done extends React.Component {
-  render() {
-    const find = name => this.props.properties.find(p => p.name === name);
-    const device = find("device");
-    const deviceImage = data.find(d => d.value === device.value);
-    const model = find("model");
-    const color = find("color");
-    const issue = find("issue");
-    const datetime = find("datetime");
-    const zip = find("zip");
-    const customer = find("customer");
+  componentDidMount() {
+    const {
+      customer,
+      zip,
+      device,
+      model,
+      color,
+      issue,
+      datetime,
+      createOrder
+    } = this.props;
 
-    console.log({
+    createOrder({
       customer: {
         ...customer.value,
         zip: zip.value
       },
       properties: [device, model, color, issue, datetime]
     });
-    axios
-      .post("https://e0915e3e.ngrok.io/api/orders", {
-        customer: {
-          ...customer.value,
-          zip: zip.value
-        },
-        properties: [device, model, color, issue, datetime]
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  }
+
+  render() {
+    const {
+      customer,
+      zip,
+      device,
+      deviceImage,
+      model,
+      color,
+      issue,
+      datetime,
+      order
+    } = this.props;
+
+    if (!order.id) {
+      return <div>Vent et øjeblik, mens din opgave bliver oprettet...</div>;
+    }
 
     return (
       <div className="page-done">
         <h1>Din anmodning er oprettet!</h1>
         <div>
           Vi sender opgaven videre til alle værksteder i nærheden af dig og
-          giver dig det bedste bud du kan få!
+          giver dig det bedste bud du kan få! <br />
+          Din order nummer: <strong>{order.id}</strong>
         </div>
         <div className="details">
           <ul>
@@ -77,6 +83,29 @@ class Done extends React.Component {
   }
 }
 
-export default connect(state => ({
-  properties: state.properties
-}))(Done);
+export default connect(
+  state => {
+    const find = name => state.properties.find(p => p.name === name);
+    const device = find("device");
+    const deviceImage = data.find(d => d.value === device.value);
+    const model = find("model");
+    const color = find("color");
+    const issue = find("issue");
+    const datetime = find("datetime");
+    const zip = find("zip");
+    const customer = find("customer");
+
+    return {
+      device,
+      deviceImage,
+      model,
+      color,
+      issue,
+      datetime,
+      zip,
+      customer,
+      order: state.order
+    };
+  },
+  { createOrder }
+)(Done);

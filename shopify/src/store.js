@@ -1,31 +1,55 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import axios from "axios";
+import config from "./config";
+
+const CREATE_ORDER_RESPONSE = "CREATE_ORDER_RESPONSE";
+export const createOrderResponse = order => ({
+  type: CREATE_ORDER_RESPONSE,
+  order
+});
+
+export const createOrder = body => dispatch => {
+  axios
+    .post(`https://${config[process.env.NODE_ENV].apiUrl}/api/orders`, body)
+    .then(response => dispatch(createOrderResponse(response.data.order)))
+    .catch(function(error) {
+      console.log(error);
+    });
+};
 
 const TOGGLE_PROPERTY = "TOGGLE_PROPERTY";
-
 export const toggleProperty = (name, value) => ({
   type: TOGGLE_PROPERTY,
   name,
   value
 });
 
-const properties = (state = [], action) => {
-  if (action.type === TOGGLE_PROPERTY) {
-    const { name, value } = action;
-    return [
-      ...state.filter(p => p.name !== name),
-      {
-        name,
-        value
-      }
-    ];
-  }
-
-  return state;
-};
-
 const rootReducer = combineReducers({
-  properties
+  properties: (state = [], action) => {
+    if (action.type === TOGGLE_PROPERTY) {
+      const { name, value } = action;
+      return [
+        ...state.filter(p => p.name !== name),
+        {
+          name,
+          value
+        }
+      ];
+    }
+
+    return state;
+  },
+  order: (state = {}, action) => {
+    if (action.type === CREATE_ORDER_RESPONSE) {
+      return action.order;
+    }
+
+    return state;
+  }
 });
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   rootReducer,
@@ -37,7 +61,7 @@ const store = createStore(
       },
       {
         name: "device",
-        value: "iphone"
+        value: "iPhone"
       },
       {
         name: "model",
@@ -67,7 +91,7 @@ const store = createStore(
       }
     ]*/
   },
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(applyMiddleware(thunk))
 );
 
 export default store;
