@@ -30,6 +30,7 @@ Api server
 ## Demo?
 
 Platform for owners: https://givetttilbud.herokuapp.com/login
+
 Shop for customers: https://givettilbud.myshopify.com/pages/order
 
 ## Installation
