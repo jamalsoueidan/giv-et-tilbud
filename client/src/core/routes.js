@@ -1,6 +1,16 @@
 export default [
   { name: "home", path: "/home" },
   {
+    name: "profile",
+    path: "/profile",
+    children: [
+      {
+        name: "create_shop",
+        path: "/shop/create"
+      }
+    ]
+  },
+  {
     name: "incoming",
     path: "/incoming",
     children: [
