@@ -1,4 +1,5 @@
 import { actions as OrdersActions } from "../orders";
+import { actions as UserActions } from "../user";
 import * as actions from "./actions";
 
 const defaultTimer = 5000;
@@ -17,23 +18,31 @@ const initState = {
   timer: defaultTimer
 };
 
+const success = msg => ({
+  ...initState,
+  open: true,
+  message: msg,
+  variant: variants.success
+});
+
+const info = msg => ({
+  ...initState,
+  open: true,
+  message: msg,
+  variant: variants.info
+});
+
 export default (state = initState, action) => {
   if (action.type === OrdersActions.SEND_OFFER_SUCCESS) {
-    return {
-      ...state,
-      open: true,
-      message: "Dit bud er blevet sendt!",
-      variant: variants.success
-    };
+    return success("Dit bud er blevet sendt!");
   }
 
   if (action.type === OrdersActions.CANCEL_OFFER_SUCCESS) {
-    return {
-      ...state,
-      open: true,
-      message: "Dit bud er annulleret!",
-      variant: variants.info
-    };
+    return info("Dit bud er annulleret!");
+  }
+
+  if (action.type === UserActions.WORKSHOP_CREATE_SUCCESS) {
+    return success("Værkstedet er blevet oprettet!");
   }
 
   if (action.type === actions.HIDE_NOTIFICATION) {

@@ -4,6 +4,7 @@ const initState = {
   token: null,
   email: null,
   customerId: null,
+  workshops: [],
   payload: null
 };
 
@@ -16,13 +17,11 @@ export default (state = initState, action) => {
   }
   if (
     action.type === actions.LOGIN_SUCCESS ||
-    action.type === actions.IS_AUTHENTICATED_SUCCESS
+    action.type === actions.IS_AUTHENTICATED_SUCCESS ||
+    action.type === actions.WORKSHOP_CREATE_SUCCESS
   ) {
-    const { token, email, customerId } = action.payload;
     return {
-      token,
-      email,
-      customerId,
+      ...action.payload,
       payload: null
     };
   }

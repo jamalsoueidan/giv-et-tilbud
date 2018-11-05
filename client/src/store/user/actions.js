@@ -12,7 +12,11 @@ export const LOGOUT_REQUEST = "@@user/LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "@@user/LOGOUT_SUCCESS";
 export const LOGOUT_FAILURE = "@@user/LOGOUT_FAILURE";
 
-const login = (email, password) => ({
+export const WORKSHOP_CREATE_REQUEST = "@@user/WORKSHOP_CREATE_REQUEST";
+export const WORKSHOP_CREATE_SUCCESS = "@@user/WORKSHOP_CREATE_SUCCESS";
+export const WORKSHOP_CREATE_FAILURE = "@@user/WORKSHOP_CREATE_FAILURE";
+
+export const login = (email, password) => ({
   [RSAA]: {
     types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
     endpoint: "/api/login",
@@ -25,7 +29,7 @@ const login = (email, password) => ({
   }
 });
 
-const isAuthenticated = token => ({
+export const isAuthenticated = token => ({
   [RSAA]: {
     types: [
       IS_AUTHENTICATED_REQUEST,
@@ -38,12 +42,23 @@ const isAuthenticated = token => ({
   }
 });
 
-const logout = () => ({
+export const createWorkshop = body => ({
+  [RSAA]: {
+    types: [
+      WORKSHOP_CREATE_REQUEST,
+      WORKSHOP_CREATE_SUCCESS,
+      WORKSHOP_CREATE_FAILURE
+    ],
+    endpoint: "/api/user/workshops",
+    method: "POST",
+    body: JSON.stringify(body)
+  }
+});
+
+export const logout = () => ({
   [RSAA]: {
     types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
     endpoint: "/api/logout",
     method: "GET"
   }
 });
-
-export { login, isAuthenticated, logout };
