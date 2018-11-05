@@ -6,6 +6,7 @@ const schema = new mongoose.Schema(
     email: { type: String, unique: true, required: true },
     password: String,
     customer_id: { type: Number, unique: true, required: true },
+    created_at: { type: Date, default: Date.now },
     workshops: [
       {
         name: String,
@@ -14,6 +15,7 @@ const schema = new mongoose.Schema(
         city: String,
         email: String,
         phone: Number,
+        created_at: { type: Date, default: Date.now },
         location: {
           type: {
             type: String,

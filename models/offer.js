@@ -4,7 +4,7 @@ const schema = new mongoose.Schema(
   {
     orderId: { type: Number, required: true },
     customerId: { type: Number, required: true },
-    created_at: Date,
+    created_at: { type: Date, default: Date.now },
     properties: [
       {
         name: String,
