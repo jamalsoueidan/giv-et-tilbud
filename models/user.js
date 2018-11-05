@@ -15,6 +15,7 @@ const schema = new mongoose.Schema(
         city: String,
         email: String,
         phone: Number,
+        vat: Number,
         created_at: { type: Date, default: Date.now },
         location: {
           type: {
