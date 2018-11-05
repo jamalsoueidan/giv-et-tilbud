@@ -38,7 +38,7 @@ module.exports = [
           new: true,
           upsert: true
         }
-      );
+      ).select({ password: 0 });
     },
     options: {
       validate: {
@@ -64,7 +64,7 @@ module.exports = [
 
       const user = await User.findOne({
         _id: credentials.id
-      });
+      }).select({ password: 0 });
 
       // should we care?
       if (
