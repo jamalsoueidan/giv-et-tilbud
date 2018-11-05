@@ -7,10 +7,25 @@ const JWT = require("jsonwebtoken");
 
 module.exports = [
   {
+    method: "GET",
+    path: "/api/user",
+    handler: async req => {
+      const credentials = req.auth.credentials;
+      return await User.findOne(
+        {
+          _id: credentials.id
+        },
+        { password: 0 }
+      );
+    }
+  },
+  {
     method: "POST",
     path: "/api/user/workshops",
     handler: async req => {
       const credentials = req.auth.credentials;
+      const workshop = req.payload;
+      workshop.location = await getLatLng(workshop);
 
       return await User.findOneAndUpdate(
         {

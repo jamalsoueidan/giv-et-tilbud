@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+/*
+ don't change the  schema for this collection, maybe we lose all the orders and need to import them again from shopify!
+*/
 const schema = new mongoose.Schema(
   {
     id: { type: Number, unique: true, required: true },
@@ -16,9 +19,7 @@ const schema = new mongoose.Schema(
     shipping_address: {
       address1: String,
       city: String,
-      zip: Number,
-      latitude: Number,
-      longitude: Number
+      zip: Number
     },
     line_items: [
       {
@@ -29,12 +30,25 @@ const schema = new mongoose.Schema(
           }
         ]
       }
-    ]
+    ],
+    location: {
+      type: {
+        type: String,
+        enum: "Point",
+        default: "Point"
+      },
+      coordinates: {
+        type: [Number],
+        default: [0, 0]
+      }
+    }
   },
   {
     collection: "orders"
   }
 );
+
+schema.index({ location: "2dsphere" });
 
 const model = mongoose.model("Order", schema);
 

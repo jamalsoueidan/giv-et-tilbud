@@ -29,13 +29,11 @@ const createShopifyOrder = async (customer, properties) =>
           phone: customer.phone,
           city: customer.city || "---",
           country: "DK",
-          zip: customer.zip,
-          latitude: customer.latitude,
-          longitude: customer.longitude
+          zip: customer.zip
         },
         fulfillment_status: "unfulfilled",
-        send_receipt: true,
-        send_fulfillment_receipt: true,
+        send_receipt: false, // turn off in development
+        send_fulfillment_receipt: false, //turn off in development
         line_items: [
           {
             product_id: process.env.SHOPIFY_PRODUCT_ID,
@@ -53,11 +51,8 @@ module.exports = async req => {
   const { customer, properties } = payload;
 
   try {
-    const shopifyOrder = await createShopifyOrder(
-      await getLatLng(customer),
-      properties
-    );
-
+    const shopifyOrder = await createShopifyOrder(customer, properties);
+    shopifyOrder.order.location = await getLatLng(customer);
     const mongoOrder = new Order(shopifyOrder.order);
     mongoOrder.save();
 

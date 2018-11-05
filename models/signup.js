@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
-    key: String,
+    key: { type: String, unique: true },
     active: { type: Boolean, default: true }
   },
   {
