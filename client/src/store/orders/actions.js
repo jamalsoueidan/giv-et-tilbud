@@ -1,8 +1,8 @@
 import { RSAA } from "redux-api-middleware";
 
-export const RECEIVE_REQUEST = "@@orders/RECEIVE_REQUEST";
-export const RECEIVE_SUCCESS = "@@orders/RECEIVE_SUCCESS";
-export const RECEIVE_FAILURE = "@@orders/RECEIVE_FAILURE";
+export const LOAD_ORDERS_REQUEST = "@@orders/LOAD_ORDERS_REQUEST";
+export const LOAD_ORDERS_SUCCESS = "@@orders/LOAD_ORDERS_SUCCESS";
+export const LOAD_ORDERS_FAILURE = "@@orders/LOAD_ORDERS_FAILURE";
 
 export const SEND_OFFER_REQUEST = "@@orders/SEND_OFFER_REQUEST";
 export const SEND_OFFER_SUCCESS = "@@orders/SEND_OFFER_SUCCESS";
@@ -12,10 +12,10 @@ export const CANCEL_OFFER_REQUEST = "@@orders/CANCEL_OFFER_REQUEST";
 export const CANCEL_OFFER_SUCCESS = "@@orders/CANCEL_OFFER_SUCCESS";
 export const CANCEL_OFFER_FAILURE = "@@orders/CANCEL_OFFER_FAILURE";
 
-const receive = () => ({
+const loadOrders = (workshopId, page = 0, limit = 5) => ({
   [RSAA]: {
-    types: [RECEIVE_REQUEST, RECEIVE_SUCCESS, RECEIVE_FAILURE],
-    endpoint: "/api/orders",
+    types: [LOAD_ORDERS_REQUEST, LOAD_ORDERS_SUCCESS, LOAD_ORDERS_FAILURE],
+    endpoint: `/api/orders?workshopid=${workshopId}&page=${page}&limit=${limit}`,
     method: "GET"
   }
 });
@@ -48,4 +48,4 @@ const sendOffer = (orderId, message, price) => ({
   }
 });
 
-export { receive, cancelOffer, sendOffer };
+export { loadOrders, cancelOffer, sendOffer };

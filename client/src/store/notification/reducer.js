@@ -1,5 +1,6 @@
 import { actions as OrdersActions } from "../orders";
 import { actions as UserActions } from "../user";
+import { actions as DataActions } from "../data";
 import * as actions from "./actions";
 
 const defaultTimer = 5000;
@@ -43,6 +44,12 @@ export default (state = initState, action) => {
 
   if (action.type === UserActions.WORKSHOP_CREATE_SUCCESS) {
     return success("Værkstedet er blevet oprettet!");
+  }
+
+  if (action.type === DataActions.UPDATE_DATA) {
+    if (action.payload.selectedWorkshopId) {
+      return info("Værksted er blevet skiftet!");
+    }
   }
 
   if (action.type === actions.HIDE_NOTIFICATION) {
