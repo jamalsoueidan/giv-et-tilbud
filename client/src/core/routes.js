@@ -12,7 +12,7 @@ export default [
   },
   {
     name: "incoming",
-    path: "/incoming",
+    path: "/incoming?limit&page",
     children: [
       {
         name: "send",

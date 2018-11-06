@@ -25,7 +25,7 @@ const validationSchema = yup.object({
 
 class Send extends React.Component {
   render() {
-    const { route, createWorkshop, navigate } = this.props;
+    const { createWorkshop, navigate } = this.props;
 
     return (
       <React.Fragment>

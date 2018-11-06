@@ -13,12 +13,13 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router5";
 import { selectors as OrderSelectors } from "../../store/orders";
+import Grid from "@material-ui/core/Grid";
+import Dropdown from "./default/_dropdown";
+import Orders from "./default/_orders";
 
 const styles = theme => ({
   root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
+    flex: 1
   },
   table: {
     minWidth: 700
@@ -32,101 +33,26 @@ const styles = theme => ({
 });
 
 class Incoming extends React.Component {
-  get renderHeader() {
-    const { orders } = this.props;
-    const columns = orders[0].line_items[0].properties;
-
-    return (
-      <TableHead>
-        <TableRow>
-          {columns.map(c => {
-            return (
-              <TableCell component="th" scope="row" key={c._id}>
-                {c.name}
-              </TableCell>
-            );
-          })}
-          <TableCell component="th" scope="row">
-            By
-          </TableCell>
-          <TableCell component="th" scope="row">
-            PostNummer
-          </TableCell>
-          <TableCell component="th" scope="row">
-            Dato oprettet
-          </TableCell>
-          <TableCell component="th" scope="row" />
-        </TableRow>
-      </TableHead>
-    );
-  }
-
-  renderLink = itemProps => <Link {...itemProps} />;
-
-  get renderBody() {
-    const { orders, classes } = this.props;
-
-    return (
-      <TableBody>
-        {orders.map(row => {
-          return (
-            <TableRow key={row._id} hover>
-              {row.line_items[0].properties.map(c => {
-                return (
-                  <TableCell component="th" scope="row" key={c._id}>
-                    {c.value}
-                  </TableCell>
-                );
-              })}
-              <TableCell component="th" scope="row">
-                {row.shipping_address.city}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {row.shipping_address.zip}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {moment(row.created_at).fromNow()}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Button
-                  color="primary"
-                  className={classes.button}
-                  component={Link}
-                  routeName="incoming.send"
-                  routeParams={{ id: row.id }}
-                >
-                  Send et tilbud
-                  <EditIcon className={classes.extendedIcon} />
-                </Button>
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    );
-  }
-
   render() {
-    const classes = this.props.classes;
-
-    if (this.props.orders.length === 0) return <div>No incoming orders!</div>;
+    const { classes, route } = this.props;
 
     return (
-      <React.Fragment>
-        <Typography component="h2" variant="h1" gutterBottom>
+      <div className={classes.root}>
+        <Typography variant="h3" gutterBottom>
           Incoming orders
         </Typography>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            {this.renderHeader}
-            {this.renderBody}
-          </Table>
-        </Paper>
-      </React.Fragment>
+
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={3}>
+            <Dropdown />
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <Orders route={route} />
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 }
 
-export default connect(state => ({
-  orders: OrderSelectors.getIncomingOrders(state)
-}))(withStyles(styles)(Incoming));
+export default withStyles(styles)(Incoming);

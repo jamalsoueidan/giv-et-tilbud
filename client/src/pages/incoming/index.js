@@ -11,7 +11,7 @@ class Index extends React.Component {
     const data = RouterHelper.getRoute(route.name);
 
     if (data.name === "incoming") {
-      return <Default />;
+      return <Default route={route} />;
     } else {
       return <Send route={route} />;
     }

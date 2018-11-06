@@ -10,8 +10,19 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Badge from "@material-ui/core/Badge";
-import { DraftsIcon, MailIcon, MenuIcon, HomeIcon, DoneIcon } from "../icons";
+import Collapse from "@material-ui/core/Collapse";
+
+import {
+  StarIcon,
+  PersonIcon,
+  DraftsIcon,
+  MailIcon,
+  MenuIcon,
+  HomeIcon,
+  DoneIcon,
+  AddIcon,
+  RemoveIcon
+} from "../icons";
 
 const styles = theme => ({
   drawerPaper: {
@@ -48,12 +59,29 @@ const styles = theme => ({
       padding: "0 6px"
     },
     ...theme.mixins.toolbar
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4
+  },
+  important: {
+    color: "#262626"
+  },
+  lessImportant: {
+    color: "#989898"
   }
 });
 
 class Navigation extends React.Component {
+  state = {
+    open: true
+  };
+
+  handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
+
   render() {
-    const { classes, open, click, stats } = this.props;
+    const { classes, open, click } = this.props;
 
     return (
       <Drawer
@@ -83,34 +111,72 @@ class Navigation extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Din forside" />
           </ListItem>
-          <ListItem button component={Link} routeName="home">
+          <ListItem button component={Link} routeName="profile">
             <ListItemIcon>
-              <HomeIcon />
+              <PersonIcon />
             </ListItemIcon>
             <ListItemText primary="Din profil" />
           </ListItem>
-          <ListItem button component={Link} routeName="incoming">
+          <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
-              <Badge badgeContent={stats.incomingOrdersCount} color="primary">
-                <DraftsIcon />
-              </Badge>
+              <StarIcon />
             </ListItemIcon>
-            <ListItemText primary="Nye opgaver" />
+            <ListItemText inset primary="Opgaver" />
+            {this.state.open ? <AddIcon /> : <RemoveIcon />}
           </ListItem>
-          <ListItem button component={Link} routeName="outgoing">
-            <ListItemIcon>
-              <Badge badgeContent={stats.outgoingOrdersCount} color="primary">
-                <MailIcon />
-              </Badge>
-            </ListItemIcon>
-            <ListItemText primary="Dine bud" />
-          </ListItem>
-          <ListItem button component={Link} routeName="finished">
-            <ListItemIcon>
-              <DoneIcon />
-            </ListItemIcon>
-            <ListItemText primary="Afsluttede opgaver" />
-          </ListItem>
+          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem
+                button
+                className={classes.nested}
+                component={Link}
+                routeName="incoming"
+              >
+                <ListItemIcon>
+                  <DraftsIcon />
+                </ListItemIcon>
+                <ListItemText
+                  inset
+                  primary="Ny Opgaver"
+                  className={classes.important}
+                />
+              </ListItem>
+            </List>
+            <List component="div" disablePadding>
+              <ListItem
+                button
+                className={classes.nested}
+                component={Link}
+                routeName="outgoing"
+              >
+                <ListItemIcon>
+                  <MailIcon />
+                </ListItemIcon>
+                <ListItemText
+                  inset
+                  primary="Dine bud"
+                  className={classes.lessImportant}
+                />
+              </ListItem>
+            </List>
+            <List component="div" disablePadding>
+              <ListItem
+                button
+                className={classes.nested}
+                component={Link}
+                routeName="finished"
+              >
+                <ListItemIcon>
+                  <DoneIcon />
+                </ListItemIcon>
+                <ListItemText
+                  inset
+                  primary="Afsluttede opgaver"
+                  className={classes.lessImportant}
+                />
+              </ListItem>
+            </List>
+          </Collapse>
         </List>
       </Drawer>
     );

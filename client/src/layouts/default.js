@@ -3,10 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
 import { TopBar, Navigation, Notification } from "../components";
-import {
-  actions as OrdersActions,
-  selectors as OrdersSelectors
-} from "../store/orders";
 import { actions as UserActions } from "../store/user";
 import { actions as NotificationActions } from "../store/notification";
 import { actions as RouterActions } from "redux-router5";
@@ -44,12 +40,8 @@ class LoggedIn extends React.Component {
     });
   };
 
-  componentDidMount() {
-    this.props.receive();
-  }
-
   render() {
-    const { classes, children, statsOrders } = this.props;
+    const { classes, children } = this.props;
 
     return (
       <React.Fragment>
@@ -59,7 +51,6 @@ class LoggedIn extends React.Component {
         <Navigation
           open={this.state.openNavigation}
           click={this.toggleNavigation}
-          stats={statsOrders}
         />
         <main className={classes.content}>{children}</main>
         <Notification
@@ -73,11 +64,9 @@ class LoggedIn extends React.Component {
 
 export default connect(
   state => ({
-    statsOrders: OrdersSelectors.statsOrders(state),
     notification: state.notification
   }),
   {
-    receive: OrdersActions.receive,
     logout: UserActions.logout,
     navigate: RouterActions.navigateTo,
     hideNotification: NotificationActions.hideNotification

@@ -66,7 +66,9 @@ const requireAuth = (router, dependencies) => (toState, fromState, done) => {
 
 export default () => {
   if (router) return router;
-  router = window.router = createRouter(routes, { defaultRoute: "login" })
+  router = window.router = createRouter(routes, {
+    defaultRoute: "login"
+  })
     .usePlugin(browserPlugin())
     .useMiddleware(requireAuth);
   return router;

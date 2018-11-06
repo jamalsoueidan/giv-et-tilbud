@@ -8,6 +8,9 @@ module.exports = async req => {
   const credentials = req.auth.credentials;
   const workshopId = req.query.workshopid;
 
+  const page = parseInt(req.query.page) || 0; //for next page pass 1 here
+  const limit = parseInt(req.query.limit) || 5;
+
   const workshops = await User.find(
     { _id: credentials.id, "workshops._id": workshopId },
     { _id: 0, "workshops.$": 1 }
@@ -20,7 +23,7 @@ module.exports = async req => {
   const coordinates = workshops[0].workshops[0].location.coordinates;
 
   //https://stackoverflow.com/questions/5681851/mongodb-combine-data-from-multiple-collections-into-one-how
-  const orders = await Order.aggregate([
+  const aggregate = await Order.aggregate([
     {
       $geoNear: {
         near: {
@@ -39,8 +42,26 @@ module.exports = async req => {
         foreignField: "orderId",
         as: "offers"
       }
+    },
+    {
+      $facet: {
+        //https://stackoverflow.com/questions/20348093/mongodb-aggregation-how-to-get-total-records-count
+        orders: [{ $skip: page * limit }, { $limit: limit }],
+        count: [
+          {
+            $count: "count"
+          }
+        ]
+      }
     }
   ]);
 
-  return { orders };
+  const orders = aggregate[0];
+
+  return {
+    results: orders.orders,
+    count: orders.count[0].count,
+    page: page,
+    limit: limit
+  };
 };
