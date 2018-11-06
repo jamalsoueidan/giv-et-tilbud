@@ -12,10 +12,13 @@ const styles = theme => ({});
 
 class Orders extends React.Component {
   updateParams(props) {
-    const { selectedWorkshop } = this.props;
-    const params = { ...this.props.route.params, ...props };
-    this.props.navigate("incoming", params);
-    this.props.loadIncoming(selectedWorkshop._id, params.page, params.limit);
+    const { selectedWorkshop, route } = this.props;
+    const params = { ...route.params, ...props };
+    this.props.navigate("outgoing", params);
+    this.props.loadOutgoing({
+      page: params.page,
+      limit: params.limit
+    });
   }
 
   handleChangePage = (event, page) => {
@@ -27,15 +30,7 @@ class Orders extends React.Component {
   };
 
   componentDidMount() {
-    const { selectedWorkshop } = this.props;
-    this.props.loadIncoming(selectedWorkshop._id);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { selectedWorkshop, route, loadIncoming } = this.props;
-    if (prevProps.selectedWorkshop !== selectedWorkshop) {
-      loadIncoming(selectedWorkshop._id, route.params.page, route.params.limit);
-    }
+    this.props.loadOutgoing();
   }
 
   render() {
@@ -77,10 +72,10 @@ class Orders extends React.Component {
 export default connect(
   state => ({
     selectedWorkshop: DataSelectors.getSelectedWorkshop(state),
-    orders: state.orders.incoming
+    orders: state.orders.outgoing
   }),
   {
-    loadIncoming: OrdersActions.loadIncoming,
+    loadOutgoing: OrdersActions.loadOutgoing,
     navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Orders));

@@ -82,10 +82,10 @@ const Order = ({ data, classes }) => {
             color="primary"
             variant="contained"
             component={Link}
-            routeName="incoming.send"
+            routeName="outgoing.info"
             routeParams={{ id: order.id }}
           >
-            Send et tilbud
+            Se tilbud
           </Button>
         </Grid>
       </Grid>

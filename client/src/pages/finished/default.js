@@ -2,7 +2,6 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Dropdown from "./default/_dropdown";
 import List from "./default/_list";
 
 const styles = theme => ({
@@ -30,14 +29,11 @@ class Incoming extends React.Component {
     return (
       <div className={classes.root}>
         <Typography variant="h4" className={classes.header}>
-          Nye opgaver
+          Opgaver der er afsluttet!
         </Typography>
 
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={3}>
-            <Dropdown />
-          </Grid>
-          <Grid item xs={12} sm={9}>
+          <Grid item xs={12} sm={12}>
             <List route={route} />
           </Grid>
         </Grid>

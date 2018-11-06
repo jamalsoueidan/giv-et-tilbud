@@ -19,7 +19,4 @@ class Index extends React.Component {
   }
 }
 
-export default connect(state => ({
-  orders: OrderSelectors.getOutgoingOrders(state),
-  ...createRouteNodeSelector("outgoing")(state)
-}))(Index);
+export default connect(createRouteNodeSelector("outgoing"))(Index);

@@ -22,7 +22,7 @@ export default [
   },
   {
     name: "outgoing",
-    path: "/outgoing",
+    path: "/outgoing?limit&page",
     children: [
       {
         name: "info",
