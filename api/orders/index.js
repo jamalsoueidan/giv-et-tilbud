@@ -1,12 +1,19 @@
 const Create = require("./create");
-const Receive = require("./receive");
+const Incoming = require("./incoming");
+const Outgoing = require("./outgoing");
+const Order = require("../../models/order");
 const Joi = require("joi");
 
 module.exports = [
   {
     method: "GET",
-    path: "/api/orders",
-    handler: Receive
+    path: "/api/orders/incoming",
+    handler: Incoming
+  },
+  {
+    method: "GET",
+    path: "/api/orders/outgoing",
+    handler: Outgoing
   },
   {
     method: "POST",

@@ -118,14 +118,5 @@ module.exports = [
         }
       }
     }
-  },
-  {
-    method: "GET",
-    path: "/api/offers",
-    handler: async req => {
-      const payload = req.payload;
-      const offers = await Offer.find({});
-      return { offers };
-    }
   }
 ];

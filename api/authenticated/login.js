@@ -18,7 +18,7 @@ module.exports = async (req, reply) => {
 
   const credentials = {
     email: user.email,
-    customerId: user.id,
+    customerId: user.customer_id,
     id: user._id
   };
 
