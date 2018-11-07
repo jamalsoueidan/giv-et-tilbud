@@ -2,12 +2,13 @@ const Joi = require("joi");
 const Order = require("../../models/order");
 const Offer = require("../../models/offer");
 const Boom = require("boom");
+const OffersClean = require("../../lib/offers_clean");
 
 /**
  * @todo validate if this order has been closed, and cannot receiving more offers by fulfillment_status
  */
 
-const aggregateOrderWithOffers = async orderId => {
+const aggregateOrderWithOffers = async (orderId, credentials) => {
   const orders = await Order.aggregate([
     {
       $match: {
@@ -24,7 +25,7 @@ const aggregateOrderWithOffers = async orderId => {
     }
   ]);
 
-  return orders.pop();
+  return OffersClean(orders, credentials).pop();
 };
 
 module.exports = [
@@ -33,6 +34,7 @@ module.exports = [
     path: "/api/orders/{orderId}/offers/cancel",
     handler: async req => {
       const { orderId } = req.params;
+      const credentials = req.auth.credentials;
 
       const order = await Order.countDocuments({
         id: orderId
@@ -41,8 +43,6 @@ module.exports = [
       if (order === 0) {
         return Boom.badData("Order id doesn't exist");
       }
-
-      const credentials = req.auth.credentials;
 
       const offer = await Offer.findOneAndRemove({
         orderId: orderId,
@@ -54,7 +54,7 @@ module.exports = [
       }
 
       // return fresh order for frontend
-      return await aggregateOrderWithOffers(orderId);
+      return await aggregateOrderWithOffers(orderId, credentials);
     },
     options: {
       validate: {
@@ -71,6 +71,7 @@ module.exports = [
     method: "POST",
     path: "/api/orders/{orderId}/offers",
     handler: async req => {
+      const credentials = req.auth.credentials;
       const { properties } = req.payload;
       const { orderId } = req.params;
 
@@ -81,8 +82,6 @@ module.exports = [
       if (order === 0) {
         return Boom.badData("Order id doesn't exist");
       }
-
-      const credentials = req.auth.credentials;
 
       await Offer.update(
         {
@@ -98,7 +97,7 @@ module.exports = [
         }
       );
 
-      return await aggregateOrderWithOffers(orderId);
+      return await aggregateOrderWithOffers(orderId, credentials);
     },
     options: {
       validate: {

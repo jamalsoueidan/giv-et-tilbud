@@ -31,9 +31,11 @@ const Order = ({ data, classes }) => {
     },
     {}
   );
+
   const order = {
     created_at: data.created_at,
-    id: data.id
+    id: data.id,
+    offers_count: 3 - data.offers_count
   };
 
   const customer = {
@@ -42,6 +44,8 @@ const Order = ({ data, classes }) => {
     zip: data.shipping_address.zip,
     city: data.shipping_address.city
   };
+
+  const price = data.offer.properties.find(p => p.name === "price").value;
 
   return (
     <Grid container spacing={24} className={classes.root}>
@@ -74,19 +78,32 @@ const Order = ({ data, classes }) => {
       <Grid item xs={12} sm={4}>
         <Grid
           container
-          justify="flex-end"
+          spacing={8}
+          direction="column"
+          justify="center"
           alignItems="center"
           className={classes.actions}
         >
-          <Button
-            color="primary"
-            variant="contained"
-            component={Link}
-            routeName="outgoing.info"
-            routeParams={{ id: order.id }}
-          >
-            Se tilbud
-          </Button>
+          <Grid item>
+            <Button
+              color="primary"
+              variant="contained"
+              component={Link}
+              routeName="outgoing.info"
+              routeParams={{ id: order.id }}
+            >
+              Se tilbud
+            </Button>
+          </Grid>
+          <Grid item>
+            <Typography variant="body1">
+              Dit bud: {price}
+              kr,-
+            </Typography>
+            <Typography variant="body2">
+              Mangler {order.offers_count} tilbud
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

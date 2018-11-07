@@ -12,7 +12,7 @@ const styles = theme => ({});
 
 class Orders extends React.Component {
   updateParams(props) {
-    const { selectedWorkshop, route } = this.props;
+    const { route } = this.props;
     const params = { ...route.params, ...props };
     this.props.navigate("finished", params);
     this.props.load({

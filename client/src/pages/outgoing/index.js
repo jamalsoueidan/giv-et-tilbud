@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createRouteNodeSelector } from "redux-router5";
-import { selectors as OrderSelectors } from "../../store/orders";
 import RouterHelper from "../../lib/router_helper";
 import Info from "./info";
 import Default from "./default";
@@ -19,4 +18,4 @@ class Index extends React.Component {
   }
 }
 
-export default connect(createRouteNodeSelector("outgoing"))(Index);
+export default connect(state => createRouteNodeSelector("outgoing"))(Index);

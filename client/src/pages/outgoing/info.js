@@ -8,6 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { Confirm } from "../../components";
 import { actions as RouterActions } from "redux-router5";
+import * as R from "ramda";
 
 import {
   actions as OrderActions,
@@ -31,26 +32,39 @@ class Info extends React.Component {
 
   onConfirm = () => {
     const { cancelOffer, navigate, order } = this.props;
-    cancelOffer(order.id).then(response => {
-      this.setState({ open: false });
-      navigate("outgoing");
-    });
+    cancelOffer(order.id);
   };
 
   openConfirm = () => {
     this.setState({ open: true });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.order) {
+      this.props.navigate("outgoing");
+    }
+  }
+
+  componentWillMount() {
+    if (!this.props.order) {
+      this.props.navigate("outgoing");
+    }
+  }
+
   render() {
-    const { classes, order, offer } = this.props;
+    const { classes, order, navigate } = this.props;
 
-    if (!order || !offer) return null;
+    if (!order) {
+      return null;
+    }
 
-    const message = offer.properties
-      .filter(prop => prop.name === "message")
-      .pop();
+    const offer = order.offer;
 
-    const price = offer.properties.filter(prop => prop.name === "price").pop();
+    const findProperty = (offer => property =>
+      R.find(R.propEq("name", property))(offer.properties))(offer);
+
+    const message = findProperty("message");
+    const price = findProperty("price");
 
     return (
       <React.Fragment>
@@ -92,8 +106,7 @@ class Info extends React.Component {
 
 export default connect(
   state => ({
-    order: OrderSelectors.getOrder(state),
-    offer: OrderSelectors.getOffer(state)
+    order: OrderSelectors.getOutgoingByRouteId(state)
   }),
   {
     cancelOffer: OrderActions.cancelOffer,

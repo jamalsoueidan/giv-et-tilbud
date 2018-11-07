@@ -133,7 +133,7 @@ class Navigation extends React.Component {
                 routeName="incoming"
               >
                 <ListItemIcon>
-                  <DraftsIcon />
+                  <DraftsIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText
                   inset
@@ -150,7 +150,7 @@ class Navigation extends React.Component {
                 routeName="outgoing"
               >
                 <ListItemIcon>
-                  <MailIcon />
+                  <MailIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText
                   inset
@@ -167,7 +167,7 @@ class Navigation extends React.Component {
                 routeName="finished"
               >
                 <ListItemIcon>
-                  <DoneIcon />
+                  <DoneIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText
                   inset

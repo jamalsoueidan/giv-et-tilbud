@@ -5,13 +5,11 @@ const initState = {};
 const incoming = (state = initState, action) => {
   if (action.type === actions.LOAD_INCOMING_SUCCESS) {
     return action.payload;
-  } else if (
-    action.type === actions.SEND_OFFER_SUCCESS ||
-    action.type === actions.CANCEL_OFFER_SUCCESS
-  ) {
+  } else if (action.type === actions.SEND_OFFER_SUCCESS) {
     const order = action.payload;
-    const newState = state.results.filter(o => o.id !== order.id);
-    return { ...state, results: [...newState, order] };
+    return state.results.filter(o => o.id !== order.id);
+  } else if (action.type === actions.CANCEL_OFFER_SUCCESS) {
+    return initState;
   }
   return state;
 };
@@ -19,7 +17,13 @@ const incoming = (state = initState, action) => {
 const outgoing = (state = initState, action) => {
   if (action.type === actions.LOAD_OUTGOING_SUCCESS) {
     return action.payload;
+  } else if (action.type === actions.CANCEL_OFFER_SUCCESS) {
+    const order = action.payload;
+    return state.results.filter(o => o.id !== order.id);
+  } else if (action.type === actions.SEND_OFFER_SUCCESS) {
+    return initState;
   }
+
   return state;
 };
 

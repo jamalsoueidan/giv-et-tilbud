@@ -2,7 +2,6 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import List from "./default/_list";
 
 const styles = theme => ({
   root: {
@@ -24,7 +23,7 @@ const styles = theme => ({
 
 class Incoming extends React.Component {
   render() {
-    const { classes, route } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
