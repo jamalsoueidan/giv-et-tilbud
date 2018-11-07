@@ -1,4 +1,5 @@
 const Order = require("../../models/order");
+const OffersClean = require("../../lib/offers_clean");
 
 module.exports = async req => {
   const payload = req.payload;
@@ -40,9 +41,10 @@ module.exports = async req => {
 
   const orders = aggregate[0];
   const count = orders.count[0] ? orders.count[0].count : 0;
+  const results = OffersClean(orders.orders, credentials);
 
   return {
-    results: orders.orders,
+    results: results,
     count: count,
     page: page,
     limit: limit

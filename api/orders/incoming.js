@@ -1,4 +1,5 @@
 const rp = require("request-promise");
+const OffersClean = require("../../lib/offers_clean");
 const Order = require("../../models/order");
 const User = require("../../models/user");
 const Boom = require("boom");
@@ -62,6 +63,7 @@ module.exports = async req => {
   ]);
 
   const orders = aggregate[0];
+  const results = OffersClean(orders.orders, credentials);
   const count = orders.count[0] ? orders.count[0].count : 0;
 
   return {
