@@ -52,6 +52,7 @@ const requireAuth = (router, dependencies) => (toState, fromState, done) => {
         if (!response.error) {
           done();
         } else {
+          localStorage.remove("user");
           done(redirect);
         }
       });
