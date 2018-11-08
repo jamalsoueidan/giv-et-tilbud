@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router5";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -66,8 +65,11 @@ const styles = theme => ({
   important: {
     color: "#262626"
   },
+  bold: {
+    fontWeight: "580"
+  },
   lessImportant: {
-    color: "#989898"
+    color: "#4c4c4c"
   }
 });
 
@@ -80,8 +82,16 @@ class Navigation extends React.Component {
     this.setState(state => ({ open: !state.open }));
   };
 
+  navigate = name => {
+    const { mobile, click, navigate } = this.props;
+    if (mobile) {
+      click();
+    }
+    navigate(name);
+  };
+
   render() {
-    const { classes, open, click } = this.props;
+    const { classes, open, click, route } = this.props;
 
     return (
       <Drawer
@@ -105,23 +115,47 @@ class Navigation extends React.Component {
         </div>
         <Divider />
         <List>
-          <ListItem button component={Link} routeName="home">
+          <ListItem
+            button
+            onClick={() => this.navigate("home")}
+            selected={route.name === "home"}
+          >
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Din forside" />
+            <ListItemText
+              primary="Din forside"
+              classes={{
+                primary: classNames(classes.lessImportant)
+              }}
+            />
           </ListItem>
-          <ListItem button component={Link} routeName="profile">
+          <ListItem
+            button
+            onClick={() => this.navigate("profile")}
+            selected={route.name === "profile"}
+          >
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary="Din profil" />
+            <ListItemText
+              primary="Din profil"
+              classes={{
+                primary: classNames(classes.lessImportant)
+              }}
+            />
           </ListItem>
           <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
               <StarIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Opgaver" />
+            <ListItemText
+              inset
+              primary="Opgaver"
+              classes={{
+                primary: classNames(classes.important, classes.bold)
+              }}
+            />
             {this.state.open ? <AddIcon /> : <RemoveIcon />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
@@ -129,16 +163,18 @@ class Navigation extends React.Component {
               <ListItem
                 button
                 className={classes.nested}
-                component={Link}
-                routeName="incoming"
+                onClick={() => this.navigate("incoming")}
+                selected={route.name === "incoming"}
               >
                 <ListItemIcon>
                   <DraftsIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText
                   inset
-                  primary="Ny Opgaver"
-                  className={classes.important}
+                  secondary="Ny Opgaver"
+                  classes={{
+                    secondary: classes.important
+                  }}
                 />
               </ListItem>
             </List>
@@ -146,15 +182,15 @@ class Navigation extends React.Component {
               <ListItem
                 button
                 className={classes.nested}
-                component={Link}
-                routeName="outgoing"
+                onClick={() => this.navigate("outgoing")}
+                selected={route.name === "outgoing"}
               >
                 <ListItemIcon>
                   <MailIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText
                   inset
-                  primary="Dine bud"
+                  secondary="Dine bud"
                   className={classes.lessImportant}
                 />
               </ListItem>
@@ -163,15 +199,15 @@ class Navigation extends React.Component {
               <ListItem
                 button
                 className={classes.nested}
-                component={Link}
-                routeName="finished"
+                onClick={() => this.navigate("finished")}
+                selected={route.name === "finished"}
               >
                 <ListItemIcon>
                   <DoneIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText
                   inset
-                  primary="Afsluttede opgaver"
+                  secondary="Afsluttede opgaver"
                   className={classes.lessImportant}
                 />
               </ListItem>

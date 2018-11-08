@@ -75,7 +75,8 @@ class LoggedIn extends React.Component {
       children,
       navigate,
       hideNotification,
-      notification
+      notification,
+      route
     } = this.props;
     const { openNavigation, mobile } = this.state;
 
@@ -89,6 +90,7 @@ class LoggedIn extends React.Component {
           click={this.toggleNavigation}
           mobile={mobile}
           navigate={navigate}
+          route={route}
         />
         <main className={classes.content}>{children}</main>
         <Notification hide={hideNotification} notification={notification} />

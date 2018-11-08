@@ -12,7 +12,7 @@ class Application extends React.Component {
     const Page = RouterHelper.getPage(route);
 
     return (
-      <Layout>
+      <Layout route={route}>
         <Page />
       </Layout>
     );
