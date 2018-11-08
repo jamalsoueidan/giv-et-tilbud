@@ -95,8 +95,8 @@ const Order = ({ data, classes }) => {
           <Grid item>
             <Typography variant="body2">
               {order.offers_count > 0 &&
-                `Der er ${order.offers_count} bud allerede!`}
-              {order.offers_count === 0 && `Være den først til at give et bud!`}
+                `Der er allerede ${order.offers_count} bud!`}
+              {order.offers_count === 0 && `Ingen bud endnu!`}
             </Typography>
           </Grid>
         </Grid>
