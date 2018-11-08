@@ -33,7 +33,8 @@ const Order = ({ data, classes }) => {
   );
   const order = {
     created_at: data.created_at,
-    id: data.id
+    id: data.id,
+    offers_count: data.offers_count
   };
 
   const customer = {
@@ -74,19 +75,30 @@ const Order = ({ data, classes }) => {
       <Grid item xs={12} sm={4}>
         <Grid
           container
-          justify="flex-end"
+          spacing={8}
+          direction="column"
+          justify="center"
           alignItems="center"
           className={classes.actions}
         >
-          <Button
-            color="primary"
-            variant="contained"
-            component={Link}
-            routeName="incoming.send"
-            routeParams={{ id: order.id }}
-          >
-            Send et tilbud
-          </Button>
+          <Grid item>
+            <Button
+              color="primary"
+              variant="contained"
+              component={Link}
+              routeName="incoming.send"
+              routeParams={{ id: order.id }}
+            >
+              Send et tilbud
+            </Button>
+          </Grid>
+          <Grid item>
+            <Typography variant="body2">
+              {order.offers_count > 0 &&
+                `Der er ${order.offers_count} bud allerede!`}
+              {order.offers_count === 0 && `Være den først til at give et bud!`}
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
