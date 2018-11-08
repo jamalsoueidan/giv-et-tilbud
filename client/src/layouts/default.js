@@ -8,6 +8,20 @@ import { actions as NotificationActions } from "../store/notification";
 import { actions as RouterActions } from "redux-router5";
 import localStorage from "local-storage";
 
+//http://sampsonblog.com/simple-throttle-function/
+function throttle(callback, limit) {
+  var wait = false;
+  return function() {
+    if (!wait) {
+      callback.call();
+      wait = true;
+      setTimeout(function() {
+        wait = false;
+      }, limit);
+    }
+  };
+}
+
 const styles = theme => ({
   content: {
     display: "flex",
@@ -26,7 +40,8 @@ const styles = theme => ({
 class LoggedIn extends React.Component {
   state = {
     openNavigation: true,
-    loaded: false
+    loaded: false,
+    mobile: false
   };
 
   toggleNavigation = () => {
@@ -34,14 +49,35 @@ class LoggedIn extends React.Component {
   };
 
   logout = () => {
-    this.props.logout().then(response => {
+    const { logout, navigate } = this.props;
+    navigate("login");
+    logout().then(response => {
       localStorage.remove("user");
-      this.props.navigate("login");
     });
   };
 
+  handleResize = () => {
+    if (window.innerWidth < 950) {
+      this.setState({ openNavigation: false, mobile: true });
+    } else {
+      this.setState({ openNavigation: true, mobile: false });
+    }
+  };
+
+  componentDidMount() {
+    window.addEventListener("resize", throttle(this.handleResize, 100));
+    this.handleResize();
+  }
+
   render() {
-    const { classes, children } = this.props;
+    const {
+      classes,
+      children,
+      navigate,
+      hideNotification,
+      notification
+    } = this.props;
+    const { openNavigation, mobile } = this.state;
 
     return (
       <React.Fragment>
@@ -49,14 +85,13 @@ class LoggedIn extends React.Component {
         <TopBar click={this.toggleNavigation} logout={this.logout} />
 
         <Navigation
-          open={this.state.openNavigation}
+          open={openNavigation}
           click={this.toggleNavigation}
+          mobile={mobile}
+          navigate={navigate}
         />
         <main className={classes.content}>{children}</main>
-        <Notification
-          hide={this.props.hideNotification}
-          notification={this.props.notification}
-        />
+        <Notification hide={hideNotification} notification={notification} />
       </React.Fragment>
     );
   }
