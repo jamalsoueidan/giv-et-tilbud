@@ -9,7 +9,7 @@ module.exports = async (req, h) => {
 
   return {
     ...credentials,
-    workshops: user.workshops,
+    workshops: user.workshops || [],
     token
   };
 };
