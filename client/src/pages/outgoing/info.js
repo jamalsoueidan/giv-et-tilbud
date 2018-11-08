@@ -31,7 +31,7 @@ class Info extends React.Component {
   };
 
   onConfirm = () => {
-    const { cancelOffer, navigate, order } = this.props;
+    const { cancelOffer, order } = this.props;
     cancelOffer(order.id);
   };
 
@@ -52,7 +52,7 @@ class Info extends React.Component {
   }
 
   render() {
-    const { classes, order, navigate } = this.props;
+    const { classes, order } = this.props;
 
     if (!order) {
       return null;
