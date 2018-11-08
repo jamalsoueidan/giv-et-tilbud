@@ -6,8 +6,7 @@ const incoming = (state = initState, action) => {
   if (action.type === actions.LOAD_INCOMING_SUCCESS) {
     return action.payload;
   } else if (action.type === actions.SEND_OFFER_SUCCESS) {
-    const order = action.payload;
-    return state.results.filter(o => o.id !== order.id);
+    return initState;
   } else if (action.type === actions.CANCEL_OFFER_SUCCESS) {
     return initState;
   }
@@ -18,8 +17,7 @@ const outgoing = (state = initState, action) => {
   if (action.type === actions.LOAD_OUTGOING_SUCCESS) {
     return action.payload;
   } else if (action.type === actions.CANCEL_OFFER_SUCCESS) {
-    const order = action.payload;
-    return state.results.filter(o => o.id !== order.id);
+    return initState;
   } else if (action.type === actions.SEND_OFFER_SUCCESS) {
     return initState;
   }
