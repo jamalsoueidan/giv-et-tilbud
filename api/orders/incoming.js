@@ -46,7 +46,8 @@ module.exports = async req => {
     },
     {
       $match: {
-        "orders.fulfillment_status": null
+        "orders.fulfillment_status": null,
+        "offers.customerId": { $ne: credentials.customerId }
       }
     },
     {
