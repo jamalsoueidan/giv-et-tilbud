@@ -12,16 +12,28 @@ module.exports = async req => {
   const page = parseInt(req.query.page) || 0; //for next page pass 1 here
   const limit = parseInt(req.query.limit) || 5;
 
-  const workshops = await User.find(
+  const user = await User.findOne(
     { _id: credentials.id, "workshops._id": workshopId },
     { _id: 0, "workshops.$": 1 }
   );
 
-  if (workshops.length === 0) {
+  if (!user) {
     return Boom.badData("Workshop id doesn't exist!");
   }
 
-  const coordinates = workshops[0].workshops[0].location.coordinates;
+  const workshop = user.workshops.pop();
+
+  let match = {
+    "orders.fulfillment_status": null,
+    "offers.customerId": { $ne: credentials.customerId }
+  };
+
+  const device = req.query.device;
+  if (device) {
+    match["line_items.properties.value"] = {
+      $regex: new RegExp(device, "ig")
+    };
+  }
 
   //https://stackoverflow.com/questions/5681851/mongodb-combine-data-from-multiple-collections-into-one-how
   const aggregate = await Order.aggregate([
@@ -29,7 +41,7 @@ module.exports = async req => {
       $geoNear: {
         near: {
           type: "Point",
-          coordinates: coordinates
+          coordinates: workshop.location.coordinates
         },
         distanceField: "distance",
         spherical: true,
@@ -45,10 +57,7 @@ module.exports = async req => {
       }
     },
     {
-      $match: {
-        "orders.fulfillment_status": null,
-        "offers.customerId": { $ne: credentials.customerId }
-      }
+      $match: match
     },
     {
       $facet: {
