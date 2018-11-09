@@ -14,12 +14,16 @@ class Done extends React.Component {
       color,
       issue,
       datetime,
+      address,
+      city,
       createOrder
     } = this.props;
 
     createOrder({
       customer: {
         ...customer.value,
+        address: address.value,
+        city: city.value,
         zip: zip.value
       },
       properties: [device, model, color, issue, datetime]
@@ -93,6 +97,8 @@ export default connect(
     const issue = find("issue");
     const datetime = find("datetime");
     const zip = find("zip");
+    const city = find("city");
+    const address = find("address");
     const customer = find("customer");
 
     return {
@@ -103,6 +109,8 @@ export default connect(
       issue,
       datetime,
       zip,
+      city,
+      address,
       customer,
       order: state.order
     };

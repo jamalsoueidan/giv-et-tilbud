@@ -25,6 +25,25 @@ export const toggleProperty = (name, value) => ({
   value
 });
 
+const UPDATE_ADDRESS = "UPDATE_ADDRESS";
+export const updateAddress = payload => ({
+  type: UPDATE_ADDRESS,
+  payload
+});
+
+export const findAddress = value => dispatch => {
+  axios
+    .get(
+      `https://${
+        config[process.env.NODE_ENV].dawaUrl
+      }/autocomplete?q=${value}&type=adresse&caretpos=5&stormodtagerpostnumre=true&fuzzy=`
+    )
+    .then(response => dispatch(updateAddress(response.data)))
+    .catch(function(error) {
+      console.log(error);
+    });
+};
+
 const rootReducer = combineReducers({
   properties: (state = [], action) => {
     if (action.type === TOGGLE_PROPERTY) {
@@ -45,6 +64,17 @@ const rootReducer = combineReducers({
       return action.order;
     }
 
+    return state;
+  },
+  address: (state = [], action) => {
+    if (action.type === UPDATE_ADDRESS) {
+      return action.payload.reduce((start, item) => {
+        if (item.data.id) {
+          start.push(item);
+        }
+        return start;
+      }, []);
+    }
     return state;
   }
 });

@@ -10,8 +10,7 @@ const validationSchema = Yup.object().shape({
   first_name: Yup.string("").required("first_name is required!"),
   last_name: Yup.string("").required("last_name is required!"),
   email: Yup.string("").required("email is required!"),
-  phone: Yup.string("").required("phone is required!"),
-  address: Yup.string("").required("address is required!")
+  phone: Yup.string("").required("phone is required!")
 });
 
 class Details extends React.Component {
@@ -24,8 +23,7 @@ class Details extends React.Component {
             first_name: "",
             last_name: "",
             email: "",
-            phone: "",
-            address: ""
+            phone: ""
           }}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -70,20 +68,6 @@ class Details extends React.Component {
                   placeholder="Dim efternavn..."
                   className={classnames("input-field", {
                     error: errors.last_name
-                  })}
-                />
-              </div>
-              <div className="input-wrapper">
-                <label>Adresse:</label>
-                <input
-                  type="text"
-                  name="address"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.address}
-                  placeholder="Din addresse..."
-                  className={classnames("input-field", {
-                    error: errors.address
                   })}
                 />
               </div>

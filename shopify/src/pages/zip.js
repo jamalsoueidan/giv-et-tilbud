@@ -1,36 +1,72 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleProperty } from "../store";
+import { toggleProperty, findAddress } from "../store";
 import { Formik } from "formik";
-import * as Yup from "yup";
+import Autocomplete from "react-autocomplete";
 import "./zip.sass";
 
-const validationSchema = Yup.object().shape({
-  zip: Yup.number("")
-    .test(
-      "len",
-      "Postnummer er 4 cifre",
-      val => val && val.toString().length === 4
-    )
-    .required("Zip is required!")
-});
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this,
+      args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
 
 class Zip extends React.Component {
+  state = {
+    value: ""
+  };
+
+  fetch = value => {
+    this.props.findAddress(value);
+  };
+
+  componentDidMount() {
+    this.debounceFindAddress = debounce(this.fetch, 250);
+  }
+
   render() {
     return (
       <div className="page-zip">
-        <h1 className="page-title">Indtast din postnummer</h1>
+        <h1 className="page-title">Indtast din adresse</h1>
         <p>
           Vi har over 100 værksteder i hele Danmark, som står klar til at
           reparere din telefon! Alle værksteder kan reparer din telefon eller
           bærbar hvor som helst og når som helst
         </p>
         <Formik
-          initialValues={{ zip: "" }}
-          validationSchema={validationSchema}
+          initialValues={{ address: "" }}
+          validate={values => {
+            let errors = {};
+
+            if (
+              !this.props.address.find(item => item.tekst === this.state.value)
+            ) {
+              errors.address = "Ugyldig adresse";
+            }
+            return errors;
+          }}
           onSubmit={(values, { setSubmitting }) => {
             const { toggleProperty, next } = this.props;
-            toggleProperty("zip", values.zip);
+            const value = this.state.value.trim();
+            const findLastSpace = value.lastIndexOf(" ");
+            const city = value.substring(findLastSpace).trim();
+            const zip = value
+              .substring(findLastSpace - 4, findLastSpace)
+              .trim();
+            const address = value.substring(0, findLastSpace - 5).trim();
+            toggleProperty("zip", zip);
+            toggleProperty("address", address);
+            toggleProperty("city", city);
             next();
             setSubmitting(false);
           }}
@@ -47,22 +83,49 @@ class Zip extends React.Component {
           }) => (
             <form onSubmit={handleSubmit}>
               <div className="input-wrapper">
-                <input
-                  type="text"
-                  name="zip"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.zip}
-                  className="input-field"
-                  placeholder="Indtast din postnummer..."
+                <Autocomplete
+                  inputProps={{
+                    name: "address",
+                    type: "text",
+                    className: "input-field",
+                    placeholder: "Indtast din address..."
+                  }}
+                  wrapperProps={{
+                    className: "wrapper"
+                  }}
+                  wrapperStyle={{
+                    position: "relative",
+                    display: "inline-block"
+                  }}
+                  value={this.state.value}
+                  items={this.props.address}
+                  getItemValue={item => item.tekst}
+                  onSelect={(value, item) => this.setState({ value })}
+                  onChange={(event, value) => {
+                    this.setState({ value });
+                    this.debounceFindAddress(value);
+                  }}
+                  renderMenu={children => (
+                    <div className="menu">{children}</div>
+                  )}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      className={`item ${
+                        isHighlighted ? "item-highlighted" : ""
+                      }`}
+                      key={item.data.id}
+                    >
+                      {item.tekst}
+                    </div>
+                  )}
                 />
+                {errors.address && (
+                  <div className="error">
+                    <div className="title">Fejl!</div>
+                    <div className="message">Adressen er ugyldig!</div>
+                  </div>
+                )}
               </div>
-              {errors.zip && (
-                <div className="error">
-                  <div className="title">Fejl!</div>
-                  <div className="message">Postnummer er forkert!</div>
-                </div>
-              )}
               <div className="input-wrapper">
                 <button
                   type="submit"
@@ -81,6 +144,8 @@ class Zip extends React.Component {
 }
 
 export default connect(
-  null,
-  { toggleProperty }
+  state => ({
+    address: state.address
+  }),
+  { toggleProperty, findAddress }
 )(Zip);
