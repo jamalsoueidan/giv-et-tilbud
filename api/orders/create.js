@@ -32,7 +32,7 @@ const createShopifyOrder = async (customer, properties) =>
           zip: customer.zip
         },
         fulfillment_status: "unfulfilled",
-        send_receipt: false, // turn off in development
+        send_receipt: true, // turn off in development
         send_fulfillment_receipt: false, //turn off in development
         line_items: [
           {

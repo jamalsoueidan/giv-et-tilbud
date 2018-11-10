@@ -11,6 +11,8 @@ const schema = new mongoose.Schema(
     updated_at: Date,
     fulfillment_status: String,
     phone: String,
+    order_status_url: String,
+    token: String,
     customer: {
       id: Number,
       first_name: String,
@@ -49,6 +51,12 @@ const schema = new mongoose.Schema(
 );
 
 schema.index({ location: "2dsphere" });
+schema.index({ fulfillment_status: 1 });
+schema.index({ token: 1, order_status_url: "text" });
+schema.index({
+  "line_items.properties.name": "text",
+  "line_items.properties.value": "text"
+});
 
 const model = mongoose.model("Order", schema);
 
