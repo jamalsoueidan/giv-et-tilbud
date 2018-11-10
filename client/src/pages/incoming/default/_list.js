@@ -14,7 +14,6 @@ class Orders extends React.Component {
   updateParams(params = {}) {
     const { route, navigate } = this.props;
     navigate("incoming", { ...route.params, ...params });
-    this.load();
   }
 
   load() {
@@ -44,8 +43,10 @@ class Orders extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const { selectedWorkshop, route, loadIncoming } = this.props;
     if (prevProps.selectedWorkshop !== selectedWorkshop) {
+      console.log("selected reload");
       this.load();
-    } else if (route === prevProps.route) {
+    } else if (route !== prevProps.route) {
+      console.log("route reload");
       this.load();
     }
   }
