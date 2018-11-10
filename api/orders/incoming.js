@@ -28,11 +28,33 @@ module.exports = async req => {
     "offers.customerId": { $ne: credentials.customerId }
   };
 
-  const device = req.query.device;
-  if (device) {
-    match["line_items.properties.value"] = {
-      $regex: new RegExp(device, "ig")
+  const device = (device => {
+    if (!device) return;
+    return {
+      "line_items.properties.name": "device",
+      "line_items.properties.value": {
+        $regex: new RegExp(device, "ig")
+      }
     };
+  })(req.query.device);
+
+  if (device) {
+    match["$and"] = [device];
+  }
+
+  const issue = (issue => {
+    if (!issue) return;
+    return {
+      "line_items.properties.name": "issue",
+      "line_items.properties.value": {
+        $regex: new RegExp(issue, "ig")
+      }
+    };
+  })(req.query.issue);
+
+  if (issue) {
+    if (match["$and"]) match["$and"].push(issue);
+    else match["$and"] = [issue];
   }
 
   //https://stackoverflow.com/questions/5681851/mongodb-combine-data-from-multiple-collections-into-one-how

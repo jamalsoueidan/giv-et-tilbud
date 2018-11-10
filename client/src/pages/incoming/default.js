@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Dropdown from "./default/_dropdown";
+import Filter from "./default/_filter";
 import List from "./default/_list";
 
 const styles = theme => ({
@@ -33,9 +34,16 @@ class Incoming extends React.Component {
           Nye opgaver
         </Typography>
 
-        <Grid container spacing={24}>
+        <Grid container spacing={40}>
           <Grid item xs={12} sm={3}>
-            <Dropdown />
+            <Grid container spacing={24} direction="column">
+              <Grid item>
+                <Dropdown />
+              </Grid>
+              <Grid item>
+                <Filter />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={9}>
             <List route={route} />

@@ -20,17 +20,25 @@ export const CANCEL_OFFER_REQUEST = "@@orders/CANCEL_OFFER_REQUEST";
 export const CANCEL_OFFER_SUCCESS = "@@orders/CANCEL_OFFER_SUCCESS";
 export const CANCEL_OFFER_FAILURE = "@@orders/CANCEL_OFFER_FAILURE";
 
-export const loadIncoming = (workshopId, page = 0, limit = 5) => ({
-  [RSAA]: {
-    types: [
-      LOAD_INCOMING_REQUEST,
-      LOAD_INCOMING_SUCCESS,
-      LOAD_INCOMING_FAILURE
-    ],
-    endpoint: `/api/orders/incoming?workshopid=${workshopId}&page=${page}&limit=${limit}`,
-    method: "GET"
-  }
-});
+export const loadIncoming = (options = {}) => {
+  const workshopId = options.workshopId;
+  const page = options.page || 0;
+  const limit = options.limit || 5;
+  const device = options.device || "";
+  const issue = options.issue || "";
+
+  return {
+    [RSAA]: {
+      types: [
+        LOAD_INCOMING_REQUEST,
+        LOAD_INCOMING_SUCCESS,
+        LOAD_INCOMING_FAILURE
+      ],
+      endpoint: `/api/orders/incoming?workshopid=${workshopId}&page=${page}&limit=${limit}&issue=${issue}&device=${device}`,
+      method: "GET"
+    }
+  };
+};
 
 export const loadOutgoing = (page, limit) => ({
   [RSAA]: {
