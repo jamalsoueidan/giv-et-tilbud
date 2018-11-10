@@ -1,0 +1,144 @@
+{% assign words = order.order_status_url | split: '/' %}
+{% capture email_title %}Tak fordi du ønsker et tilbud fra os! {% endcapture %}
+{% capture email_body %}
+  {% if requires_shipping %}
+    Hej {{ customer.first_name }}, vi gør tilbuddene klar til dig, og når de er klar så modtag du en email med alle tilbud.
+  {% endif %}
+{% endcapture %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{{ email_title }}</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width" name="viewport">
+	<link href="/assets/notifications/styles.css" rel="stylesheet" type="text/css">
+	<style>
+	      .button__cell { background: {{ shop.email_accent_color }}; }
+	      a, a:hover, a:active, a:visited { color: {{ shop.email_accent_color }}; }
+	</style>
+</head>
+<body>
+	<table class="body">
+		<tr>
+			<td>
+				<table class="header row">
+					<tr>
+						<td class="header__cell">
+							<center>
+								<table class="container">
+									<tr>
+										<td>
+											<table class="row">
+												<tr>
+													<td class="shop-name__cell">
+														{%- if shop.email_logo_url %} <img alt="{{ shop.name }}" src="{{shop.email_logo_url}}" width="{{ shop.email_logo_width }}"> {%- else %}
+														<h1 class="shop-name__text"><a href="{{shop.url}}">{{ shop.name }}</a></h1>{%- endif %}
+													</td>
+													<td class="order-number__cell"><span class="order-number__text">Order {{ order_name }}</span></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</center>
+						</td>
+					</tr>
+				</table>
+				<table class="row content">
+					<tr>
+						<td class="content__cell">
+							<center>
+								<table class="container">
+									<tr>
+										<td>
+											<h2>{{ email_title }}</h2>
+											<p>{{ email_body }}</p>{% if order_status_url %}
+											<table class="row actions">
+												<tr>
+													<td class="actions__cell">
+														<table class="button main-action-cell">
+															<tr>
+																<td class="button__cell">
+																	<a class="button__text" href="https://givettilbud.myshopify.com/pages/status?token={{words[5]}}&key={{words[6] | replace: 'authenticate?key=', '' }}">Vis status</a>
+																</td>
+															</tr>
+														</table>{% if shop.url %}
+														<table class="link secondary-action-cell">
+															<tr>
+																<td class="link__cell">
+																	eller <a href="{{%20shop.url%20}}">besøg vores hjemmeside</a>
+																</td>
+															</tr>
+														</table>{% endif %}
+													</td>
+												</tr>
+											</table>{% else %} {% if shop.url %}
+											<table class="row actions">
+												<tr>
+													<td class="actions__cell">
+														<table class="button main-action-cell">
+															<tr>
+																<td class="button__cell">
+																	<a class="button__text" href="{{%20shop.url%20}}">Visit our store</a>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>{% endif %} {% endif %}
+										</td>
+									</tr>
+								</table>
+							</center>
+						</td>
+					</tr>
+				</table>
+				<table class="row section">
+					<tr>
+						<td class="section__cell">
+							<center>
+								<table class="container">
+									<tr>
+										<td>
+											<h3>Din informationer:</h3>
+										</td>
+									</tr>
+								</table>
+								<table class="container">
+									<tr>
+										<td>
+											<table class="row">
+												<tr>
+													<td class="customer-info__item">
+														{{ shipping_address | format_address }}
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</center>
+						</td>
+					</tr>
+				</table>
+				<table class="row footer">
+					<tr>
+						<td class="footer__cell">
+							<center>
+								<table class="container">
+									<tr>
+										<td>
+											<p class="disclaimer__subtext">Hvis du har spørgsmål så send et svar til den her email, eller bruge følgende link <a href="mailto:{{%20shop.email%20}}">{{ shop.email }}</a></p>
+										</td>
+									</tr>
+								</table>
+							</center>
+						</td>
+					</tr>
+				</table><img class="spacer" height="1" src="{{%20'notifications/spacer.png'%20|%20shopify_asset_url%20}}">
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{% assign words = order.order_status_url | split: '/' %}
+
+Hej{% unless order.customer.first_name == blank %} {{ order.customer.first_name }}{% endunless %}, Vi vender hurtigt tilbage til dig med gode tilbud til din enhedsreparation! {% if order.order_status_url %}Vis status ({{ order.name }}): https://givettilbud.myshopify.com/pages/status?token={{words[5]}}&key={{words[6] | replace: 'authenticate?key=', '' }}{% endif %}, mvh {{shop.name}}
+
+{% if false == true %}({{ order.name }}): {{ order.order_status_url }}{% endif %}
