@@ -3,9 +3,6 @@ const Order = require("../../models/order");
 const Cancel = require("./cancel");
 const Create = require("./create");
 const Boom = require("boom");
-/**
- * @todo validate if this order has been closed, and cannot receiving more offers by fulfillment_status
- */
 
 module.exports = [
   {

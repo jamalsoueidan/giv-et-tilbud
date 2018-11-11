@@ -5,6 +5,10 @@ const User = require("../../models/user");
 const Boom = require("boom");
 const aggregateOrderWithOffers = require("./_aggregate_order_with_offers.js");
 
+/**
+ * @todo validate if this order has been closed, and cannot receiving more offers by fulfillment_status
+ */
+
 module.exports = async req => {
   const credentials = req.auth.credentials;
   const { workshopId, properties } = req.payload;
