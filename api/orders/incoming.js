@@ -83,6 +83,12 @@ module.exports = async req => {
       $match: match
     },
     {
+      $project: {
+        token: 0,
+        order_status_url: 0
+      }
+    },
+    {
       $facet: {
         //https://stackoverflow.com/questions/20348093/mongodb-aggregation-how-to-get-total-records-count
         orders: [{ $skip: page * limit }, { $limit: limit }],
