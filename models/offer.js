@@ -6,6 +6,8 @@ const schema = new mongoose.Schema(
     customer_id: { type: Number, required: true },
     workshop_id: { type: mongoose.Types.ObjectId, require: true },
     created_at: { type: Date, default: Date.now },
+    distance: String,
+    duration: String,
     properties: [
       {
         name: String,
