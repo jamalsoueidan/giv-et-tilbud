@@ -106,13 +106,24 @@ const store = createStore(
         value: "battery"
       },
       {
+        name: "address",
+        value: "dortesvej 21 1 th"
+      },
+      {
+        name: "city",
+        value: "brabrand"
+      },
+      {
+        name: "datetime",
+        value: "2018-11-13T13:24:06+01:00"
+      },
+      {
         name: "customer",
         value: {
           first_name: "jamal",
           last_name: "soueidan",
           email: "asd@gmail.com",
-          phone: "86 34 56 78",
-          address: "dortesvej 21 1 th"
+          phone: "86 34 56 78"
         }
       }
     ]*/

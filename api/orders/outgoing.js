@@ -20,6 +20,7 @@ module.exports = async req => {
         as: "offers"
       }
     },
+    { $sort: { created_at: -1 } },
     {
       $match: {
         "offers.customer_id": credentials.customerId,

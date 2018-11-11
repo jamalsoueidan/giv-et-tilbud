@@ -30,6 +30,14 @@ class Done extends React.Component {
     });
   }
 
+  get getUrl() {
+    const order = this.props.order;
+    const status_url = order.order_status_url;
+    return `/pages/status?token=${order.token}&key=${status_url.substring(
+      status_url.lastIndexOf("=") + 1
+    )}`;
+  }
+
   render() {
     const {
       customer,
@@ -49,12 +57,23 @@ class Done extends React.Component {
 
     return (
       <div className="page-done">
-        <h1 className="page-title">Din anmodning er oprettet!</h1>
-        <div>
-          Vi sender din anmodning videre til alle værksteder i nærheden af dig
-          og giver dig det bedste bud du kan få! <br />
-          Din order nummer: <strong>{order.id}</strong>
-        </div>
+        <h1 className="page-title">Din forespørgsel er oprettet</h1>
+        <p>
+          Tak for din forespørgsel, dine tilbud er snart på vej! Brug for hjælp?
+          Ring 00 00 00 00 <br />
+          Din order nummer:
+          <strong>
+            <a href={this.getUrl} target="_blank">
+              {order.id}
+            </a>
+          </strong>
+        </p>
+        <p>
+          Du kan følge status på din forespørgsel her:
+          <a href={this.getUrl} target="_blank">
+            Status siden
+          </a>
+        </p>
         <div className="details">
           <ul>
             <li>
