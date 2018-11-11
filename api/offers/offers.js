@@ -1,9 +1,35 @@
 const Order = require("../../models/order");
+const Offer = require("../../models/offer");
 const Boom = require("boom");
 
 module.exports = async req => {
   const token = req.query.token;
   const key = req.query.key;
+
+  const fields = {
+    _id: 0,
+    token: 0,
+    order_status_url: 0,
+    "offers.users": 0
+  };
+
+  const order = await Order.findOne(
+    {
+      token: token,
+      order_status_url: {
+        $regex: new RegExp(key, "ig")
+      }
+    },
+    fields
+  );
+
+  const offersCount = await Offer.count({
+    order_id: order.id
+  });
+
+  if (offersCount === 0) {
+    return order;
+  }
 
   const orders = await Order.aggregate([
     {
@@ -82,12 +108,7 @@ module.exports = async req => {
       }
     },
     {
-      $project: {
-        _id: 0,
-        token: 0,
-        order_status_url: 0,
-        "offers.users": 0
-      }
+      $project: fields
     }
   ]);
 
