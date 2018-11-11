@@ -1,6 +1,6 @@
 export default {
   development: {
-    apiUrl: "1ae25f40.ngrok.io",
+    apiUrl: "f55f59a4.ngrok.io",
     dawaUrl: "dawa.aws.dk"
   },
   production: {

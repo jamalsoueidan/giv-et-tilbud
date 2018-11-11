@@ -9,7 +9,7 @@ import Breadcrumbs from "./components/breadcrumbs";
 import Booking from "./pages/booking";
 import Details from "./pages/details";
 import Done from "./pages/done";
-import "./app.sass";
+import "./application.sass";
 
 const history = createHistory();
 

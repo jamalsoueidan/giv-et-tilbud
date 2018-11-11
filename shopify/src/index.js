@@ -1,15 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import store from "./store";
-import App from "./App";
+/*import createOrderRender from "./create_order";
+const createOrder = document.getElementById("create_order");
+if (createOrder) {
+  createOrderRender(createOrder);
+}*/
 
-const root = document.getElementById("root");
-if (root) {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById("root")
-  );
+import viewOffersRender from "./view_offers";
+const viewOffers = document.getElementById("view_offers");
+if (viewOffers) {
+  viewOffersRender(viewOffers);
 }

@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import axios from "axios";
-import config from "./config";
+import config from "../config";
 
 const CREATE_ORDER_RESPONSE = "CREATE_ORDER_RESPONSE";
 export const createOrderResponse = order => ({

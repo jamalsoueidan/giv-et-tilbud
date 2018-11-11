@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { toggleProperty } from "../store";
-import data from "../data";
+import data from "../../data";
 
-class Issues extends React.Component {
+class Colors extends React.Component {
   onClick = evt => {
     evt.stopPropagation();
     const { toggleProperty, next } = this.props;
     const target = evt.currentTarget;
-    toggleProperty("issue", target.dataset.value);
+    toggleProperty("color", target.dataset.value);
     next();
   };
 
@@ -20,13 +20,13 @@ class Issues extends React.Component {
         {data
           .find(d => d.value === device.value)
           .models.find(m => m.value === model.value)
-          .issues.map(issue => (
+          .colors.map(color => (
             <li
-              key={issue.value}
-              data-value={issue.value}
+              key={color.value}
+              data-value={color.value}
               onClickCapture={this.onClick}
             >
-              <span>{issue.value}</span>
+              <span>{color.value}</span>
             </li>
           ))}
       </ul>
@@ -35,8 +35,8 @@ class Issues extends React.Component {
 
   render() {
     return (
-      <div className="page-issues">
-        <h1 className="page-title">Hvilken problem har din telefon?</h1>
+      <div className="page-colors">
+        <h1 className="page-title">Hvilken farver er din telefon?</h1>
         {this.renderColors}
       </div>
     );
@@ -49,4 +49,4 @@ export default connect(
     model: state.properties.find(p => p.name === "model")
   }),
   { toggleProperty }
-)(Issues);
+)(Colors);

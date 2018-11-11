@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { toggleProperty } from "../store";
-import data from "../data";
+import data from "../../data";
 import "./devices.sass";
 class Devices extends React.Component {
   onClick = evt => {
