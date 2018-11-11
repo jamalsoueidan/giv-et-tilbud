@@ -25,7 +25,7 @@ module.exports = async req => {
 
   let match = {
     "orders.fulfillment_status": null,
-    "offers.customerId": { $ne: credentials.customerId }
+    "offers.customer_id": { $ne: credentials.customerId }
   };
 
   const device = (device => {
@@ -70,11 +70,12 @@ module.exports = async req => {
         maxDistance: 10000
       }
     },
+    { $sort: { created_at: -1 } },
     {
       $lookup: {
         from: "offers",
         localField: "id",
-        foreignField: "orderId",
+        foreignField: "order_id",
         as: "offers"
       }
     },

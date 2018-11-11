@@ -16,13 +16,13 @@ module.exports = async req => {
       $lookup: {
         from: "offers",
         localField: "id",
-        foreignField: "orderId",
+        foreignField: "order_id",
         as: "offers"
       }
     },
     {
       $match: {
-        "offers.customerId": credentials.customerId,
+        "offers.customer_id": credentials.customerId,
         "orders.fulfillment_status": fulfillment_status
       }
     },
