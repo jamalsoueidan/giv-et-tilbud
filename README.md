@@ -1,27 +1,27 @@
 ## Sales Promotion Application
 
-Customer gets 3 offers, by creating a new order on the Shopify store.
+Customer gets offers from Workshops, by creating a new order on the Shopify store.
 
 ### How it works
 
-1.  Customer request 3 price offers, like where can I find the cheapest "iphone screen repairs" in my ciy.
+1.  Customer request price offers, like where can I find the cheapest "iphone screen repairs".
 2.  Shop owners near the customer can now send an offer back, max 1 for each owner.
 
 ### Who, where
 
-This application will be used by different shop owners to send a offer to customers.
+This application will be used by different shop owners to send a offer back to customer.
 
-The customers will use the **Shopify store** to request a offer by creating a order.
+The customer will use the **Shopify store** to request a offer by creating a order.
 
 ### What is what
 
 #### /client
 
-Location of the platform for shop owerns to use
+Location of the platform for shop owners to use
 
 #### /shopify
 
-Location of the small react appication for the shopify frontend store, so customers can create an order.
+Location of the small react appications for the shopify frontend store, so customers can **create an order** and **view order**.
 
 #### /api + /models + /test
 
