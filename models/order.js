@@ -57,6 +57,7 @@ schema.index({
   "line_items.properties.name": "text",
   "line_items.properties.value": "text"
 });
+schema.index({ created_at: -1 });
 
 const model = mongoose.model("Order", schema);
 

@@ -37,6 +37,8 @@ const schema = new mongoose.Schema(
 );
 
 schema.index({ "workshops.location": "2dsphere" });
+schema.index({ customer_id: 1 });
+schema.index({ email: 1 });
 
 const model = mongoose.model("User", schema);
 
