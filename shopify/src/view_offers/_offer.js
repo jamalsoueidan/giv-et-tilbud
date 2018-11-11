@@ -1,9 +1,17 @@
 import React from "react";
+import "./_offer.sass";
 
 class Offer extends React.Component {
   render() {
+    const offer = this.props.data;
+
+    const properties = offer.properties.reduce((properties, property) => {
+      properties[property.name] = property.value;
+      return properties;
+    }, {});
+
     return (
-      <article className="product-list-item" id="product-list-item-288335897">
+      <article className="offer">
         <figure className="product-list-item-thumbnail">
           <a href="/products/beer-print">
             <img
@@ -16,20 +24,31 @@ class Offer extends React.Component {
 
         <div className="product-list-item-details">
           <h1 className="product-list-item-title">
-            <a href="/products/beer-print">Beer Print</a>
+            <a href="/products/beer-print">{offer.workshop.name}</a>
+            <p>{offer.workshop.address}</p>
+            <p>
+              {offer.workshop.zip} {offer.workshop.city}
+            </p>
           </h1>
 
-          <p className="product-list-item-price">
-            <span className="price">
-              <span
-                className="money"
-                data-currency-usd="$50.00 USD"
-                data-currency="USD"
-              >
-                $50.00 USD
-              </span>
-            </span>
+          <p className="property">
+            <span className="name">Pris</span>
+            <span className="value">{properties.price} DK</span>
           </p>
+          <p className="property">
+            <span className="name">Afstand</span>
+            <span className="value">{offer.distance}</span>
+          </p>
+          <p className="property">
+            <span className="name">Tid</span>
+            <span className="value">{offer.duration}</span>
+          </p>
+        </div>
+
+        <div className="input-wrapper">
+          <button type="submit" className="button">
+            Vælg tilbud
+          </button>
         </div>
       </article>
     );
