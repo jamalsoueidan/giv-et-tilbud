@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { actions as OrderActions } from "../../store/orders";
 import { actions as RouterActions } from "redux-router5";
+import { selectors as DataSelectors } from "../../store/data";
 
 const styles = theme => ({
   textField: {
@@ -21,7 +22,7 @@ const validationSchema = yup.object({
 
 class Send extends React.Component {
   render() {
-    const { route, sendOffer } = this.props;
+    const { route, sendOffer, selectedWorkshop } = this.props;
     const orderId = route.params.id;
 
     return (
@@ -33,8 +34,14 @@ class Send extends React.Component {
           render={props => <Form {...props} />}
           validationSchema={validationSchema}
           onSubmit={(values, action) => {
-            sendOffer(orderId, values.message, values.price).then(response => {
-              this.props.navigate("outgoing.info", { id: orderId });
+            sendOffer({
+              orderId,
+              workshopId: selectedWorkshop._id,
+              ...values
+            }).then(response => {
+              this.props.navigate("outgoing.info", {
+                id: orderId
+              });
               action.setSubmitting(false);
             });
           }}
@@ -45,7 +52,9 @@ class Send extends React.Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    selectedWorkshop: DataSelectors.getSelectedWorkshop(state)
+  }),
   {
     sendOffer: OrderActions.sendOffer,
     navigate: RouterActions.navigateTo

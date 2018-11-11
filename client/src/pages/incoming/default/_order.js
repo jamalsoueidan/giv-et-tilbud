@@ -56,6 +56,7 @@ const Order = ({ data, classes }) => {
               {customer.first_name}
             </Typography>
             <Typography variant="body2" gutterBottom>
+              Tid til reparation:
               {moment(properties.datetime).format(
                 "dddd, MMMM Do YYYY, H:mm:ss"
               )}

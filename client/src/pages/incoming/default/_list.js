@@ -41,12 +41,10 @@ class Orders extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { selectedWorkshop, route, loadIncoming } = this.props;
+    const { selectedWorkshop, route } = this.props;
     if (prevProps.selectedWorkshop !== selectedWorkshop) {
-      console.log("selected reload");
       this.load();
     } else if (route !== prevProps.route) {
-      console.log("route reload");
       this.load();
     }
   }

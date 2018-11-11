@@ -72,20 +72,21 @@ export const cancelOffer = orderId => ({
   }
 });
 
-export const sendOffer = (orderId, message, price) => ({
+export const sendOffer = (options = {}) => ({
   [RSAA]: {
     types: [SEND_OFFER_REQUEST, SEND_OFFER_SUCCESS, SEND_OFFER_FAILURE],
-    endpoint: `/api/orders/${orderId}/offers`,
+    endpoint: `/api/orders/${options.orderId}/offers`,
     method: "POST",
     body: JSON.stringify({
+      workshopId: options.workshopId,
       properties: [
         {
           name: "message",
-          value: message
+          value: options.message
         },
         {
           name: "price",
-          value: price.toString()
+          value: options.price.toString()
         }
       ]
     })
