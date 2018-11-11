@@ -23,6 +23,9 @@ module.exports = async req => {
     fields
   );
 
+  /**
+   * Todo, just use second query to get workshop if any offers exists, and addFields to the order, instead of 3 queries just do 2 queries.
+   */
   const offersCount = await Offer.count({
     order_id: order.id
   });
