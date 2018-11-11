@@ -16,8 +16,8 @@ module.exports = async req => {
   }
 
   const offer = await Offer.findOneAndRemove({
-    orderId: orderId,
-    customerId: credentials.customerId
+    order_id: orderId,
+    customer_id: credentials.customerId
   });
 
   if (!offer) {

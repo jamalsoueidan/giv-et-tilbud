@@ -13,7 +13,7 @@ module.exports = async (orderId, credentials) => {
       $lookup: {
         from: "offers",
         localField: "id",
-        foreignField: "orderId",
+        foreignField: "order_id",
         as: "offers"
       }
     }
