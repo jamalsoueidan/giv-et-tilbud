@@ -95,5 +95,5 @@ module.exports = async req => {
     return Boom.badData();
   }
 
-  return orders;
+  return orders.pop();
 };
