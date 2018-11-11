@@ -1,19 +1,74 @@
 .offer
+  display: flex
+  flex-direction: column
   width: calc(calc(100% / 3) - 10px)
-  margin: 10px
+  margin-right: 10px
+  background-color: #fff
+  border-radius: 6px
+  &:last-child
+    width: calc(100% / 3)
+    margin-right: 0
 
-  .property
+  @media only screen and (max-width: 600px)
+    width: 100%
+    margin-right: 0px
+    margin-bottom: 10px
+
+    &:last-child
+      margin-bottom: 0px
+      width: 100%
+
+  .details
     display: flex
-    flex-direction: row
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    background-color: #f7f7f7
+    border-top-left-radius: 4px
+    border-top-right-radius: 4px
+    border-bottom: 1px solid #ddd
+    padding: 10px
+    height: 150px
 
-    span
+    p
+      margin: 0
+
+  .properties
+    display: flex
+    flex-direction: column
+    flex: 1
+    min-height: 150px
+
+    .comingSoon
+      display: flex
       flex: 1
-      padding-bottom: 1em
+      text-align: center
+      align-items: center
+
+
+    .property
+      display: flex
+      flex-direction: row
       border-bottom: 1px solid #000
 
-    span.name
-      text-align: left
-      font-weight: 700
+      &:last-child
+        border-bottom: 0px
 
-    span.value
-      text-align: right
+      span
+        display: flex
+        align-items: center
+        flex: 1
+        padding: 1em 10px
+
+      span.name
+        justify-content: flex-start
+        font-weight: 700
+
+      span.value
+        justify-content: flex-end
+
+  .input-wrapper
+    padding: 5px
+    margin: 0
+    .button
+      width: 100%

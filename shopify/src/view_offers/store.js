@@ -25,7 +25,9 @@ export const getOrder = (options = {}) => dispatch => {
 const rootReducer = combineReducers({
   order: (state = {}, action) => {
     if (action.type === GET_ORDER_RESPONSE) {
-      return action.order;
+      const order = action.order;
+      if (!order.offers) order.offers = [];
+      return order;
     }
     return state;
   }
