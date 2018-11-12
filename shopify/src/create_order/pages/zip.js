@@ -57,16 +57,14 @@ class Zip extends React.Component {
           }}
           onSubmit={(values, { setSubmitting }) => {
             const { toggleProperty, next } = this.props;
-            const value = this.state.value.trim();
-            const findLastSpace = value.lastIndexOf(" ");
-            const city = value.substring(findLastSpace).trim();
-            const zip = value
-              .substring(findLastSpace - 4, findLastSpace)
-              .trim();
-            const address = value.substring(0, findLastSpace - 5).trim();
-            toggleProperty("zip", zip);
+            const item = this.state.item;
+            const address = item.forslagstekst.substring(
+              0,
+              item.forslagstekst.lastIndexOf(",")
+            );
+            toggleProperty("zip", item.data.postnr);
             toggleProperty("address", address);
-            toggleProperty("city", city);
+            toggleProperty("city", item.data.postnrnavn);
             next();
             setSubmitting(false);
           }}
@@ -83,6 +81,13 @@ class Zip extends React.Component {
           }) => (
             <form onSubmit={handleSubmit}>
               <div className="input-wrapper">
+                {errors.address && (
+                  <div className="error">
+                    <div className="title">Fejl!</div>
+                    <div className="message">Adressen er ugyldig!</div>
+                  </div>
+                )}
+
                 <Autocomplete
                   inputProps={{
                     name: "address",
@@ -100,7 +105,7 @@ class Zip extends React.Component {
                   value={this.state.value}
                   items={this.props.address}
                   getItemValue={item => item.tekst}
-                  onSelect={(value, item) => this.setState({ value })}
+                  onSelect={(value, item) => this.setState({ value, item })}
                   onChange={(event, value) => {
                     this.setState({ value });
                     this.debounceFindAddress(value);
@@ -119,12 +124,6 @@ class Zip extends React.Component {
                     </div>
                   )}
                 />
-                {errors.address && (
-                  <div className="error">
-                    <div className="title">Fejl!</div>
-                    <div className="message">Adressen er ugyldig!</div>
-                  </div>
-                )}
               </div>
               <div className="input-wrapper">
                 <button

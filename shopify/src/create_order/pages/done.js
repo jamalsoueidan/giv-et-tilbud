@@ -61,16 +61,16 @@ class Done extends React.Component {
         <p>
           Tak for din forespørgsel, dine tilbud er snart på vej! Brug for hjælp?
           Ring 00 00 00 00 <br />
-          Din order nummer:
+          Din order nummer:{" "}
           <strong>
-            <a href={this.getUrl} target="_blank">
+            <a href={this.getUrl} target="_blank" rel="noopener noreferrer">
               {order.id}
             </a>
           </strong>
         </p>
         <p>
-          Du kan følge status på din forespørgsel her:
-          <a href={this.getUrl} target="_blank">
+          Du kan følge status på din forespørgsel her:{" "}
+          <a href={this.getUrl} target="_blank" rel="noopener noreferrer">
             Status siden
           </a>
         </p>
