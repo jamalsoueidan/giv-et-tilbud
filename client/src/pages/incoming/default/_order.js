@@ -9,13 +9,14 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   root: {
+    padding: `${theme.spacing.unit}px 0`,
     borderBottom: "1px solid #000"
+  },
+  device: {
+    margin: `${theme.spacing.unit}px 0`
   },
   chip: {
     marginRight: theme.spacing.unit
-  },
-  actions: {
-    height: "100%"
   }
 });
 
@@ -45,24 +46,22 @@ const Order = ({ data, classes }) => {
   };
 
   return (
-    <Grid container spacing={24} className={classes.root}>
-      <Grid item xs={12} sm={8}>
+    <Grid
+      container
+      alignItems="center"
+      direction="row"
+      spacing={12}
+      className={classes.root}
+    >
+      <Grid item xs={12} sm={6}>
         <Grid container direction="column">
           <Grid item xs={12}>
-            <Typography variant="subtitle1" gutterBottom>
-              {customer.zip} {customer.city}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {customer.first_name}
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              Tid til reparation:
-              {moment(properties.datetime).format(
-                "dddd, MMMM Do YYYY, H:mm:ss"
-              )}
+            <Typography variant="body2">
+              Oprettet{" "}
+              {moment(order.created_at).format("Do MMMM  YYYY, H:mm:ss")}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={classes.device}>
             <Chip
               color="primary"
               variant="outlined"
@@ -71,15 +70,17 @@ const Order = ({ data, classes }) => {
             />
             <Chip color="secondary" label={properties.issue} />
           </Grid>
+          <Grid item xs={12}>
+            Nær {customer.zip} {customer.city}
+          </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={6}>
         <Grid
           container
-          spacing={8}
           direction="column"
-          justify="center"
-          alignItems="center"
+          spacing={8}
+          align="right"
           className={classes.actions}
         >
           <Grid item>

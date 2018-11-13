@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createRouteNodeSelector } from "redux-router5";
-
+import "moment/locale/da";
 import RouterHelper from "./lib/router_helper";
 
 class Application extends React.Component {

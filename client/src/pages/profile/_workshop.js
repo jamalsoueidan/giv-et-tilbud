@@ -57,7 +57,7 @@ class RecipeReviewCard extends React.Component {
           }
           title={data.name}
           subheader={`oprettet ${moment(data.created_at).format(
-            "MMMM Do YYYY"
+            "Do MMMM YYYY"
           )}`}
         />
         <CardContent>
