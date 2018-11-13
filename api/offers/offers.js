@@ -23,6 +23,9 @@ module.exports = async req => {
     fields
   );
 
+  if (!order) {
+    return Boom.badData();
+  }
   /**
    * Todo, just use second query to get workshop if any offers exists, and addFields to the order, instead of 3 queries just do 2 queries.
    */
