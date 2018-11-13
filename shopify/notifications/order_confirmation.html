@@ -1,10 +1,5 @@
 {% assign words = order.order_status_url | split: '/' %}
-{% capture email_title %}Tak fordi du ønsker et tilbud fra os! {% endcapture %}
-{% capture email_body %}
-  {% if requires_shipping %}
-    Hej {{ customer.first_name }}, vi gør tilbuddene klar til dig, og når de er klar så modtag du en email med alle tilbud.
-  {% endif %}
-{% endcapture %}
+{% capture email_title %}Din opgave er nu oprettet, og vi er i gang med at finde de bedste tilbud til dig! {% endcapture %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +48,14 @@
 									<tr>
 										<td>
 											<h2>{{ email_title }}</h2>
-											<p>{{ email_body }}</p>{% if order_status_url %}
+											<p>Vi sender nu din opgave i udbud hos vores netværk af kvalitetsværksteder, hvor professionelle teknikker skræddersyr tilbud til din enhed.</p>
+
+
+
+<p>Vi bestræber os på, at du modtager dine tilbud inden for 24 timer. Hvis du har oprettet opgaven i weekenden, kan der gå lidt længere tid.</p>
+
+
+<p>Du vil løbende modtage tilbuddene på mail og på SMS, hvis vi har dit telefonnummer.</p>{% if order_status_url %}
 											<table class="row actions">
 												<tr>
 													<td class="actions__cell">
@@ -73,20 +75,7 @@
 														</table>{% endif %}
 													</td>
 												</tr>
-											</table>{% else %} {% if shop.url %}
-											<table class="row actions">
-												<tr>
-													<td class="actions__cell">
-														<table class="button main-action-cell">
-															<tr>
-																<td class="button__cell">
-																	<a class="button__text" href="{{%20shop.url%20}}">Visit our store</a>
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>{% endif %} {% endif %}
+											</table>{% endif %}
 										</td>
 									</tr>
 								</table>
@@ -129,7 +118,15 @@
 								<table class="container">
 									<tr>
 										<td>
-											<p class="disclaimer__subtext">Hvis du har spørgsmål så send et svar til den her email, eller bruge følgende link <a href="mailto:{{%20shop.email%20}}">{{ shop.email }}</a></p>
+											<p class="disclaimer__subtext">Du er altid velkommen til at bruge vores rådgivning, hvis du har spørgsmål. Vi er uafhængige af værkstederne og giver uvildig, gratis hjælp.</p>
+
+
+
+<p class="disclaimer__subtext">Vi sidder klar på 00 00 00 00 på hverdage 8-16 – eller send os en mail til <a href="mailto:{{%20shop.email%20}}">{{ shop.email }}</a></p>
+
+<p class="disclaimer__subtext">Med venlig hilsen<br />
+Jamal Soueidan<br />
+Din supporter </p>
 										</td>
 									</tr>
 								</table>

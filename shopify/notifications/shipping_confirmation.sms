@@ -1,0 +1,5 @@
+{% assign words = order.order_status_url | split: '/' %}
+Du har nu fået alle tilbud på din opgave. Sammenlign og bestil tid - spar 20-40% i forhold til markedsprisen, med prisgarnati {% if order.order_status_url %} https://givettilbud.myshopify.com/pages/status?token={{words[5]}}&key={{words[6] | replace: 'authenticate?key=', '' }}{% endif %}
+mvh {{shop.name}}
+
+{% if false == true %}({{ order.name }}): {{ order.order_status_url }}{% endif %}
