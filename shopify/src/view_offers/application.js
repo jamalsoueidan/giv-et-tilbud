@@ -22,6 +22,20 @@ class Application extends React.Component {
     });
   };
 
+  componentWillReceiveProps(nextProps, nextState) {
+    const order = nextProps.order;
+    const offer = order.offers && order.offers.find(offer => offer.accepted);
+    if (offer) {
+      history.push(
+        history.jsonToParams({
+          ...history.getParams(),
+          id: offer._id,
+          page: "accept"
+        })
+      );
+    }
+  }
+
   render() {
     const { order } = this.props;
 
