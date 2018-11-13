@@ -33,9 +33,9 @@ class App extends Component {
     } else if (currentPage === "colors") {
       return "issues";
     } else if (currentPage === "issues") {
-      return "booking";
-    } else if (currentPage === "booking") {
       return "details";
+      /*} else if (currentPage === "booking") {
+      return "details";*/
     } else if (currentPage === "details") {
       return "done";
     }

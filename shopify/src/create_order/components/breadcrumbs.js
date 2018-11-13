@@ -7,7 +7,7 @@ const progress = [
   "models",
   "colors",
   "issues",
-  "booking",
+  //"booking",
   "details",
   "done"
 ];

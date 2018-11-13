@@ -13,7 +13,6 @@ class Done extends React.Component {
       model,
       color,
       issue,
-      datetime,
       address,
       city,
       createOrder
@@ -26,7 +25,7 @@ class Done extends React.Component {
         city: city.value,
         zip: zip.value
       },
-      properties: [device, model, color, issue, datetime]
+      properties: [device, model, color, issue]
     });
   }
 
@@ -47,7 +46,8 @@ class Done extends React.Component {
       model,
       color,
       issue,
-      datetime,
+      address,
+      city,
       order
     } = this.props;
 
@@ -92,12 +92,8 @@ class Done extends React.Component {
             <li>
               <div className="name">Område</div>
               <div className="value">
-                {customer.value.address}, {zip.value}, DK
+                {address.value}, {zip.value} {city.value}
               </div>
-            </li>
-            <li>
-              <div className="name">Hvornår?</div>
-              <div className="value">{moment().to(datetime.value)}</div>
             </li>
           </ul>
         </div>
@@ -114,7 +110,6 @@ export default connect(
     const model = find("model");
     const color = find("color");
     const issue = find("issue");
-    const datetime = find("datetime");
     const zip = find("zip");
     const city = find("city");
     const address = find("address");
@@ -126,7 +121,6 @@ export default connect(
       model,
       color,
       issue,
-      datetime,
       zip,
       city,
       address,
