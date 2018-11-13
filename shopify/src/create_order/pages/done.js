@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import moment from "moment";
+//import moment from "moment";
 import data from "../../data";
 import { createOrder } from "../store";
 
@@ -39,7 +39,6 @@ class Done extends React.Component {
 
   render() {
     const {
-      customer,
       zip,
       device,
       deviceImage,

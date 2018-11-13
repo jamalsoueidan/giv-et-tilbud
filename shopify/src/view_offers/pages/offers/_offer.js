@@ -46,7 +46,11 @@ class Offer extends React.Component {
           </div>
         </div>
         <div className="input-wrapper">
-          <button type="submit" className="button">
+          <button
+            type="submit"
+            className="button"
+            onClick={() => this.props.onClick(offer)}
+          >
             Vælg tilbud
           </button>
         </div>

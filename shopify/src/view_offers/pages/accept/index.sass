@@ -1,0 +1,54 @@
+.accept
+  .progress-indicator
+    counter-reset: step
+    padding: 0
+    margin-top: 1.25em
+    margin-bottom: 1.25em
+    display: flex
+
+  .progress-indicator-step-active
+    color: #0068ac
+    font-weight: 700
+
+  .progress-indicator-step
+    list-style-type: none
+    color: #333
+    text-align: center
+    display: flex
+    flex-direction: column
+    flex: 1
+    position: relative
+    font-size: 12px
+
+    &::before
+      width: 30px
+      height: 30px
+      font-size: 14px
+      font-weight: 700
+      content: counter(step)
+      counter-increment: step
+      align-self: center
+      align-content: center
+      border: 1px solid #ccc
+      border-radius: 50%
+      background: #efefef
+      color: #777
+      line-height: 2em
+      text-align: center
+      margin-bottom: .5em
+
+    &:not(:last-child):after
+      height: 1px
+      width: calc(100% - 4em)
+      content: ''
+      background: #ccc
+      position: absolute
+      top: 1.25em
+      left: calc(50% + 2em)
+
+  .content
+    display: flex
+    width: 100%
+    margin-right: 10px
+    background-color: #fff
+    border-radius: 6px

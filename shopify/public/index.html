@@ -18,13 +18,32 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
+    <!-- Theme CSS -->
+    <link href="//cdn.shopify.com/s/files/1/0069/9390/3727/t/4/assets/theme.scss.css?6979157724797932775" rel="stylesheet" type="text/css" media="all" />
+    <link href="//cdn.shopify.com/s/files/1/0069/9390/3727/t/4/assets/map.css?6979157724797932775" rel="stylesheet" type="text/css" media="all" />
+
+    <!-- Third Party JS Libraries -->
+    <script src="//cdn.shopify.com/s/files/1/0069/9390/3727/t/4/assets/modernizr-2.7.1.min.js?6979157724797932775" type="text/javascript"></script>
+
+    <!-- Store object -->
+    <script type="text/javascript">
+    Theme = {};
+    Theme.version = "8.4.3";
+    Theme.currency = 'DKK';
+    shopCurrency = 'DKK'; /* used by shipping calculator */
+    Theme.moneyFormat = "{{amount_with_comma_separator}} kr";
+    Theme.moneyFormatCurrency = "{{amount_with_comma_separator}} DKK";
+    Theme.enableCurrencyConverter = false;
+    </script>
+
     <title>React App</title>
   </head>
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="view_offers"></div>
+  <body className="template-page-status" style>
+
+    <main class="main-content" role="main" data-main-content="" style="margin-top: 161px;">
+      <div id="view_offers"></div>
+    </main>
 
     <!--<div id="create_order"></div>
       This HTML file is a template.
@@ -36,5 +55,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+
   </body>
 </html>
