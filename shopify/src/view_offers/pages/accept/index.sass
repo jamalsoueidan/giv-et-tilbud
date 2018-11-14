@@ -6,45 +6,64 @@
     margin-bottom: 1.25em
     display: flex
 
-  .progress-indicator-step-active
-    color: #0068ac
-    font-weight: 700
-
-  .progress-indicator-step
-    list-style-type: none
-    color: #333
-    text-align: center
-    display: flex
-    flex-direction: column
-    flex: 1
-    position: relative
-    font-size: 12px
-
-    &::before
-      width: 30px
-      height: 30px
-      font-size: 14px
-      font-weight: 700
-      content: counter(step)
-      counter-increment: step
-      align-self: center
-      align-content: center
-      border: 1px solid #ccc
-      border-radius: 50%
-      background: #efefef
-      color: #777
-      line-height: 2em
+    .progress-indicator-step
+      list-style-type: none
+      color: #333
       text-align: center
-      margin-bottom: .5em
+      display: flex
+      flex-direction: column
+      flex: 1
+      position: relative
+      font-size: 12px
 
-    &:not(:last-child):after
-      height: 1px
-      width: calc(100% - 4em)
-      content: ''
-      background: #ccc
-      position: absolute
-      top: 1.25em
-      left: calc(50% + 2em)
+      &::before
+        width: 30px
+        height: 30px
+        font-size: 14px
+        font-weight: 700
+        content: counter(step)
+        counter-increment: step
+        align-self: center
+        align-content: center
+        border: 1px solid #ccc
+        border-radius: 50%
+        background: #efefef
+        color: #777
+        line-height: 2em
+        text-align: center
+        margin-bottom: .5em
+
+      &:not(:last-child):after
+        height: 1px
+        width: calc(100% - 4em)
+        content: ''
+        background: #ccc
+        position: absolute
+        top: 1.25em
+        left: calc(50% + 2em)
+
+    .progress-indicator-step-active
+      color: #0068ac
+      font-weight: 700
+
+      &::before
+        color: #fff
+        background: #0068ac
+        border: 1px solid #0068ac
+
+    .progress-indicator-step-complete
+      color: #0068ac
+      font-weight: bold
+
+      &::before
+        color: #0068ac
+        border: 1px solid #0068ac
+        border-radius: 50%
+        font-weight: 700
+
+      &::after
+        background: #0068ac !important
+
 
   .content
     display: flex

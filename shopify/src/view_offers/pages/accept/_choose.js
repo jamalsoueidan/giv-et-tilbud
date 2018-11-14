@@ -1,9 +1,28 @@
 import React from "react";
+import { connect } from "react-redux";
+import { acceptOffer } from "../../store";
+import { confirmAlert } from "react-confirm-alert";
 import "./_choose.sass";
 
 class Choose extends React.Component {
+  onClick = () => {
+    confirmAlert({
+      title: "Acceptere dette tilbud?",
+      message: "Du kan ikke skifte til et andet tilbud.",
+      buttons: [
+        {
+          label: "Ja",
+          onClick: () => this.props.acceptOffer(this.props.offer._id)
+        },
+        {
+          label: "Nej"
+        }
+      ]
+    });
+  };
+
   render() {
-    const { order, offer, onAccept } = this.props;
+    const { order, offer } = this.props;
 
     const properties =
       offer.properties &&
@@ -55,10 +74,15 @@ class Choose extends React.Component {
               <span className="choose-accept-price-cur">Inkl. moms</span>
             </div>
             <div className="choose-accept-button">
-              <button type="submit" className="button" onClick={onAccept}>
+              <button type="submit" className="button" onClick={this.onClick}>
                 Acceptér tilbud
               </button>
             </div>
+          </div>
+
+          <div className="choose-message">
+            <strong>{workshop.name} meddelse:</strong>
+            <p>{properties.message}</p>
           </div>
 
           <h5>Vi er din sikkerhed for en tryg handel.</h5>
@@ -76,4 +100,9 @@ class Choose extends React.Component {
   }
 }
 
-export default Choose;
+export default connect(
+  undefined,
+  {
+    acceptOffer
+  }
+)(Choose);

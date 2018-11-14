@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import axios from "axios";
 import config from "../config";
+import history from "./core/history";
 
 const GET_ORDER_RESPONSE = "GET_ORDER_RESPONSE";
 export const getOrderResponse = order => ({
@@ -9,14 +10,36 @@ export const getOrderResponse = order => ({
   order
 });
 
-export const getOrder = (options = {}) => dispatch => {
+export const getOrder = () => dispatch => {
+  const params = history.getParams();
   axios
     .get(
       `https://${config[process.env.NODE_ENV].apiUrl}/api/offers?token=${
-        options.token
-      }&key=${options.key}`
+        params.token
+      }&key=${params.key}`
     )
     .then(response => dispatch(getOrderResponse(response.data)))
+    .catch(function(error) {
+      console.log(error);
+    });
+};
+
+const ACCEPTED_OFFER = "ACCEPTED_OFFER";
+export const acceptedOffer = offer => ({
+  type: ACCEPTED_OFFER,
+  offer
+});
+
+export const acceptOffer = offerId => dispatch => {
+  const params = history.getParams();
+
+  axios
+    .post(
+      `https://${
+        config[process.env.NODE_ENV].apiUrl
+      }/api/offers/${offerId}/accept?token=${params.token}&key=${params.key}`
+    )
+    .then(response => dispatch(acceptedOffer(response.data)))
     .catch(function(error) {
       console.log(error);
     });
@@ -27,6 +50,15 @@ const rootReducer = combineReducers({
     if (action.type === GET_ORDER_RESPONSE) {
       const order = action.order;
       if (!order.offers) order.offers = [];
+      return order;
+    } else if (action.type === ACCEPTED_OFFER) {
+      const order = {
+        ...state
+      };
+      order.offers = [
+        ...state.offers.filter(offer => offer._id !== action.offer._id),
+        action.offer
+      ];
       return order;
     }
     return state;

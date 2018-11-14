@@ -3,28 +3,10 @@ import classnames from "classnames";
 import Choose from "./_choose";
 import Confirm from "./_confirm";
 import Booking from "./_booking";
-import { confirmAlert } from "react-confirm-alert";
 import history from "../../core/history";
 import "./index.sass";
 
 class Accept extends React.Component {
-  onAccept = () => {
-    confirmAlert({
-      title: "Acceptere dette tilbud?",
-      message: "Du kan ikke skifte til et andet tilbud.",
-      buttons: [
-        {
-          label: "Ja",
-          onClick: () => alert("Click Yes")
-        },
-        {
-          label: "Nej",
-          onClick: () => window.history.back()
-        }
-      ]
-    });
-  };
-
   get accepted() {
     const offer = this.props.offer;
     return offer.accepted && !offer.booking_at;
@@ -48,26 +30,27 @@ class Accept extends React.Component {
     } else if (this.booking_done) {
       return <Confirm order={order} offer={offer} onBooking={this.onBooking} />;
     } else {
-      return <Choose order={order} offer={offer} onAccept={this.onAccept} />;
+      return <Choose order={order} offer={offer} />;
     }
   }
 
   render() {
-    const { order, offer } = this.props;
-
     return (
       <div className="accept">
         <ul className="progress-indicator">
           <li
             className={classnames("progress-indicator-step", {
-              "progress-indicator-step-active": this.choose
+              "progress-indicator-step-active": this.choose,
+              "progress-indicator-step-complete":
+                this.accepted || this.booking_done
             })}
           >
             Vælg tilbud
           </li>
           <li
             className={classnames("progress-indicator-step", {
-              "progress-indicator-step-active": this.accepted
+              "progress-indicator-step-active": this.accepted,
+              "progress-indicator-step-complete": this.booking_done
             })}
           >
             Bestil tid

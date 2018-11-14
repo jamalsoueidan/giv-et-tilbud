@@ -1,0 +1,89 @@
+.booking
+  display: flex
+  flex: 1
+  margin-top: 30px
+  background-color: #d7d7d7
+  padding: 10px
+  border-radius: 5px
+
+  @media only screen and (max-width: 600px)
+    flex-direction: column
+
+  .booking-offer
+    flex: 1
+    background-color: #fff
+    padding: 10px
+    box-sizing: border-box
+
+    .booking-info
+      .booking-info-device
+        font-weight: bold
+
+      .booking-info-created_at
+        color: #777
+
+    .booking-panel
+      margin-bottom: 20px
+      border: 1px solid #ddd
+      border-radius: 4px
+      box-shadow: 0 1px 1px rgba(0,0,0,.05)
+
+      .booking-panel-title
+        padding: 12px
+        margin-bottom: 12px
+
+      .booking-panel-body
+        padding: 0 20px 20px 20px
+        display: flex
+        clear: both
+
+      ul
+        position: relative
+        color: #555
+        list-style: none
+        margin: 0 0 20px
+        padding: 0
+        line-height: 34px
+        height: 34px
+        overflow: hidden
+
+        &::before
+          position: absolute
+          content: ""
+          width: 100%
+          bottom: 0
+          left: 0
+          border-bottom: 1px solid #ddd
+          z-index: 1
+
+        li
+          display: inline-block
+          position: relative
+          z-index: 0
+          margin: 0 5px
+          padding: 0 12px
+
+
+          &::before
+            z-index: 1
+
+        li.selected
+          border: 1px solid #ddd
+          border-top-left-radius: 4px
+          border-top-right-radius: 4px
+          z-index: 2
+          border-bottom-color: #FFF
+          background: #fff
+
+        li:before, li:after
+          position: absolute
+          bottom: -1px
+          width: 6px
+          height: 6px
+          content: " "
+
+        li:before
+          left: -6px
+
+        li:after
+          right: -6px
