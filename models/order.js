@@ -25,6 +25,7 @@ const schema = new mongoose.Schema(
     },
     line_items: [
       {
+        id: Number,
         properties: [
           {
             name: String,
