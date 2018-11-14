@@ -8,6 +8,8 @@ const schema = new mongoose.Schema(
     created_at: { type: Date, default: Date.now },
     accepted: { type: Boolean, default: false },
     accepted_at: Date,
+    booking: { type: String, enum: ["phone", "datetime"] },
+    booking_at: Date,
     distance: String,
     duration: String,
     properties: [
@@ -22,6 +24,8 @@ const schema = new mongoose.Schema(
   }
 );
 schema.index({ order_id: 1, customer_id: 1, workshop_id: 1 }, { unique: true });
+schema.index({ accepted: 1 });
+schema.index({ booking: 1 });
 
 const model = mongoose.model("Offer", schema);
 

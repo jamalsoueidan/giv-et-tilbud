@@ -4,6 +4,7 @@ const Cancel = require("./cancel");
 const Create = require("./create");
 const Offers = require("./offers");
 const Accept = require("./accept");
+const Booking = require("./booking");
 
 module.exports = [
   {
@@ -13,6 +14,27 @@ module.exports = [
     options: {
       auth: false,
       validate: {
+        query: {
+          token: Joi.string()
+            .min(15)
+            .required(),
+          key: Joi.string()
+            .min(15)
+            .required()
+        }
+      }
+    }
+  },
+  {
+    method: "POST",
+    path: "/api/offers/{offerId}/booking",
+    handler: Booking,
+    options: {
+      auth: false,
+      validate: {
+        params: {
+          offerId: Joi.objectId()
+        },
         query: {
           token: Joi.string()
             .min(15)
