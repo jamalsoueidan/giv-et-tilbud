@@ -30,7 +30,16 @@ export default [
       }
     ]
   },
-  { name: "finished", path: "/finished" },
+  {
+    name: "finished",
+    path: "/finished?limit&page",
+    children: [
+      {
+        name: "info",
+        path: "/:id/info"
+      }
+    ]
+  },
   {
     name: "login",
     path: "/login",

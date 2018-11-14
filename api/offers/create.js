@@ -4,6 +4,7 @@ const Offer = require("../../models/offer");
 const User = require("../../models/user");
 const Boom = require("boom");
 const getDirections = require("../../lib/get_directions");
+const fulfillOrder = require("./_fulfill_order.js");
 const aggregateOrderWithOffers = require("./_aggregate_order_with_offers.js");
 
 /**
@@ -19,7 +20,7 @@ module.exports = async req => {
     {
       id: orderId
     },
-    { id: 1, location: 1 }
+    { id: 1, location: 1, line_items: 1 }
   );
 
   if (!order) {
@@ -36,6 +37,14 @@ module.exports = async req => {
   }
 
   const workshop = user.workshops.find(w => w._id == workshopId);
+
+  const countOffers = Offer.count({
+    order_id: order.id
+  });
+
+  if (countOffers >= 2) {
+    fulfillOrder(order, true);
+  }
 
   directions = await getDirections({ workshop, order });
 

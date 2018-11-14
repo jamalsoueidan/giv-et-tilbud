@@ -32,7 +32,9 @@ class Incoming extends React.Component {
         </Typography>
 
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={12}>
+            blah
+          </Grid>
         </Grid>
       </div>
     );

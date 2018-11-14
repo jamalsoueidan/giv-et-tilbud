@@ -1,6 +1,7 @@
 const Order = require("../../models/order");
 const Offer = require("../../models/offer");
 const Boom = require("boom");
+const fulfillOrder = require("./_fulfill_order.js");
 
 module.exports = async req => {
   const { token, key } = req.query;
@@ -15,6 +16,10 @@ module.exports = async req => {
 
   if (!order) {
     return Boom.badData();
+  }
+
+  if (!order.fulfillment_status) {
+    fulfillOrder(order, false);
   }
 
   const booking = req.payload.booking === "phone" ? "phone" : "datetime";

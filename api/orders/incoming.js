@@ -24,7 +24,7 @@ module.exports = async req => {
   const workshop = user.workshops.pop();
 
   let match = {
-    "orders.fulfillment_status": null,
+    fulfillment_status: null,
     "offers.customer_id": { $ne: credentials.customerId }
   };
 

@@ -67,7 +67,14 @@ const Order = ({ data, classes }) => {
               label={`${phone(properties)}`}
               className={classes.chip}
             />
-            <Chip color="secondary" label={properties.issue} />
+            <Chip
+              color="secondary"
+              label={properties.issue}
+              className={classes.chip}
+            />
+            {data.offer.accepted && (
+              <Chip color="primary" label="Accepteret!" />
+            )}
           </Grid>
         </Grid>
       </Grid>
@@ -82,7 +89,7 @@ const Order = ({ data, classes }) => {
             color="primary"
             variant="contained"
             component={Link}
-            routeName="outgoing.info"
+            routeName="finished.info"
             routeParams={{ id: order.id }}
           >
             Se tilbud
