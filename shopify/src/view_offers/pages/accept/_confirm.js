@@ -1,11 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { acceptOffer } from "../../store";
-import { confirmAlert } from "react-confirm-alert";
-import history from "../../core/history";
+import moment from "moment";
 import "./_confirm.sass";
 
-class confirm extends React.Component {
+class Confirm extends React.Component {
   get renderTextBooking() {
     const offer = this.props.offer;
     if (offer.booking_status === "phone") {
@@ -30,18 +27,16 @@ class confirm extends React.Component {
     if (offer.booking_status === "phone") {
       return <React.Fragment>I har aftalt indbyrdes</React.Fragment>;
     } else {
-      return <React.Fragment>{offer.booking_at}</React.Fragment>;
+      return (
+        <React.Fragment>
+          {moment(offer.booking_at).format("Do MMMM YYYY, H:mm:ss")}
+        </React.Fragment>
+      );
     }
   }
+
   render() {
     const { order, offer } = this.props;
-
-    const properties =
-      offer.properties &&
-      offer.properties.reduce((properties, property) => {
-        properties[property.name] = property.value;
-        return properties;
-      }, {});
 
     const orderProperties = order.line_items[0].properties.reduce(
       (properties, property) => {
@@ -63,7 +58,7 @@ class confirm extends React.Component {
             </div>
             <div className="confirm-info-issue">{orderProperties.issue}</div>
             <div className="confirm-info-created_at">
-              oprettet 10. november 2018
+              {moment(order.created_at).format("Do MMMM YYYY, H:mm:ss")}
             </div>
           </div>
           <h4>Tak for din forespørgsel</h4>
@@ -90,9 +85,4 @@ class confirm extends React.Component {
   }
 }
 
-export default connect(
-  undefined,
-  {
-    acceptOffer
-  }
-)(confirm);
+export default Confirm;

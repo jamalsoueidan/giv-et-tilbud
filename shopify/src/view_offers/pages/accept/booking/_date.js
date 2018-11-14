@@ -5,16 +5,36 @@ import "rc-datetime-picker/dist/picker.css";
 import "./_date.sass";
 
 class Date extends Component {
-  constructor() {
-    super();
-    this.state = {
-      moment: moment()
-    };
-  }
+  state = {
+    date: moment(),
+    time: 18,
+    disabled: false
+  };
 
   handleChange = moment => {
     this.setState({
-      moment
+      date: moment
+    });
+  };
+
+  selectChange = evt => {
+    this.setState({ time: Number(evt.target.value) });
+  };
+
+  onClick = () => {
+    const { date, time } = this.state;
+    const booking_at = moment(date)
+      .set("minute", 0)
+      .set("hour", time)
+      .set("second", 0);
+
+    this.setState({
+      disabled: true
+    });
+
+    this.props.onBooking({
+      booking: "datetime",
+      booking_at: booking_at
     });
   };
 
@@ -23,7 +43,7 @@ class Date extends Component {
       <div className="date">
         <h4>Hvilken dag ønsker du din enhed bliver lavet?</h4>
         <DatetimePicker
-          moment={this.state.moment}
+          moment={this.state.date}
           onChange={this.handleChange}
           minDate={moment()}
           weeks={["Søn", "Man", "Tirs", "Ons", "Tors", "Fre", "Lør"]}
@@ -44,19 +64,18 @@ class Date extends Component {
           showTimePicker={false}
         />
         <h4>Hvornår ønsker du at aflevere enheden?</h4>
-        <select>
-          <option value="Morgen (08:00 - 10:00)">Morgen (08:00 - 10:00)</option>
-          <option value="Formiddag (10:00 - 12:00)">
-            Formiddag (10:00 - 12:00)
-          </option>
-          <option value="Eftermiddag (12:00 - 17:00)">
-            Eftermiddag (12:00 - 17:00)
-          </option>
-          <option value="Hele dagen (08:00 - 17:00)">
-            Hele dagen (08:00 - 17:00)
-          </option>
+        <select onChange={this.selectChange} defaultValue={18}>
+          <option value="10">Formiddag (10:00 - 12:00)</option>
+          <option value="12">Middag (12:00 - 15:00)</option>
+          <option value="15">Eftermiddag (15:00 - 18:00)</option>
+          <option value="18">Hele dagen (10:00 - 18:00)</option>
         </select>
-        <button type="submit" className="button">
+        <button
+          type="submit"
+          className="button"
+          onClick={this.onClick}
+          disabled={this.state.disabled}
+        >
           Forespørg tid
         </button>
         <small>

@@ -13,7 +13,7 @@ class Application extends React.Component {
 
   componentDidMount() {
     history.listen(this.onLocationChange);
-    //this.props.getOrder();
+    this.props.getOrder();
   }
 
   onLocationChange = () => {

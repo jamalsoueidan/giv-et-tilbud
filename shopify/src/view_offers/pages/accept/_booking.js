@@ -1,7 +1,8 @@
 import React from "react";
+import moment from "moment";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { acceptOffer } from "../../store";
+import { bookingOffer } from "../../store";
 import Call from "./booking/_call";
 import Date from "./booking/_date";
 import "./_booking.sass";
@@ -11,28 +12,27 @@ class Booking extends React.Component {
     selection: "date"
   };
 
-  onClick = () => {};
-
   changeSelction = selection => {
     this.setState({ selection });
   };
 
+  onBooking = options => {
+    const { bookingOffer, offer } = this.props;
+    bookingOffer({
+      ...options,
+      offerId: offer._id
+    });
+  };
+
   get renderBody() {
     if (this.state.selection === "call") {
-      return <Call />;
+      return <Call onBooking={this.onBooking} offer={this.props.offer} />;
     }
-    return <Date />;
+    return <Date onBooking={this.onBooking} offer={this.props.offer} />;
   }
 
   render() {
     const { order, offer } = this.props;
-
-    const properties =
-      offer.properties &&
-      offer.properties.reduce((properties, property) => {
-        properties[property.name] = property.value;
-        return properties;
-      }, {});
 
     const orderProperties = order.line_items[0].properties.reduce(
       (properties, property) => {
@@ -54,7 +54,7 @@ class Booking extends React.Component {
             </div>
             <div className="booking-info-issue">{orderProperties.issue}</div>
             <div className="booking-info-created_at">
-              oprettet 10. november 2018
+              {moment(order.created_at).format("Do MMMM YYYY, H:mm:ss")}
             </div>
           </div>
           <p>Tilbuddet er accepteret og du skal nu bestille tid.</p>
@@ -67,30 +67,30 @@ class Booking extends React.Component {
                   selected: this.state.selection === "call"
                 })}
               >
-                <a
-                  href="#"
+                <button
+                  className="link"
                   onClick={evt => {
                     evt.preventDefault();
                     this.changeSelction("call");
                   }}
                 >
                   Ring
-                </a>
+                </button>
               </li>
               <li
                 className={classnames({
                   selected: this.state.selection === "date"
                 })}
               >
-                <a
-                  href="#"
+                <button
+                  className="link"
                   onClick={evt => {
                     evt.preventDefault();
                     this.changeSelction("date");
                   }}
                 >
                   Book online
-                </a>
+                </button>
               </li>
             </ul>
             <div className="booking-panel-body">{this.renderBody}</div>
@@ -104,6 +104,6 @@ class Booking extends React.Component {
 export default connect(
   undefined,
   {
-    acceptOffer
+    bookingOffer
   }
 )(Booking);

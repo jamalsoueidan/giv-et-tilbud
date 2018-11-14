@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { connect } from "react-redux";
 import { acceptOffer } from "../../store";
 import { confirmAlert } from "react-confirm-alert";
@@ -6,6 +7,10 @@ import history from "../../core/history";
 import "./_choose.sass";
 
 class Choose extends React.Component {
+  state = {
+    disabled: false
+  };
+
   onClick = () => {
     confirmAlert({
       title: "Acceptere dette tilbud?",
@@ -13,7 +18,10 @@ class Choose extends React.Component {
       buttons: [
         {
           label: "Ja",
-          onClick: () => this.props.acceptOffer(this.props.offer._id)
+          onClick: () => {
+            this.setState({ disabled: true });
+            this.props.acceptOffer(this.props.offer._id);
+          }
         },
         {
           label: "Nej"
@@ -62,7 +70,7 @@ class Choose extends React.Component {
             </div>
             <div className="choose-info-issue">{orderProperties.issue}</div>
             <div className="choose-info-created_at">
-              oprettet 10. november 2018
+              {moment(order.created_at).format("Do MMMM YYYY, H:mm:ss")}
             </div>
           </div>
           <p>
@@ -85,13 +93,18 @@ class Choose extends React.Component {
               <span className="choose-accept-price-cur">Inkl. moms</span>
             </div>
             <div className="choose-accept-button">
-              <button type="submit" className="button" onClick={this.onClick}>
+              <button
+                type="submit"
+                className="button"
+                onClick={this.onClick}
+                disabled={this.state.disabled}
+              >
                 Acceptér tilbud
               </button>
 
-              <a href="#" onClick={this.cancel}>
+              <button className="link" onClick={this.cancel}>
                 eller annullere
-              </a>
+              </button>
             </div>
           </div>
 

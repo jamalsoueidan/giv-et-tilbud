@@ -1,3 +1,5 @@
+import "moment/locale/da";
+
 const createOrder = document.getElementById("create_order");
 if (createOrder) {
   import("./create_order").then(module => module.default(createOrder));

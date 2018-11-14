@@ -3,7 +3,6 @@ import classnames from "classnames";
 import Choose from "./_choose";
 import Confirm from "./_confirm";
 import Booking from "./_booking";
-import history from "../../core/history";
 import "./index.sass";
 
 class Accept extends React.Component {

@@ -24,6 +24,31 @@ export const getOrder = () => dispatch => {
     });
 };
 
+const BOOKING_OFFER = "BOOKING_OFFER";
+export const setBookingOffer = offer => ({
+  type: BOOKING_OFFER,
+  offer
+});
+
+export const bookingOffer = (options = {}) => dispatch => {
+  const params = history.getParams();
+
+  axios
+    .post(
+      `https://${config[process.env.NODE_ENV].apiUrl}/api/offers/${
+        options.offerId
+      }/booking?token=${params.token}&key=${params.key}`,
+      {
+        booking: options.booking,
+        booking_at: options.booking_at
+      }
+    )
+    .then(response => dispatch(setBookingOffer(response.data)))
+    .catch(function(error) {
+      console.log(error);
+    });
+};
+
 const ACCEPTED_OFFER = "ACCEPTED_OFFER";
 export const acceptedOffer = offer => ({
   type: ACCEPTED_OFFER,
@@ -51,14 +76,24 @@ const rootReducer = combineReducers({
       const order = action.order;
       if (!order.offers) order.offers = [];
       return order;
-    } else if (action.type === ACCEPTED_OFFER) {
+    } else if (
+      action.type === ACCEPTED_OFFER ||
+      action.type === BOOKING_OFFER
+    ) {
       const order = {
         ...state
       };
-      order.offers = [
-        ...state.offers.filter(offer => offer._id !== action.offer._id),
-        action.offer
-      ];
+
+      const offers = state.offers.filter(
+        offer => offer._id !== action.offer._id
+      );
+
+      const offer = {
+        ...state.offers.find(offer => offer._id === action.offer._id),
+        ...action.offer
+      };
+
+      order.offers = [...offers, offer];
       return order;
     }
     return state;
@@ -70,7 +105,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
   {
-    order: {
+    /*order: {
       id: 713046851695,
       location: {
         type: "Point",
@@ -144,10 +179,6 @@ const store = createStore(
               value: "10000"
             }
           ],
-          accepted: true,
-          accepted_at: "2018-11-14T13:18:28.633Z",
-          booking_at: "2018-11-14T13:18:28.633Z",
-          booking_status: "phone",
           workshop: {
             location: {
               type: "Point",
@@ -200,7 +231,7 @@ const store = createStore(
           }
         }
       ]
-    }
+    }*/
   },
   composeEnhancers(applyMiddleware(thunk))
 );
