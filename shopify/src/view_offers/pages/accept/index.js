@@ -14,7 +14,7 @@ class Accept extends React.Component {
 
   get booking_done() {
     const offer = this.props.offer;
-    return offer.accepted && offer.booking_at;
+    return offer.accepted && (offer.booking_at || offer.booking_status);
   }
 
   get choose() {

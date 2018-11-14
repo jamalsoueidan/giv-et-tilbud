@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { acceptOffer } from "../../store";
 import { confirmAlert } from "react-confirm-alert";
+import history from "../../core/history";
 import "./_choose.sass";
 
 class Choose extends React.Component {
@@ -19,6 +20,16 @@ class Choose extends React.Component {
         }
       ]
     });
+  };
+
+  cancel = evt => {
+    evt.preventDefault();
+    history.push(
+      history.jsonToParams({
+        ...history.getParams(),
+        page: ""
+      })
+    );
   };
 
   render() {
@@ -77,6 +88,10 @@ class Choose extends React.Component {
               <button type="submit" className="button" onClick={this.onClick}>
                 Acceptér tilbud
               </button>
+
+              <a href="#" onClick={this.cancel}>
+                eller annullere
+              </a>
             </div>
           </div>
 

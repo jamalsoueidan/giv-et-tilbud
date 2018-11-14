@@ -44,13 +44,16 @@
 
         @media only screen and (max-width: 600px)
           text-align: center
-          margin-bottom: 10px
+          margin-bottom: 25px
 
       .choose-accept-price
         display: flex
         flex-direction: column
-        justify-content: center
         flex: 1
+
+        @media only screen and (max-width: 600px)
+          flex-direction: row
+          justify-content: center
 
         span
           display: block
@@ -62,6 +65,9 @@
           &.choose-accept-price-number
             font-weight: bold
 
+            @media only screen and (max-width: 600px)
+              margin-right: 8px
+
           &.choose-accept-price-cur
             color: #777
 
@@ -70,14 +76,21 @@
         flex: 1
         justify-content: flex-end
         align-items: center
+        flex-direction: column
 
         @media only screen and (max-width: 600px)
           justify-content: center
 
         .button
-          width: calc(100% - 12px)
+          width: calc(100% - 15px)
           max-height: 54px
-          padding: 12px
+          padding: 10px
+          margin: 0 0 10px 15px
+
+          @media only screen and (max-width: 600px)
+            width: 100%
+            margin: 0 0 10px 0
+
 
     h5
       font-size: 14px

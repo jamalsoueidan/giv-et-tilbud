@@ -144,6 +144,10 @@ const store = createStore(
               value: "10000"
             }
           ],
+          accepted: true,
+          accepted_at: "2018-11-14T13:18:28.633Z",
+          booking_at: "2018-11-14T13:18:28.633Z",
+          booking_status: "phone",
           workshop: {
             location: {
               type: "Point",
