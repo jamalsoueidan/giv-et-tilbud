@@ -29,11 +29,9 @@ module.exports = [
               .required(),
             first_name: Joi.string()
               .required()
-              .alphanum()
               .min(2),
             last_name: Joi.string()
               .required()
-              .alphanum()
               .min(2)
           }
         }
