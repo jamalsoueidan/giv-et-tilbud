@@ -46,26 +46,22 @@ export const getFinished = createSelector(
   cleanUp
 );
 
+const byRouteId = (orders, route) => {
+  const orderId = Number(route.params.id);
+  if (!orders.results) {
+    return null;
+  }
+  return orders.results.find(order => order.id === orderId);
+};
+
 export const getOutgoingByRouteId = createSelector(
   getOutgoing,
   route,
-  (orders, route) => {
-    const orderId = Number(route.params.id);
-    if (!orders.results) {
-      return null;
-    }
-    return orders.results.find(order => order.id === orderId);
-  }
+  byRouteId
 );
 
 export const getFinishedByRouteId = createSelector(
   getFinished,
   route,
-  (orders, route) => {
-    const orderId = Number(route.params.id);
-    if (!orders.results) {
-      return null;
-    }
-    return orders.results.find(order => order.id === orderId);
-  }
+  byRouteId
 );
