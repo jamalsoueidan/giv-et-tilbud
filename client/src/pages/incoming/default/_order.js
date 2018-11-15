@@ -20,31 +20,7 @@ const styles = theme => ({
   }
 });
 
-const Order = ({ data, classes }) => {
-  const phone = properties => {
-    return `${properties.device} ${properties.model}, ${properties.color}`;
-  };
-
-  const properties = data.line_items[0].properties.reduce(
-    (properties, property) => {
-      properties[property.name] = property.value;
-      return properties;
-    },
-    {}
-  );
-  const order = {
-    created_at: data.created_at,
-    id: data.id,
-    offers_count: data.offers_count
-  };
-
-  const customer = {
-    first_name: data.customer.first_name,
-    address: data.shipping_address.address1,
-    zip: data.shipping_address.zip,
-    city: data.shipping_address.city
-  };
-
+const Order = ({ order, classes }) => {
   return (
     <Grid
       container
@@ -65,13 +41,15 @@ const Order = ({ data, classes }) => {
             <Chip
               color="primary"
               variant="outlined"
-              label={`${phone(properties)}`}
+              label={`${order.properties.device} ${order.properties.model}, ${
+                order.properties.color
+              }`}
               className={classes.chip}
             />
-            <Chip color="secondary" label={properties.issue} />
+            <Chip color="secondary" label={order.properties.issue} />
           </Grid>
           <Grid item xs={12}>
-            Nær {customer.zip} {customer.city}
+            Nær {order.customer.zip} {order.customer.city}
           </Grid>
         </Grid>
       </Grid>

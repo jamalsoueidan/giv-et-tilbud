@@ -60,12 +60,6 @@ class Info extends React.Component {
 
     const offer = order.offer;
 
-    const findProperty = (offer => property =>
-      R.find(R.propEq("name", property))(offer.properties))(offer);
-
-    const message = findProperty("message");
-    const price = findProperty("price");
-
     return (
       <React.Fragment>
         <Typography component="h2" variant="h4" gutterBottom>
@@ -79,13 +73,13 @@ class Info extends React.Component {
               gutterBottom
             />
             <Typography variant="h5" component="h2">
-              {price.value} kr,-
+              {offer.properties.price} kr,-
             </Typography>
 
             <Typography className={classes.pos} color="textSecondary">
               {moment(offer.created_at).fromNow()}
             </Typography>
-            <Typography component="p">{message.value}</Typography>
+            <Typography component="p">{offer.properties.message}</Typography>
           </CardContent>
           <CardActions>
             <Button size="small" onClick={this.openConfirm}>

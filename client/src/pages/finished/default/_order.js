@@ -19,43 +19,20 @@ const styles = theme => ({
   }
 });
 
-const Order = ({ data, classes }) => {
-  const phone = properties => {
-    return `${properties.device} ${properties.model}, ${properties.color}`;
-  };
-
-  const properties = data.line_items[0].properties.reduce(
-    (properties, property) => {
-      properties[property.name] = property.value;
-      return properties;
-    },
-    {}
-  );
-  const order = {
-    created_at: data.created_at,
-    id: data.id
-  };
-
-  const customer = {
-    first_name: data.customer.first_name,
-    address: data.shipping_address.address1,
-    zip: data.shipping_address.zip,
-    city: data.shipping_address.city
-  };
-
+const Order = ({ order, classes }) => {
   return (
     <Grid container spacing={24} className={classes.root}>
       <Grid item xs={12} sm={8}>
         <Grid container direction="column">
           <Grid item xs={12}>
             <Typography variant="subtitle1" gutterBottom>
-              {customer.zip} {customer.city}
+              {order.customer.zip} {order.customer.city}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              {customer.first_name}
+              {order.customer.first_name}
             </Typography>
             <Typography variant="body2" gutterBottom>
-              {moment(properties.datetime).format(
+              {moment(order.properties.datetime).format(
                 "dddd, MMMM Do YYYY, H:mm:ss"
               )}
             </Typography>
@@ -64,15 +41,17 @@ const Order = ({ data, classes }) => {
             <Chip
               color="primary"
               variant="outlined"
-              label={`${phone(properties)}`}
+              label={`${order.properties.device} ${order.properties.model}, ${
+                order.properties.color
+              }`}
               className={classes.chip}
             />
             <Chip
               color="secondary"
-              label={properties.issue}
+              label={order.properties.issue}
               className={classes.chip}
             />
-            {data.offer.accepted && (
+            {order.offer.accepted && (
               <Chip color="primary" label="Accepteret!" />
             )}
           </Grid>

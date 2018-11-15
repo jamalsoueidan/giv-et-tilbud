@@ -9,7 +9,7 @@ class Index extends React.Component {
   render() {
     const route = this.props.route;
     const data = RouterHelper.getRoute(route.name);
-
+    console.log(route);
     if (data.name === "finished") {
       return <Default {...this.props} />;
     } else {
@@ -18,4 +18,4 @@ class Index extends React.Component {
   }
 }
 
-export default connect(createRouteNodeSelector("finished"))(Index);
+export default connect(state => createRouteNodeSelector("finished"))(Index);

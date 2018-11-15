@@ -2,7 +2,10 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { actions as OrdersActions } from "../../../store/orders";
+import {
+  actions as OrdersActions,
+  selectors as OrdersSelectors
+} from "../../../store/orders";
 import { selectors as DataSelectors } from "../../../store/data";
 import { actions as RouterActions } from "redux-router5";
 import TablePagination from "@material-ui/core/TablePagination";
@@ -44,7 +47,7 @@ class Orders extends React.Component {
       <Grid container spacing={24} direction="column">
         <Grid item>
           {orders.results.map(order => (
-            <Order key={order.id} data={order} />
+            <Order key={order.id} order={order} />
           ))}
         </Grid>
         <Grid item>
@@ -72,7 +75,7 @@ class Orders extends React.Component {
 export default connect(
   state => ({
     selectedWorkshop: DataSelectors.getSelectedWorkshop(state),
-    orders: state.orders.finished
+    orders: OrdersSelectors.getFinished(state)
   }),
   {
     load: OrdersActions.loadFinished,

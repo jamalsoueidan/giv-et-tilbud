@@ -56,7 +56,7 @@ class Finished extends React.Component {
                   variant="contained"
                   component={Link}
                   className={classes.button}
-                  routeName="outgoing.info"
+                  routeName="finished.info"
                   routeParams={{ id: order.id }}
                 >
                   Se info

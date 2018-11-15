@@ -1,5 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { selectors as OrderSelectors } from "../../store/orders";
+import { actions as RouterActions } from "redux-router5";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
@@ -21,9 +24,25 @@ const styles = theme => ({
   }
 });
 
-class Incoming extends React.Component {
+class Info extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.order) {
+      this.props.navigate("finished");
+    }
+  }
+
+  componentWillMount() {
+    if (!this.props.order) {
+      this.props.navigate("finished");
+    }
+  }
+
   render() {
-    const { classes } = this.props;
+    const { order, classes } = this.props;
+
+    if (!order) {
+      return null;
+    }
 
     return (
       <div className={classes.root}>
@@ -33,7 +52,7 @@ class Incoming extends React.Component {
 
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12}>
-            blah
+            {order.id}
           </Grid>
         </Grid>
       </div>
@@ -41,4 +60,11 @@ class Incoming extends React.Component {
   }
 }
 
-export default withStyles(styles)(Incoming);
+export default connect(
+  state => ({
+    order: OrderSelectors.getFinishedByRouteId(state)
+  }),
+  {
+    navigate: RouterActions.navigateTo
+  }
+)(withStyles(styles)(Info));

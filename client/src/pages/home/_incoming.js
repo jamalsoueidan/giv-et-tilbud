@@ -39,6 +39,7 @@ class Incoming extends React.Component {
   render() {
     const { orders, classes, selectedWorkshop } = this.props;
 
+    console.log(selectedWorkshop);
     if (!orders.results) {
       return <div>Vent et øjeblik</div>;
     }
