@@ -38,7 +38,7 @@ module.exports = async req => {
 
   const workshop = user.workshops.find(w => w._id == workshopId);
 
-  const countOffers = Offer.count({
+  const countOffers = await Offer.count({
     order_id: order.id
   });
 
