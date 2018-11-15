@@ -1,4 +1,5 @@
 "use strict";
+const Boom = require("boom");
 const Hapi = require("hapi");
 
 require("dotenv").load();
