@@ -10,7 +10,9 @@
     "both": "concurrently \"npm run client\" \"npm run shopify\" \"npm run server\"",
     "start": "node index.js",
     "test": "ava --tap | tap-nyan",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "npm run deploy-client && npm run deploy-shopify",
+    "deploy-client": "cd client && npm run execute",
+    "deploy-shopify": "node shopify/undeploy && cd shopify && npm run execute && cd .. && node shopify/deploy"
   },
   "author": "",
   "license": "ISC",
