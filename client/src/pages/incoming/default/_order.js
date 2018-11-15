@@ -50,7 +50,7 @@ const Order = ({ data, classes }) => {
       container
       alignItems="center"
       direction="row"
-      spacing={12}
+      spacing={16}
       className={classes.root}
     >
       <Grid item xs={12} sm={6}>

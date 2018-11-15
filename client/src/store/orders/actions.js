@@ -40,6 +40,18 @@ export const loadIncoming = (options = {}) => {
   };
 };
 
+export const ACCEPTED_REQUEST = "@@orders/ACCEPTED_REQUEST";
+export const ACCEPTED_SUCCESS = "@@orders/ACCEPTED_SUCCESS";
+export const ACCEPTED_FAILURE = "@@orders/ACCEPTED_FAILURE";
+
+export const loadAccepted = () => ({
+  [RSAA]: {
+    types: [ACCEPTED_REQUEST, ACCEPTED_SUCCESS, ACCEPTED_FAILURE],
+    endpoint: `/api/orders/accepted`,
+    method: "GET"
+  }
+});
+
 export const loadOutgoing = (page, limit) => ({
   [RSAA]: {
     types: [

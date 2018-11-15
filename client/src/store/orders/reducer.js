@@ -32,8 +32,16 @@ const finished = (state = initState, action) => {
   return state;
 };
 
+const accepted = (state = initState, action) => {
+  if (action.type === actions.ACCEPTED_SUCCESS) {
+    return action.payload;
+  }
+  return state;
+};
+
 export default (state = initState, action) => ({
   incoming: incoming(state.incoming, action),
   outgoing: outgoing(state.outgoing, action),
-  finished: finished(state.finished, action)
+  finished: finished(state.finished, action),
+  accepted: accepted(state.accepted, action)
 });
