@@ -9,7 +9,7 @@ module.exports = async req => {
   const limit = parseInt(req.query.limit) || 5;
   const fulfillment_status =
     req.query.fulfillment_status === "fulfilled" ? "fulfilled" : null;
-  console.log(fulfillment_status);
+
   //https://stackoverflow.com/questions/38954687/how-to-apply-condition-on-lookup-result-in-mongodb
   const aggregate = await Order.aggregate([
     {
