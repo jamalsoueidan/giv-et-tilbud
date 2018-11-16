@@ -2,10 +2,23 @@ const Create = require("./create");
 const Incoming = require("./incoming");
 const Outgoing = require("./outgoing");
 const Accepted = require("./accepted");
+const ById = require("./by_id");
 const Order = require("../../models/order");
 const Joi = require("joi");
 
 module.exports = [
+  {
+    method: "GET",
+    path: "/api/orders/{orderId}",
+    handler: ById,
+    options: {
+      validate: {
+        params: {
+          orderId: Joi.number().required()
+        }
+      }
+    }
+  },
   {
     method: "GET",
     path: "/api/orders/incoming",
