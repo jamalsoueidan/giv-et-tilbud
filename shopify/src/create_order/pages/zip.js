@@ -35,6 +35,11 @@ class Zip extends React.Component {
     this.debounceFindAddress = debounce(this.fetch, 250);
   };
 
+  scroll = () => {
+    const node = ReactDOM.findDOMNode(this);
+    node.querySelector(".page-title").scrollIntoView();
+  };
+
   render() {
     return (
       <div className="page-zip">
@@ -108,6 +113,11 @@ class Zip extends React.Component {
                   items={this.props.address}
                   getItemValue={item => item.tekst}
                   onSelect={(value, item) => {
+                    this.input.blur();
+                    setTimeout(() => {
+                      const node = ReactDOM.findDOMNode(this);
+                      node.querySelector(".page-title").scrollIntoView();
+                    }, 150);
                     this.setState({ value, item });
                   }}
                   onChange={(event, value) => {
