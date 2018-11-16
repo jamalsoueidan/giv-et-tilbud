@@ -12,7 +12,8 @@
     "test": "ava --tap | tap-nyan",
     "heroku-postbuild": "npm run deploy-client && npm run deploy-shopify",
     "deploy-client": "cd client && npm run execute",
-    "deploy-shopify": "node shopify/undeploy && cd shopify && npm run execute && cd .. && node shopify/deploy"
+    "deploy-shopify": "node shopify/undeploy && cd shopify && npm run execute && cd .. && node shopify/deploy",
+    "deploy": "node shopify/undeploy && cd shopify && npm run build && cd .. && node shopify/deploy"
   },
   "author": "",
   "license": "ISC",

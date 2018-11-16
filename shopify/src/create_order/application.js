@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import createHistory from "history/createBrowserHistory";
 import Zip from "./pages/zip";
 import Devices from "./pages/devices";
@@ -21,6 +22,12 @@ class App extends Component {
   componentDidMount() {
     history.listen(this.onLocationChange);
   }
+
+  scrollIntoView = () => {
+    // https://davidwalsh.name/get-react-component-element
+    const node = ReactDOM.findDOMNode(this);
+    node.querySelector(".progressbar-progress").scrollIntoView();
+  };
 
   getNextPage = () => {
     const currentPage = this.state.page;
@@ -53,6 +60,7 @@ class App extends Component {
     this.setState({
       page: reloadPage
     });
+    this.scrollIntoView();
   };
 
   get renderPage() {

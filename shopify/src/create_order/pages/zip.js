@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { toggleProperty, findAddress } from "../store";
 import { Formik } from "formik";
@@ -23,16 +24,16 @@ function debounce(func, wait, immediate) {
 
 class Zip extends React.Component {
   state = {
-    value: ""
+    value: undefined
   };
 
   fetch = value => {
     this.props.findAddress(value);
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.debounceFindAddress = debounce(this.fetch, 250);
-  }
+  };
 
   render() {
     return (
@@ -89,6 +90,7 @@ class Zip extends React.Component {
                 )}
 
                 <Autocomplete
+                  ref={el => (this.input = el)}
                   inputProps={{
                     name: "address",
                     type: "text",
@@ -105,7 +107,9 @@ class Zip extends React.Component {
                   value={this.state.value}
                   items={this.props.address}
                   getItemValue={item => item.tekst}
-                  onSelect={(value, item) => this.setState({ value, item })}
+                  onSelect={(value, item) => {
+                    this.setState({ value, item });
+                  }}
                   onChange={(event, value) => {
                     this.setState({ value });
                     this.debounceFindAddress(value);

@@ -89,12 +89,14 @@ const deleteAllAssets = async () => {
       return assets;
     }, []);
 
-    assets.forEach(async asset => {
-      const response = await deleteAssets({
-        theme,
-        key: asset.key
-      });
-      console.log("Deleting...", asset.key);
+    assets.forEach((asset, index) => {
+      setTimeout(async () => {
+        const response = await deleteAssets({
+          theme,
+          key: asset.key
+        });
+        console.log("Deleting...", asset.key);
+      }, index * 2000);
     });
   } catch (error) {
     console.log(error);
