@@ -39,9 +39,17 @@ const accepted = (state = initState, action) => {
   return state;
 };
 
+const order = (state = null, action) => {
+  if (action.type === actions.ORDER_SUCCESS) {
+    return action.payload;
+  }
+  return state;
+};
+
 export default (state = initState, action) => ({
   incoming: incoming(state.incoming, action),
   outgoing: outgoing(state.outgoing, action),
   finished: finished(state.finished, action),
-  accepted: accepted(state.accepted, action)
+  accepted: accepted(state.accepted, action),
+  order: order(state.order, action)
 });

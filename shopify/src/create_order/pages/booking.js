@@ -31,7 +31,6 @@ const fromToday = () => {
   }
 
   if (moment().isBefore(openingTime())) {
-    console.log("start of day");
     return openingTime();
   }
 

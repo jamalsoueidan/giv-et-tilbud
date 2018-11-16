@@ -8,7 +8,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { Confirm } from "../../components";
 import { actions as RouterActions } from "redux-router5";
-import * as R from "ramda";
 
 import {
   actions as OrderActions,
@@ -39,15 +38,9 @@ class Info extends React.Component {
     this.setState({ open: true });
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.order) {
-      this.props.navigate("outgoing");
-    }
-  }
-
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.order) {
-      this.props.navigate("outgoing");
+      this.props.loadOrder(this.props.route.params.id);
     }
   }
 
@@ -100,10 +93,10 @@ class Info extends React.Component {
 
 export default connect(
   state => ({
-    order: OrderSelectors.getOutgoingByRouteId(state)
+    order: OrderSelectors.getOutgoingOrderById(state)
   }),
   {
-    cancelOffer: OrderActions.cancelOffer,
+    loadOrder: OrderActions.loadOrder,
     navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Info));

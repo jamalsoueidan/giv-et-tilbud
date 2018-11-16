@@ -40,6 +40,18 @@ export const loadIncoming = (options = {}) => {
   };
 };
 
+export const ORDER_REQUEST = "@@orders/ORDER_REQUEST";
+export const ORDER_SUCCESS = "@@orders/ORDER_SUCCESS";
+export const ORDER_FAILURE = "@@orders/ORDER_FAILURE";
+
+export const loadOrder = orderId => ({
+  [RSAA]: {
+    types: [ORDER_REQUEST, ORDER_SUCCESS, ORDER_FAILURE],
+    endpoint: `/api/orders/${orderId}`,
+    method: "GET"
+  }
+});
+
 export const ACCEPTED_REQUEST = "@@orders/ACCEPTED_REQUEST";
 export const ACCEPTED_SUCCESS = "@@orders/ACCEPTED_SUCCESS";
 export const ACCEPTED_FAILURE = "@@orders/ACCEPTED_FAILURE";

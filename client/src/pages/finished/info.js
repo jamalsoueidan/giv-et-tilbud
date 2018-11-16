@@ -1,7 +1,10 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { selectors as OrderSelectors } from "../../store/orders";
+import {
+  selectors as OrderSelectors,
+  actions as OrderActions
+} from "../../store/orders";
 import { actions as RouterActions } from "redux-router5";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -25,15 +28,9 @@ const styles = theme => ({
 });
 
 class Info extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.order) {
-      this.props.navigate("finished");
-    }
-  }
-
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.order) {
-      this.props.navigate("finished");
+      this.props.loadOrder(this.props.route.params.id);
     }
   }
 
@@ -52,7 +49,8 @@ class Info extends React.Component {
 
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12}>
-            {order.id}
+            {order.id} <br />
+            {order.customer.first_name} {order.customer.last_name}
           </Grid>
         </Grid>
       </div>
@@ -62,9 +60,10 @@ class Info extends React.Component {
 
 export default connect(
   state => ({
-    order: OrderSelectors.getFinishedByRouteId(state)
+    order: OrderSelectors.getFinishedOrderById(state)
   }),
   {
+    loadOrder: OrderActions.loadOrder,
     navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Info));
