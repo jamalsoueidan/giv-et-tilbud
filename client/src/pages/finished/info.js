@@ -1,31 +1,15 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import {
-  selectors as OrderSelectors,
-  actions as OrderActions
-} from "../../store/orders";
+import { withStyles, Typography, Chip } from "@material-ui/core";
+import { InformationLayout, OrderInfo, Panel } from "components";
 import { actions as RouterActions } from "redux-router5";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 
-const styles = theme => ({
-  root: {
-    flex: 1
-  },
-  header: {
-    margin: `${theme.spacing.unit * 2}px  0 ${theme.spacing.unit * 4}px`
-  },
-  table: {
-    minWidth: 700
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit
-  }
-});
+import {
+  actions as OrderActions,
+  selectors as OrderSelectors
+} from "../../store/orders";
+
+const styles = theme => ({});
 
 class Info extends React.Component {
   componentDidMount() {
@@ -35,32 +19,36 @@ class Info extends React.Component {
   }
 
   render() {
-    const { order, classes } = this.props;
+    const { order } = this.props;
 
     if (!order) {
       return null;
     }
 
     return (
-      <div className={classes.root}>
-        <Typography variant="h4" className={classes.header}>
-          Information om resultatet af opgaver
-        </Typography>
-
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12}>
-            {order.id} <br />
-            {order.customer.first_name} {order.customer.last_name}
-          </Grid>
-        </Grid>
-      </div>
+      <InformationLayout
+        title={
+          <React.Fragment>
+            Resultat af ordre
+            {order.offer.accepted && (
+              <Chip
+                color="primary"
+                label="Accepteret!"
+                style={{ marginLeft: "16px" }}
+              />
+            )}
+          </React.Fragment>
+        }
+      >
+        <OrderInfo order={order} />
+      </InformationLayout>
     );
   }
 }
 
 export default connect(
   state => ({
-    order: OrderSelectors.getFinishedOrderById(state)
+    order: OrderSelectors.getOutgoingOrderById(state)
   }),
   {
     loadOrder: OrderActions.loadOrder,

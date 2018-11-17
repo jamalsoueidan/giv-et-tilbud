@@ -33,7 +33,10 @@ class Orders extends React.Component {
   };
 
   componentDidMount() {
-    this.props.loadOutgoing();
+    const { orders, load } = this.props;
+    if (!orders.results) {
+      load();
+    }
   }
 
   render() {
@@ -78,7 +81,7 @@ export default connect(
     orders: OrdersSelectors.getOutgoing(state)
   }),
   {
-    loadOutgoing: OrdersActions.loadOutgoing,
+    load: OrdersActions.loadOutgoing,
     navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Orders));

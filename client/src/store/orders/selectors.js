@@ -6,13 +6,16 @@ const keyValue = (properties, property) => {
 };
 
 const cleanUpOrder = order => {
-  order.properties = order.line_items[0].properties.reduce(keyValue, {});
+  //https://stackoverflow.com/questions/18359093/how-to-copy-javascript-object-to-new-variable-not-by-reference?answertab=votes#tab-top
+  const newOrder = JSON.parse(JSON.stringify(order));
 
-  if (order.offer) {
-    order.offer.properties = order.offer.properties.reduce(keyValue, {});
+  newOrder.properties = newOrder.line_items[0].properties.reduce(keyValue, {});
+
+  if (newOrder.offer) {
+    newOrder.offer.properties = newOrder.offer.properties.reduce(keyValue, {});
   }
 
-  order.customer = {
+  newOrder.customer = {
     first_name: order.customer.first_name,
     last_name: order.customer.last_name,
     address: order.shipping_address.address1,
@@ -20,70 +23,68 @@ const cleanUpOrder = order => {
     city: order.shipping_address.city
   };
 
-  return order;
+  return newOrder;
 };
 
 const cleanUpAllOrders = orders => {
   if (orders.results) {
-    orders.results = orders.results.map(cleanUpOrder);
+    return {
+      ...orders,
+      results: orders.results.map(cleanUpOrder)
+    };
   }
   return orders;
 };
 
-export const getOutgoing = createSelector(
-  state => state.orders.outgoing,
-  cleanUpAllOrders
-);
+const outgoing = state => state.orders.outgoing;
+export const getOutgoing = createSelector(outgoing, cleanUpAllOrders);
 
-export const getIncoming = createSelector(
-  state => state.orders.incoming,
-  cleanUpAllOrders
-);
+const incoming = state => state.orders.incoming;
+export const getIncoming = createSelector(incoming, cleanUpAllOrders);
 
-export const getFinished = createSelector(
-  state => state.orders.finished,
-  cleanUpAllOrders
-);
+const finished = state => state.orders.finished;
+export const getFinished = createSelector(finished, cleanUpAllOrders);
 
 const getOrder = state => state.orders.order;
 const route = state => state.router.route;
 
-const byRouteId = (orders, route) => {
-  const orderId = Number(route.params.id);
+const byRouteId = (orders, orderId) => {
   if (!orders.results) {
     return null;
   }
   return orders.results.find(order => order.id === orderId);
 };
 
-const find = (orders, order, route) => {
+const find = (orders, order, orderId) => {
   const found = byRouteId(orders, route);
   if (found) return found;
 
-  if (order && order.id === Number(route.params.id)) {
+  if (order && order.id === orderId) {
     return cleanUpOrder(order);
   }
 
   return null;
 };
 
+const orderId = state => Number(state.router.route.params.id);
+
 export const getOutgoingOrderById = createSelector(
   getOutgoing,
   getOrder,
-  route,
+  orderId,
   find
 );
 
 export const getIncomingOrderById = createSelector(
   getIncoming,
   getOrder,
-  route,
+  orderId,
   find
 );
 
 export const getFinishedOrderById = createSelector(
   getFinished,
   getOrder,
-  route,
+  orderId,
   find
 );

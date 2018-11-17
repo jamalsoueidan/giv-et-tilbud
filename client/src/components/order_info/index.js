@@ -20,10 +20,27 @@ export default ({ order }) => {
       <Typography variant="body2" gutterBottom>
         Kunde informationer:
       </Typography>
-      <Typography variant="body1">{order.customer.first_name}</Typography>
+      <Typography variant="body1" gutterBottom>
+        {order.customer.first_name} {order.customer.last_name}
+      </Typography>
+      {order.customer.address && (
+        <Typography variant="body1" gutterBottom>
+          {order.customer.address}
+        </Typography>
+      )}
       <Typography variant="body1" gutterBottom>
         {order.customer.zip} {order.customer.city}
       </Typography>
+      {order.email && (
+        <Typography variant="body1" gutterBottom>
+          {order.email}
+        </Typography>
+      )}
+      {order.phone && (
+        <Typography variant="body1" gutterBottom>
+          {order.phone}
+        </Typography>
+      )}
     </Panel>
   );
 };

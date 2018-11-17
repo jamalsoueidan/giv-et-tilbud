@@ -14,7 +14,7 @@ class InformationLayout extends React.Component {
             {children}
           </Grid>
           <Grid item xs={12} sm={4}>
-            {information}
+            {information || ""}
           </Grid>
         </Grid>
       </Title>

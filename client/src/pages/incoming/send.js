@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withStyles, Grid } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import Form from "./send/_form";
-import { Panel, Title, OrderInfo, InformationLayout } from "components";
+import { Panel, OrderInfo, InformationLayout } from "components";
 import * as yup from "yup";
 import { Formik } from "formik";
 import {

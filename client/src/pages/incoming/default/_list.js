@@ -40,7 +40,9 @@ class Orders extends React.Component {
   };
 
   componentDidMount() {
-    this.load();
+    if (!this.props.orders.results) {
+      this.load();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {

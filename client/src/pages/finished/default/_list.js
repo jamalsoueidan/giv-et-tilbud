@@ -33,7 +33,10 @@ class Orders extends React.Component {
   };
 
   componentDidMount() {
-    this.props.load();
+    const { orders, load } = this.props;
+    if (!orders.results) {
+      load();
+    }
   }
 
   render() {
