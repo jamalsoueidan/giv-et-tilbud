@@ -15,13 +15,13 @@ class Home extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Finished />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Incoming />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={12}>
             <Welcome />
           </Grid>
         </Grid>

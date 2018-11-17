@@ -1,16 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
-import Form from "./createShop/_form";
+import { withStyles, Typography } from "@material-ui/core";
+import Form from "./create/_form";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { actions as UserActions } from "../../store/user";
+import { Panel } from "components";
+import { actions as UserActions } from "store/user";
 import { actions as RouterActions } from "redux-router5";
 
 const styles = theme => ({
-  textField: {
-    flex: 1
+  text: {
+    margin: theme.spacing.unit * 2
+  },
+  panel: {
+    padding: "20px"
   }
 });
 
@@ -25,17 +28,14 @@ const validationSchema = yup.object({
 
 class Send extends React.Component {
   render() {
-    const { createWorkshop, navigate } = this.props;
+    const { createWorkshop, navigate, classes } = this.props;
 
     return (
-      <React.Fragment>
-        <Typography component="h2" variant="h4" gutterBottom>
-          Tilføj et værksted
-        </Typography>
-        <p>
+      <Panel title="Tilføj et værksted">
+        <Typography variant="body1" className={classes.text}>
           Du kan desværre ikke ændre i din oplysninger når du har oprettet
           værkstedet, så sørger for alle oplysninger er rigtige!
-        </p>
+        </Typography>
         <Formik
           render={props => <Form {...props} />}
           validationSchema={validationSchema}
@@ -46,7 +46,7 @@ class Send extends React.Component {
             });
           }}
         />
-      </React.Fragment>
+      </Panel>
     );
   }
 }

@@ -5,8 +5,18 @@ export default [
     path: "/profile",
     children: [
       {
-        name: "create_shop",
-        path: "/shop/create"
+        name: "account",
+        path: "/account"
+      },
+      {
+        name: "workshops",
+        path: "/workshops",
+        children: [
+          {
+            name: "create",
+            path: "/create"
+          }
+        ]
       }
     ]
   },

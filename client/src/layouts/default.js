@@ -2,9 +2,9 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
-import { TopBar, Navigation, Notification } from "../components";
-import { actions as UserActions } from "../store/user";
-import { actions as NotificationActions } from "../store/notification";
+import { TopBar, Navigation, Notification } from "components";
+import { actions as UserActions } from "store/user";
+import { actions as NotificationActions } from "store/notification";
 import { actions as RouterActions } from "redux-router5";
 import localStorage from "local-storage";
 
@@ -26,14 +26,14 @@ const styles = theme => ({
   content: {
     display: "flex",
     flexDirection: "column",
+    flexGrow: 1,
+    padding: "24px",
     [theme.breakpoints.up("sm")]: {
-      paddingTop: "82px"
+      padding: "92px 40px 0px 40px"
     },
     [theme.breakpoints.down("xs")]: {
-      paddingTop: "72px"
-    },
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3
+      paddingTop: "82px"
+    }
   }
 });
 
