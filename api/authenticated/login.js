@@ -19,7 +19,8 @@ module.exports = async (req, reply) => {
   const credentials = {
     email: user.email,
     customerId: user.customer_id,
-    id: user._id
+    id: user._id,
+    is_admin: user.is_admin
   };
 
   const token = JWT.sign(credentials, process.env.SECRET_KEY);

@@ -7,6 +7,7 @@ const schema = new mongoose.Schema(
     password: String,
     customer_id: { type: Number, unique: true, required: true },
     created_at: { type: Date, default: Date.now },
+    is_admin: { type: Boolean, default: false },
     workshops: [
       {
         name: String,
