@@ -11,21 +11,16 @@ const styles = theme => ({
 });
 
 const CustomTextField = props => {
-  const { label, id, className, onChange, error, required, classes } = props;
-  return (
-    <TextField
-      required={required}
-      label={label}
-      id={id}
-      placeholder="Placeholder"
-      type="string"
-      margin="normal"
-      variant="outlined"
-      className={classnames(classes.textfield, className)}
-      onChange={onChange}
-      error={error}
-    />
-  );
+  const newProps = {
+    type: "string",
+    margin: "normal",
+    variant: "outlined",
+    ...props,
+    className: classnames(props.classes.textfield, props.className)
+  };
+
+  newProps.classes = undefined;
+  return <TextField {...newProps} />;
 };
 
 export default withStyles(styles)(CustomTextField);

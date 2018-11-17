@@ -10,6 +10,8 @@ import TwoColumnLayout from "./two_column_layout";
 import TextField from "./text_field";
 import PanelList from "./panel_list";
 import PanelListItem from "./panel_list_item";
+import FormatDate from "./format_date";
+
 export {
   Navigation,
   TopBar,
@@ -22,5 +24,6 @@ export {
   Actions,
   TextField,
   PanelList,
-  PanelListItem
+  PanelListItem,
+  FormatDate
 };
