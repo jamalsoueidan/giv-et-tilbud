@@ -13,8 +13,7 @@ class Form extends React.Component {
       touched,
       handleChange,
       setFieldTouched,
-      isSubmitting,
-      classes
+      isSubmitting
     } = this.props;
 
     const change = (name, e) => {

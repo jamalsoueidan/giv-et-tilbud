@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { createRouteNodeSelector } from "redux-router5";
 import Default from "./default";
 import Create from "./create";
+import View from "./view";
 import RouterHelper from "lib/router_helper";
 
 class Index extends React.Component {
@@ -12,6 +13,8 @@ class Index extends React.Component {
 
     if (routeObject.name === "create") {
       return <Create route={route} user={user} />;
+    } else if (routeObject.name === "view") {
+      return <View route={route} user={user} />;
     }
 
     return <Default route={route} user={user} />;

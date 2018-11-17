@@ -15,6 +15,10 @@ export default [
           {
             name: "create",
             path: "/create"
+          },
+          {
+            name: "view",
+            path: "/:id/view"
           }
         ]
       }

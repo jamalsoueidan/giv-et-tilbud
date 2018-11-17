@@ -1,5 +1,6 @@
 import React from "react";
-import { withStyles, ListItem, ListItemText } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
+import { PanelListItem } from "components";
 
 const styles = theme => ({});
 
@@ -8,12 +9,12 @@ class Workshop extends React.Component {
     const { workshop } = this.props;
 
     return (
-      <ListItem button>
-        <ListItemText
-          primary={workshop.name}
-          secondary={`${workshop.zip} ${workshop.city}`}
-        />
-      </ListItem>
+      <PanelListItem
+        primary={workshop.name}
+        secondary={`${workshop.zip} ${workshop.city}`}
+        routeName="profile.workshops.view"
+        routeParams={{ id: workshop._id }}
+      />
     );
   }
 }

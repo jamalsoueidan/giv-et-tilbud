@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  withStyles,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader
-} from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
 import { createRouteNodeSelector } from "redux-router5";
-import { Link } from "react-router5";
 import Default from "./default";
-import RouterHelper from "lib/router_helper";
 import Workshops from "./workshops";
 import { PanelList, PanelListItem, TwoColumnLayout } from "components";
 
@@ -35,7 +27,7 @@ class Index extends React.Component {
   }
 
   get navigation() {
-    const { route, classes } = this.props;
+    const { route } = this.props;
     return (
       <PanelList title="Navigation">
         <PanelListItem
