@@ -1,12 +1,8 @@
 import React from "react";
 import moment from "moment";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import { Typography, Button } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import { Confirm } from "../../components";
+import { withStyles, Typography, Button } from "@material-ui/core";
+import { Confirm, InformationLayout, OrderInfo, Panel } from "components";
 import { actions as RouterActions } from "redux-router5";
 
 import {
@@ -54,39 +50,36 @@ class Info extends React.Component {
     const offer = order.offer;
 
     return (
-      <React.Fragment>
-        <Typography component="h2" variant="h4" gutterBottom>
-          Offer Information
-        </Typography>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            />
-            <Typography variant="h5" component="h2">
-              {offer.properties.price} kr,-
-            </Typography>
+      <InformationLayout
+        title={`Din bud til ${order.customer.first_name}`}
+        information={<OrderInfo order={order} />}
+      >
+        <Panel padding>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          />
+          <Typography variant="h5" component="h2">
+            {offer.properties.price} kr,-
+          </Typography>
 
-            <Typography className={classes.pos} color="textSecondary">
-              {moment(offer.created_at).fromNow()}
-            </Typography>
-            <Typography component="p">{offer.properties.message}</Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" onClick={this.openConfirm}>
-              Cancel offer
-            </Button>
-            <Confirm
-              open={this.state.open}
-              onCancel={this.onCancel}
-              onConfirm={this.onConfirm}
-              message="You want to cancel this offer"
-            />
-          </CardActions>
-        </Card>
-      </React.Fragment>
+          <Typography className={classes.pos} color="textSecondary">
+            {moment(offer.created_at).fromNow()}
+          </Typography>
+          <Typography component="p">{offer.properties.message}</Typography>
+
+          <Button size="small" onClick={this.openConfirm}>
+            Cancel offer
+          </Button>
+          <Confirm
+            open={this.state.open}
+            onCancel={this.onCancel}
+            onConfirm={this.onConfirm}
+            message="You want to cancel this offer"
+          />
+        </Panel>
+      </InformationLayout>
     );
   }
 }

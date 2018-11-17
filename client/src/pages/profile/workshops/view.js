@@ -1,7 +1,6 @@
 import React from "react";
-import Workshop from "./default/_workshop";
-import { withStyles, Typography, List, Divider } from "@material-ui/core";
-import { Panel, Link, Actions } from "components";
+import { withStyles, Typography } from "@material-ui/core";
+import { Panel } from "components";
 
 const styles = theme => ({});
 
@@ -9,7 +8,6 @@ class View extends React.Component {
   render() {
     const { route, user } = this.props;
     const workshop = user.workshops.find(w => w._id === route.params.id);
-    console.log();
     return (
       <Panel title={workshop.name} padding>
         <Typography variant="subtitle1" gutterBottom>

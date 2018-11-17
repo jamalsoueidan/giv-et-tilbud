@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { createRouteNodeSelector } from "redux-router5";
 import Default from "./default";
 import Workshops from "./workshops";
-import { PanelList, PanelListItem, TwoColumnLayout } from "components";
+import { PanelList, PanelListItem, NavigationLayout } from "components";
 
 const styles = theme => ({
   root: {
@@ -46,11 +46,9 @@ class Index extends React.Component {
 
   render() {
     return (
-      <TwoColumnLayout
-        title="Profile"
-        navigation={this.navigation}
-        page={this.renderPage}
-      />
+      <NavigationLayout title="Profile" navigation={this.navigation}>
+        {this.renderPage}
+      </NavigationLayout>
     );
   }
 }

@@ -6,12 +6,15 @@ import Panel from "./panel";
 import Link from "./link";
 import Actions from "./actions";
 import * as Icons from "./icons";
-import TwoColumnLayout from "./two_column_layout";
 import TextField from "./text_field";
 import PanelList from "./panel_list";
 import PanelListItem from "./panel_list_item";
 import FormatDate from "./format_date";
+import Title from "./title";
+import OrderInfo from "./order_info";
 
+import InformationLayout from "./information_layout";
+import NavigationLayout from "./navigation_layout";
 export {
   Navigation,
   TopBar,
@@ -20,10 +23,13 @@ export {
   Notification,
   Panel,
   Link,
-  TwoColumnLayout,
+  InformationLayout,
+  NavigationLayout,
   Actions,
   TextField,
   PanelList,
   PanelListItem,
-  FormatDate
+  FormatDate,
+  Title,
+  OrderInfo
 };
