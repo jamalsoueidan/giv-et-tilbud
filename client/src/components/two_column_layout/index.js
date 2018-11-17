@@ -9,7 +9,7 @@ const styles = theme => ({
     flex: 1
   },
   header: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 4
   }
 });
 

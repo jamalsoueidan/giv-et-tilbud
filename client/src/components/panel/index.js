@@ -26,16 +26,18 @@ class Panel extends React.Component {
     return (
       <Paper className={classnames(classes.root, className)}>
         <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              variant="subtitle1"
-              gutterBottom
-              align="center"
-              className={classes.title}
-            >
-              {title}
-            </Typography>
-          </Grid>
+          {title && (
+            <Grid item xs={12}>
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                align="center"
+                className={classes.title}
+              >
+                {title}
+              </Typography>
+            </Grid>
+          )}
           <Grid item xs={12}>
             {children}
           </Grid>
