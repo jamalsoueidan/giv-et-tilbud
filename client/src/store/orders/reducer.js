@@ -43,6 +43,12 @@ const order = (state = null, action) => {
   if (action.type === actions.ORDER_SUCCESS) {
     return action.payload;
   }
+  if (
+    action.type === actions.SEND_OFFER_SUCCESS ||
+    action.type === actions.CANCEL_OFFER_SUCCESS
+  ) {
+    return null;
+  }
   return state;
 };
 
