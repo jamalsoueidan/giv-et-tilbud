@@ -7,7 +7,7 @@
     "client": "cd client && npm start",
     "shopify": "cd shopify && npm start",
     "server": "nodemon index.js",
-    "both": "concurrently \"npm run client\" \"npm run shopify\" \"npm run server\"",
+    "all": "concurrently \"npm run client\" \"npm run shopify\" \"npm run server\"",
     "start": "node index.js",
     "test": "ava --tap | tap-nyan",
     "heroku-postbuild": "npm run deploy-client && npm run deploy-shopify",
@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.2",
     "boom": "^7.2.0",
     "dotenv": "^6.1.0",
     "hapi": "^17.6.0",

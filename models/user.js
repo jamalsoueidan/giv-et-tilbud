@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const schema = new mongoose.Schema(
   {
     email: { type: String, unique: true, required: true },
-    password: String,
+    password: { type: String, required: true },
     customer_id: { type: Number, unique: true, required: true },
     created_at: { type: Date, default: Date.now },
     is_admin: { type: Boolean, default: false },
