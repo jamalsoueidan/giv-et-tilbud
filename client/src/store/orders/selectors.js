@@ -15,6 +15,13 @@ const cleanUpOrder = order => {
     newOrder.offer.properties = newOrder.offer.properties.reduce(keyValue, {});
   }
 
+  if (newOrder.offers) {
+    newOrder.offers = newOrder.offers.map(offer => {
+      offer.properties = offer.properties.reduce(keyValue, {});
+      return offer;
+    });
+  }
+
   newOrder.customer = {
     first_name: order.customer.first_name,
     last_name: order.customer.last_name,
@@ -37,13 +44,28 @@ const cleanUpAllOrders = orders => {
 };
 
 const outgoing = state => state.orders.outgoing;
-export const getOutgoing = createSelector(outgoing, cleanUpAllOrders);
+export const getOutgoing = createSelector(
+  outgoing,
+  cleanUpAllOrders
+);
 
 const incoming = state => state.orders.incoming;
-export const getIncoming = createSelector(incoming, cleanUpAllOrders);
+export const getIncoming = createSelector(
+  incoming,
+  cleanUpAllOrders
+);
 
 const finished = state => state.orders.finished;
-export const getFinished = createSelector(finished, cleanUpAllOrders);
+export const getFinished = createSelector(
+  finished,
+  cleanUpAllOrders
+);
+
+const orders = state => state.orders.orders;
+export const getOrders = createSelector(
+  orders,
+  cleanUpAllOrders
+);
 
 const getOrder = state => state.orders.order;
 const route = state => state.router.route;

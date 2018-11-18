@@ -52,10 +52,19 @@ const order = (state = null, action) => {
   return state;
 };
 
+const orders = (state = initState, action) => {
+  if (action.type === actions.LOAD_ORDERS_SUCCESS) {
+    return action.payload;
+  }
+
+  return state;
+};
+
 export default (state = initState, action) => ({
   incoming: incoming(state.incoming, action),
   outgoing: outgoing(state.outgoing, action),
   finished: finished(state.finished, action),
   accepted: accepted(state.accepted, action),
-  order: order(state.order, action)
+  orders: orders(state.orders, action), //admin orders
+  order: order(state.order, action) //current order
 });

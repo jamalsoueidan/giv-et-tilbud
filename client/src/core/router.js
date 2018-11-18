@@ -44,7 +44,7 @@ const requireAuth = (router, dependencies) => (toState, fromState, done) => {
   };
 
   // on browser refresh, token exist in storage but user must authorize again to make sure he is logged in.
-  const user = JSON.parse(localStorage("user"));
+  const user = JSON.parse(localStorage("user") || localStorage("admin"));
   if (user && !userState.token) {
     store()
       .dispatch(UserActions.isAuthenticated(user.token))
@@ -52,7 +52,11 @@ const requireAuth = (router, dependencies) => (toState, fromState, done) => {
         if (!response.error) {
           done();
         } else {
-          localStorage.remove("user");
+          if (user.is_admin) {
+            localStorage.remove("admin");
+          } else {
+            localStorage.remove("user");
+          }
           done(redirect);
         }
       });

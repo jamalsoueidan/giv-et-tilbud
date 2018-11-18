@@ -40,6 +40,20 @@ export const loadIncoming = (options = {}) => {
   };
 };
 
+export const LOAD_ORDERS_REQUEST = "@@orders/LOAD_ORDERS_REQUEST";
+export const LOAD_ORDERS_SUCCESS = "@@orders/LOAD_ORDERS_SUCCESS";
+export const LOAD_ORDERS_FAILURE = "@@orders/LOAD_ORDERS_FAILURE";
+
+export const loadOrders = (options = {}) => ({
+  [RSAA]: {
+    types: [LOAD_ORDERS_REQUEST, LOAD_ORDERS_SUCCESS, LOAD_ORDERS_FAILURE],
+    endpoint: `/api/admin/orders?page=${options.page}&limit=${
+      options.limit
+    }&device=${options.device}&issue=${options.issue}`,
+    method: "GET"
+  }
+});
+
 export const ORDER_REQUEST = "@@orders/ORDER_REQUEST";
 export const ORDER_SUCCESS = "@@orders/ORDER_SUCCESS";
 export const ORDER_FAILURE = "@@orders/ORDER_FAILURE";

@@ -97,7 +97,12 @@ class Login extends React.Component {
               onSubmit={(values, action) => {
                 login(values.email, values.password).then(response => {
                   if (!response.error) {
-                    localStorage("user", JSON.stringify(response.payload));
+                    const user = JSON.stringify(response.payload);
+                    if (user.is_admin) {
+                      localStorage("admin", user);
+                    } else {
+                      localStorage("user", user);
+                    }
                     this.redirectToApplication(response.payload);
                   }
                   action.setSubmitting(false);
