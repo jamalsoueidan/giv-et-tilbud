@@ -21,12 +21,27 @@ const styles = theme => ({
 
 class Panel extends React.Component {
   render() {
-    const { classes, title, children, className, padding } = this.props;
+    const {
+      classes,
+      title,
+      children,
+      className,
+      padding,
+      paddingTop,
+      paddingBottom
+    } = this.props;
 
     const style = {};
     if (padding) {
       style.padding = "24px";
     }
+    if (paddingTop) {
+      style.paddingTop = "24px";
+    }
+    if (paddingBottom) {
+      style.paddingBottom = "24px";
+    }
+
     return (
       <Paper className={classnames(classes.root, className)}>
         <Grid container>

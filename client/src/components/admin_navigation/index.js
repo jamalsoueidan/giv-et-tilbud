@@ -82,8 +82,6 @@ class Navigation extends React.Component {
   render() {
     const { classes, open, click, route } = this.props;
 
-    console.log(route.name);
-
     return (
       <Drawer
         variant="permanent"
@@ -123,21 +121,6 @@ class Navigation extends React.Component {
           </ListItem>
           <ListItem
             button
-            onClick={() => this.navigate("admin.profile")}
-            selected={route.name === "admin.profile"}
-          >
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary="Din profil"
-              classes={{
-                primary: classNames(classes.lessImportant)
-              }}
-            />
-          </ListItem>
-          <ListItem
-            button
             onClick={() => this.navigate("admin.orders")}
             selected={route.name === "admin.orders"}
           >
@@ -149,6 +132,21 @@ class Navigation extends React.Component {
               primary="Opgaver"
               classes={{
                 primary: classNames(classes.important, classes.bold)
+              }}
+            />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => this.navigate("admin.users")}
+            selected={route.name === "admin.users"}
+          >
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary="Brugere"
+              classes={{
+                primary: classNames(classes.lessImportant)
               }}
             />
           </ListItem>

@@ -16,6 +16,10 @@ import OrderInfo from "./order_info";
 import ListItem from "./list_item";
 import InformationLayout from "./information_layout";
 import NavigationLayout from "./navigation_layout";
+import DeviceFilter from "./device_filter";
+import IssueFilter from "./issue_filter";
+import Pagination from "./pagination";
+
 export {
   DefaultNavigation,
   AdminNavigation,
@@ -34,5 +38,8 @@ export {
   FormatDate,
   Title,
   OrderInfo,
-  ListItem
+  ListItem,
+  DeviceFilter,
+  IssueFilter,
+  Pagination
 };
