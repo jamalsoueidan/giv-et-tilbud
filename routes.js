@@ -3,6 +3,7 @@ const Offers = require("./api/offers");
 const Authenticated = require("./api/authenticated");
 const User = require("./api/user");
 const Signup = require("./api/signup");
+const Admin = require("./api/admin");
 const Joi = require("joi");
 
 const defaultRoutes = [
@@ -50,5 +51,6 @@ module.exports = defaultRoutes.concat(
   Orders,
   Authenticated,
   User,
-  Signup
+  Signup,
+  Admin
 );
