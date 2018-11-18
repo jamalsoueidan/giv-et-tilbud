@@ -38,6 +38,17 @@ const schema = new mongoose.Schema(
 );
 
 schema.index({ "workshops.location": "2dsphere" });
+schema.index(
+  {
+    email: "text",
+    "workshops.name": "text",
+    address: "text",
+    "workshops.city": "text"
+  },
+  {
+    default_language: "danish"
+  }
+);
 schema.index({ customer_id: 1 });
 schema.index({ email: 1 });
 

@@ -71,6 +71,8 @@ module.exports = async req => {
         phone: { $first: "$phone" },
         fulfillment_status: { $first: "$fulfillment_status" },
         line_items: { $first: "$line_items" },
+        token: { $first: "$token" },
+        order_status_url: { $first: "$order_status_url" },
         shipping_address: { $first: "$shipping_address" },
         customer: { $first: "$customer" },
         offers: { $push: "$offers" }

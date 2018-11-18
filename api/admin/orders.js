@@ -6,7 +6,7 @@ module.exports = async req => {
   const credentials = req.auth.credentials;
 
   const page = parseInt(req.query.page) || 0; //for next page pass 1 here
-  const limit = parseInt(req.query.limit) || 15;
+  const limit = parseInt(req.query.limit) || 10;
 
   if (!credentials.is_admin) {
     return Boom.badData("Is NOT admin");
@@ -69,6 +69,8 @@ module.exports = async req => {
         fulfillment_status: { $first: "$fulfillment_status" },
         line_items: { $first: "$line_items" },
         shipping_address: { $first: "$shipping_address" },
+        token: { $first: "$token" },
+        order_status_url: { $first: "$order_status_url" },
         customer: { $first: "$customer" },
         offers: { $push: "$offers" }
       }
