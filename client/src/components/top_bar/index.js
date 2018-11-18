@@ -54,13 +54,17 @@ class TopBar extends React.Component {
   };
 
   render() {
-    const { classes, click } = this.props;
+    const { classes, click, style } = this.props;
 
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
-      <AppBar position="fixed" className={classNames(classes.appBar)}>
+      <AppBar
+        position="fixed"
+        className={classNames(classes.appBar)}
+        style={style}
+      >
         <Toolbar>
           <IconButton color="inherit" aria-label="Open drawer" onClick={click}>
             <MenuIcon />

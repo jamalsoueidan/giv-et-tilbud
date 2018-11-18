@@ -58,7 +58,7 @@ const styles = theme => ({
 });
 
 class Login extends React.Component {
-  redirectToApplication() {
+  redirectToApplication(user) {
     const { route, navigate } = this.props;
 
     const nextRoute = route.params;
@@ -67,7 +67,11 @@ class Login extends React.Component {
        * @todo Must be taken from router options in the core/router.js, which route name is set as default
        * createRouter(routes, { defaultRoute: "login" })
        */
-      nextRoute.nextName = "home";
+      if (user.is_admin) {
+        nextRoute.nextName = "admin";
+      } else {
+        nextRoute.nextName = "home";
+      }
     }
 
     navigate(nextRoute.nextName, nextRoute.nextParams);
@@ -94,7 +98,7 @@ class Login extends React.Component {
                 login(values.email, values.password).then(response => {
                   if (!response.error) {
                     localStorage("user", JSON.stringify(response.payload));
-                    this.redirectToApplication();
+                    this.redirectToApplication(response.payload);
                   }
                   action.setSubmitting(false);
                 });

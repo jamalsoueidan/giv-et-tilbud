@@ -4,6 +4,7 @@ const initState = {
   token: null,
   email: null,
   customerId: null,
+  is_admin: false,
   workshops: [],
   payload: null
 };

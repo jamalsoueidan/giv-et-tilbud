@@ -2,7 +2,8 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
-import { TopBar, DefaultNavigation, Notification } from "components";
+import { createRouteNodeSelector } from "redux-router5";
+import { TopBar, AdminNavigation, Notification } from "components";
 import { actions as UserActions } from "store/user";
 import { actions as NotificationActions } from "store/notification";
 import { actions as RouterActions } from "redux-router5";
@@ -83,9 +84,13 @@ class LoggedIn extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <TopBar click={this.toggleNavigation} logout={this.logout} />
+        <TopBar
+          click={this.toggleNavigation}
+          logout={this.logout}
+          style={{ backgroundColor: "#ff0040" }}
+        />
 
-        <DefaultNavigation
+        <AdminNavigation
           open={openNavigation}
           click={this.toggleNavigation}
           mobile={mobile}
@@ -101,7 +106,8 @@ class LoggedIn extends React.Component {
 
 export default connect(
   state => ({
-    notification: state.notification
+    notification: state.notification,
+    ...createRouteNodeSelector("admin")(state)
   }),
   {
     logout: UserActions.logout,

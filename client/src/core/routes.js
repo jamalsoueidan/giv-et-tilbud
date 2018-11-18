@@ -1,6 +1,16 @@
 export default [
   { name: "home", path: "/home" },
   {
+    name: "admin",
+    path: "/admin",
+    layout: "admin",
+    children: [
+      { name: "dashboard", path: "/dashboard" },
+      { name: "profile", path: "/profile" },
+      { name: "orders", path: "/orders" }
+    ]
+  },
+  {
     name: "profile",
     path: "/profile",
     children: [

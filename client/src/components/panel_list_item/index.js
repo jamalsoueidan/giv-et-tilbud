@@ -1,6 +1,6 @@
 import React from "react";
-import { ListItem, ListItemText } from "@material-ui/core";
-import { Link } from "react-router5";
+import ListItem from "../list_item";
+import { ListItemText } from "@material-ui/core";
 
 export default props => {
   if (!props.routeName) {
@@ -8,8 +8,6 @@ export default props => {
   }
   return (
     <ListItem
-      button
-      component={Link}
       routeName={props.routeName}
       routeParams={props.routeParams}
       selected={props.selected}

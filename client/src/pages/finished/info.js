@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withStyles, Typography, Chip } from "@material-ui/core";
-import { InformationLayout, OrderInfo, Panel } from "components";
+import { withStyles, Chip } from "@material-ui/core";
+import { InformationLayout, OrderInfo } from "components";
 import { actions as RouterActions } from "redux-router5";
 
 import {
