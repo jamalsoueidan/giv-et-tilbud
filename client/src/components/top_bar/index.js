@@ -54,7 +54,7 @@ class TopBar extends React.Component {
   };
 
   render() {
-    const { classes, click, style } = this.props;
+    const { classes, click, style, title } = this.props;
 
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
@@ -75,7 +75,7 @@ class TopBar extends React.Component {
             className={classNames(classes.typo)}
             noWrap
           >
-            Application
+            {title}
           </Typography>
 
           <div>

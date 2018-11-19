@@ -11,13 +11,13 @@ class Index extends React.Component {
     const routeObject = RouterHelper.getRoute(route.name);
 
     if (routeObject.name === "view") {
-      return <View />;
+      return <View route={route} />;
     }
 
-    return <Default />;
+    return <Default route={route} />;
   }
 }
 
 export default connect(state => ({
-  ...createRouteNodeSelector("admin.orders")(state)
+  ...createRouteNodeSelector("admin.workshops")(state)
 }))(Index);

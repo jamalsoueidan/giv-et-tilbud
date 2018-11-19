@@ -110,3 +110,10 @@ export const getFinishedOrderById = createSelector(
   orderId,
   find
 );
+
+export const getOrderById = createSelector(
+  getOrders,
+  getOrder,
+  orderId,
+  find
+);

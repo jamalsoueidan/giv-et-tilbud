@@ -83,7 +83,11 @@ class LoggedIn extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <TopBar click={this.toggleNavigation} logout={this.logout} />
+        <TopBar
+          click={this.toggleNavigation}
+          logout={this.logout}
+          title="Bruger"
+        />
 
         <DefaultNavigation
           open={openNavigation}

@@ -19,6 +19,8 @@ import NavigationLayout from "./navigation_layout";
 import DeviceFilter from "./device_filter";
 import IssueFilter from "./issue_filter";
 import Pagination from "./pagination";
+import Search from "./search";
+import WorkshopInfo from "./workshop_info";
 
 export {
   DefaultNavigation,
@@ -41,5 +43,7 @@ export {
   ListItem,
   DeviceFilter,
   IssueFilter,
-  Pagination
+  Pagination,
+  Search,
+  WorkshopInfo
 };

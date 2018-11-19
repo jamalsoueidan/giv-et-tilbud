@@ -5,8 +5,12 @@ import {
   createRouteNodeSelector,
   actions as RouterActions
 } from "redux-router5";
-import { actions as UsersActions } from "store/users";
+import {
+  actions as OrdersActions,
+  selectors as OrdersSelectors
+} from "store/orders";
 import { Panel, PanelListItem, NavigationLayout, Pagination } from "components";
+import Filters from "./_filters";
 
 const styles = theme => ({
   root: {
@@ -19,7 +23,7 @@ const styles = theme => ({
 
 class Orders extends React.Component {
   componentDidMount() {
-    if (!this.props.users.results) {
+    if (!this.props.orders.results) {
       this.load();
     }
   }
@@ -30,7 +34,8 @@ class Orders extends React.Component {
     load({
       page: route.params.page,
       limit: route.params.limit,
-      search: route.params.search
+      device: route.params.device,
+      issue: route.params.issue
     });
   }
 
@@ -43,28 +48,35 @@ class Orders extends React.Component {
 
   get navigation() {
     const { route, navigate } = this.props;
-    return <Panel title="Navigation">test</Panel>;
+    return (
+      <Panel title="Navigation">
+        <Filters navigate={navigate} route={route} />
+      </Panel>
+    );
   }
 
   get renderOrders() {
-    const { users } = this.props;
+    const { orders } = this.props;
     return (
-      users.results &&
-      users.results.map(user => (
+      orders.results &&
+      orders.results.map(order => (
         <PanelListItem
-          key={user.id}
-          primary={`${user.email}
+          key={order.id}
+          primary={`${order.properties.device} ${order.properties.model}, ${
+            order.properties.color
           }`}
-          secondary={`${user.workshops.length}`}
-          routeName="admin.users.view"
-          routeParams={{ id: user.id }}
+          secondary={`${order.customer.first_name} ${
+            order.customer.last_name
+          }, ${order.phone}`}
+          routeName="admin.orders.view"
+          routeParams={{ id: order.id }}
         />
       ))
     );
   }
 
   render() {
-    const { users, route, navigate } = this.props;
+    const { orders, route, navigate } = this.props;
 
     return (
       <NavigationLayout title="Alle opgaver" navigation={this.navigation}>
@@ -72,9 +84,9 @@ class Orders extends React.Component {
           <List component="nav">{this.renderOrders}</List>
           <Divider />
           <Pagination
-            count={users.count}
-            rowsPerPage={users.limit}
-            page={users.page}
+            count={orders.count}
+            rowsPerPage={orders.limit}
+            page={orders.page}
             navigate={navigate}
             route={route}
           />
@@ -86,11 +98,11 @@ class Orders extends React.Component {
 
 export default connect(
   state => ({
-    users: state.users,
-    ...createRouteNodeSelector("admin.users")(state)
+    orders: OrdersSelectors.getOrders(state),
+    ...createRouteNodeSelector("admin.orders")(state)
   }),
   {
-    load: UsersActions.loadUsers,
+    load: OrdersActions.loadOrders,
     navigate: RouterActions.navigateTo
   }
 )(withStyles(styles)(Orders));

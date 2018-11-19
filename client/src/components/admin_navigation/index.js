@@ -122,7 +122,7 @@ class Navigation extends React.Component {
           <ListItem
             button
             onClick={() => this.navigate("admin.orders")}
-            selected={route.name === "admin.orders"}
+            selected={route.name.indexOf("admin.orders") !== -1}
           >
             <ListItemIcon>
               <StarIcon />
@@ -138,13 +138,28 @@ class Navigation extends React.Component {
           <ListItem
             button
             onClick={() => this.navigate("admin.users")}
-            selected={route.name === "admin.users"}
+            selected={route.name.indexOf("admin.users") !== -1}
           >
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
             <ListItemText
               primary="Brugere"
+              classes={{
+                primary: classNames(classes.lessImportant)
+              }}
+            />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => this.navigate("admin.workshops")}
+            selected={route.name.indexOf("admin.workshops") !== -1}
+          >
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary="Værksteder"
               classes={{
                 primary: classNames(classes.lessImportant)
               }}

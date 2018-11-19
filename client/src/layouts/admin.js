@@ -88,6 +88,7 @@ class LoggedIn extends React.Component {
           click={this.toggleNavigation}
           logout={this.logout}
           style={{ backgroundColor: "#ff0040" }}
+          title="Administrator"
         />
 
         <AdminNavigation

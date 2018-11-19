@@ -54,6 +54,18 @@ export const loadOrders = (options = {}) => ({
   }
 });
 
+export const LOAD_ORDER_REQUEST = "@@orders/LOAD_ORDER_REQUEST";
+export const LOAD_ORDER_SUCCESS = "@@orders/LOAD_ORDER_SUCCESS";
+export const LOAD_ORDER_FAILURE = "@@orders/LOAD_ORDER_FAILURE";
+
+export const loadOrderAdmin = orderId => ({
+  [RSAA]: {
+    types: [LOAD_ORDER_REQUEST, LOAD_ORDER_SUCCESS, LOAD_ORDER_FAILURE],
+    endpoint: `/api/admin/orders/${orderId}`,
+    method: "GET"
+  }
+});
+
 export const ORDER_REQUEST = "@@orders/ORDER_REQUEST";
 export const ORDER_SUCCESS = "@@orders/ORDER_SUCCESS";
 export const ORDER_FAILURE = "@@orders/ORDER_FAILURE";

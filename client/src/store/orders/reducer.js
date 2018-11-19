@@ -40,10 +40,12 @@ const accepted = (state = initState, action) => {
 };
 
 const order = (state = null, action) => {
-  if (action.type === actions.ORDER_SUCCESS) {
-    return action.payload;
-  }
   if (
+    action.type === actions.ORDER_SUCCESS ||
+    action.type === actions.LOAD_ORDER_SUCCESS
+  ) {
+    return action.payload;
+  } else if (
     action.type === actions.SEND_OFFER_SUCCESS ||
     action.type === actions.CANCEL_OFFER_SUCCESS
   ) {

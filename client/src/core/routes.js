@@ -6,7 +6,26 @@ export default [
     layout: "admin",
     children: [
       { name: "dashboard", path: "/dashboard" },
-      { name: "users", path: "/users" },
+      {
+        name: "users",
+        path: "/users",
+        children: [
+          {
+            name: "view",
+            path: "/:id"
+          }
+        ]
+      },
+      {
+        name: "workshops",
+        path: "/workshops?limit&page&zip&search",
+        children: [
+          {
+            name: "view",
+            path: "/:id"
+          }
+        ]
+      },
       {
         name: "orders",
         path: "/orders?limit&page&device&issue&zip",
