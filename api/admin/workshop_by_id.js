@@ -7,7 +7,7 @@ module.exports = async req => {
   const credentials = req.auth.credentials;
 
   const page = parseInt(req.query.page) || 0; //for next page pass 1 here
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 5;
 
   if (!credentials.is_admin) {
     return Boom.badData("Is NOT admin");
@@ -19,70 +19,59 @@ module.exports = async req => {
     workshop_id: mongoose.Types.ObjectId(workshopId)
   });
 
-  if (offersCount === 0) {
-    const user = await User.findOne({
-      "workshops._id": mongoose.Types.ObjectId(workshopId)
-    }).lean();
+  const results = {
+    page: page,
+    limit: limit,
+    count: 0
+  };
 
-    return user.workshops.find(w => w._id == workshopId);
+  const user = await User.findOne({
+    "workshops._id": mongoose.Types.ObjectId(workshopId)
+  }).lean();
+
+  const workshop = user.workshops.find(w => w._id == workshopId);
+  delete user.workshops;
+  workshop.user = user;
+
+  if (offersCount > 0) {
+    const aggregate = await Offer.aggregate([
+      {
+        $match: {
+          workshop_id: mongoose.Types.ObjectId(workshopId)
+        }
+      },
+      { $sort: { created_at: -1 } },
+      {
+        $lookup: {
+          from: "orders",
+          localField: "order_id",
+          foreignField: "id",
+          as: "order"
+        }
+      },
+      {
+        $unwind: "$order"
+      },
+      {
+        $facet: {
+          //https://stackoverflow.com/questions/20348093/mongodb-aggregation-how-to-get-total-records-count
+          offers: [{ $skip: page * limit }, { $limit: limit }],
+          count: [
+            {
+              $count: "count"
+            }
+          ]
+        }
+      }
+    ]);
+
+    const offers = aggregate[0];
+    results.count = offers.count[0] ? offers.count[0].count : 0;
+    workshop.offers = offers.offers;
   }
 
-  const aggregate = await User.aggregate([
-    {
-      $match: {
-        "workshops._id": mongoose.Types.ObjectId(workshopId)
-      }
-    },
-    { $unwind: "$workshops" },
-    { $replaceRoot: { newRoot: "$workshops" } },
-    {
-      $match: {
-        _id: mongoose.Types.ObjectId(workshopId)
-      }
-    },
-    //check if this workshop have offers, so we dont need to do the rest of the pipeline?
-    {
-      $lookup: {
-        from: "offers",
-        localField: "_id",
-        foreignField: "workshop_id",
-        as: "offers"
-      }
-    },
-    {
-      $unwind: "$offers"
-    },
-    {
-      $lookup: {
-        from: "orders",
-        localField: "offers.order_id",
-        foreignField: "id",
-        as: "offers.order"
-      }
-    },
-    {
-      $unwind: "$offers.order"
-    },
-    {
-      $group: {
-        _id: "$_id",
-        name: { $first: "$name" },
-        address: { $first: "$address" },
-        zip: { $first: "$zip" },
-        city: { $first: "$city" },
-        email: { $first: "$email" },
-        phone: { $first: "$phone" },
-        vat: { $first: "$vat" },
-        created_at: { $first: "$created_at" },
-        location: { $first: "$location" },
-        offers: { $push: "$offers" }
-      }
-    }
-  ]);
-
-  if (aggregate.length > 0) {
-    return aggregate[0];
-  } else {
-    return Boom.badData("Workshop does not exist!");
-  }
+  return {
+    results: workshop,
+    ...results
+  };
 };
