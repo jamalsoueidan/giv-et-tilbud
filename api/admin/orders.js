@@ -50,11 +50,22 @@ module.exports = async req => {
     else match["$and"] = [issue];
   }
 
-  const fulfillment_status = req.query.fulfillment_status;
-  if (fulfillment_status === "null") {
-    match["fulfillment_status"] = null;
-  } else if (fulfillment_status === "fulfilled") {
-    match["fulfillment_status"] = "fulfilled";
+  const fulfillment_status = (fulfillment_status => {
+    if (isEmpty(fulfillment_status)) return;
+    if (fulfillment_status === "null") {
+      return {
+        fulfillment_status: null
+      };
+    } else if (fulfillment_status === "fulfilled") {
+      return {
+        fulfillment_status: "fulfilled"
+      };
+    }
+  })(req.query.fulfillment_status);
+
+  if (fulfillment_status) {
+    if (match["$and"]) match["$and"].push(fulfillment_status);
+    else match["$and"] = [fulfillment_status];
   }
 
   const search = req.query.search;
