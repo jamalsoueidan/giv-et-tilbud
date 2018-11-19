@@ -2,7 +2,9 @@ const ById = require("./by_id");
 const Orders = require("./orders");
 const Users = require("./users");
 const Workshops = require("./workshops");
+const WorkshopsOffers = require("./workshops_offers");
 const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
 module.exports = [
   {
@@ -26,6 +28,18 @@ module.exports = [
     method: "GET",
     path: "/api/admin/users",
     handler: Users
+  },
+  {
+    method: "GET",
+    path: "/api/admin/workshops/{workshopId}/offers",
+    handler: WorkshopsOffers,
+    options: {
+      validate: {
+        params: {
+          workshopId: Joi.objectId()
+        }
+      }
+    }
   },
   {
     method: "GET",
