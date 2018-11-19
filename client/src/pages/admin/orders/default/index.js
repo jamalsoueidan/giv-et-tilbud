@@ -1,5 +1,11 @@
 import React from "react";
-import { withStyles, Divider, List } from "@material-ui/core";
+import {
+  withStyles,
+  Divider,
+  List,
+  ListItemText,
+  ListItemSecondaryAction
+} from "@material-ui/core";
 import { connect } from "react-redux";
 import {
   createRouteNodeSelector,
@@ -11,6 +17,7 @@ import {
 } from "store/orders";
 import {
   Panel,
+  ListItem,
   PanelListItem,
   NavigationLayout,
   Pagination,
@@ -61,17 +68,23 @@ class Orders extends React.Component {
     return (
       orders.results &&
       orders.results.map(order => (
-        <PanelListItem
+        <ListItem
           key={order.id}
-          primary={`${order.properties.device} ${order.properties.model}, ${
-            order.properties.color
-          }`}
-          secondary={`${order.customer.first_name} ${
-            order.customer.last_name
-          }, ${order.phone}`}
           routeName="admin.orders.view"
           routeParams={{ id: order.id }}
-        />
+        >
+          <ListItemText
+            primary={`${order.properties.device} ${order.properties.model}, ${
+              order.properties.color
+            }`}
+            secondary={`${order.customer.first_name} ${
+              order.customer.last_name
+            }, ${order.phone}`}
+          />
+          <ListItemSecondaryAction style={{ marginRight: "24px" }}>
+            {`${order.offers.length}`} bud
+          </ListItemSecondaryAction>
+        </ListItem>
       ))
     );
   }

@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import {
   withStyles,
   Grid,
@@ -6,15 +7,21 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  ListSubheader
+  ListSubheader,
+  Typography,
+  Chip
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import {
   createRouteNodeSelector,
   actions as RouterActions
 } from "redux-router5";
-import { InformationLayout, WorkshopInfo, Panel } from "components";
-import { actions as WorkshopsActions } from "store/workshops";
+import { InformationLayout, WorkshopInfo, Panel, FormatDate } from "components";
+import OffersOrderInfo from "./_offers_order_info";
+import {
+  actions as WorkshopsActions,
+  selectors as WorkshopsSelectors
+} from "store/workshops";
 
 const styles = theme => ({});
 
@@ -22,16 +29,30 @@ class Default extends React.Component {
   componentDidMount() {
     const { workshop, route, load } = this.props;
     if (!workshop || route.params.id !== workshop._id) {
-      load(route.params.id);
+      load(route.params);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { workshop, route, load } = this.props;
+    if (route !== prevProps.route) {
+      load(route.params);
     }
   }
 
   get left() {
-    const workshop = this.props.workshop;
+    const workshop = this.props.payload.results;
     const offersLength = (workshop.offers && workshop.offers.length) || 0;
     return (
       <Panel>
         <List>
+          <ListItem>
+            <ListItemText
+              primary="Konto oplysninger"
+              secondary={`${workshop.user.email}`}
+            />
+          </ListItem>
+
           <ListItem>
             <ListItemText
               primary="Antal bud på opgaver"
@@ -46,28 +67,35 @@ class Default extends React.Component {
           <ListItem button>
             <ListItemText primary="Luk værksted" />
           </ListItem>
-
-          <ListItem button>
-            <ListItemText primary="Gå til kontoejer" />
-          </ListItem>
         </List>
       </Panel>
     );
   }
 
   render() {
-    const workshop = this.props.workshop;
+    const { payload, classes, route, navigate } = this.props;
 
-    if (!workshop) return null;
+    if (!payload) return null;
 
+    const workshop = payload.results;
     return (
-      <InformationLayout title={workshop.name} information={this.left}>
+      <InformationLayout
+        title={`${workshop.name} værksted`}
+        information={this.left}
+      >
         <Grid container direction="column" spacing={24}>
           <Grid item>
             <WorkshopInfo workshop={workshop} />
           </Grid>
-          <Grid item>bud på opgaver...</Grid>
-          <Grid item>opgave list?</Grid>
+          {workshop.offers && (
+            <Grid item>
+              <OffersOrderInfo
+                payload={payload}
+                route={route}
+                navigate={navigate}
+              />
+            </Grid>
+          )}
         </Grid>
       </InformationLayout>
     );
@@ -76,7 +104,7 @@ class Default extends React.Component {
 
 export default connect(
   state => ({
-    workshop: state.workshops.current
+    payload: WorkshopsSelectors.getUserByWorkshopId(state)
   }),
   {
     load: WorkshopsActions.loadById,

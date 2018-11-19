@@ -22,7 +22,7 @@ export default [
         children: [
           {
             name: "view",
-            path: "/:id"
+            path: "/:id?limit&page"
           }
         ]
       },

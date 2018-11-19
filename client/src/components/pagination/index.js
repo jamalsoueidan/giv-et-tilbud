@@ -19,7 +19,7 @@ const Pagination = props => {
     <TablePagination
       component="div"
       count={props.count || 0}
-      rowsPerPage={props.rowsPerPage || 0}
+      rowsPerPage={props.rowsPerPage || props.limit || 0}
       page={props.page || 0}
       backIconButtonProps={{
         "aria-label": "Forrige Side"

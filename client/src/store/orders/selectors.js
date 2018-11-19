@@ -1,43 +1,11 @@
 import { createSelector } from "reselect";
-
-const keyValue = (properties, property) => {
-  properties[property.name] = property.value;
-  return properties;
-};
-
-const cleanUpOrder = order => {
-  //https://stackoverflow.com/questions/18359093/how-to-copy-javascript-object-to-new-variable-not-by-reference?answertab=votes#tab-top
-  const newOrder = JSON.parse(JSON.stringify(order));
-
-  newOrder.properties = newOrder.line_items[0].properties.reduce(keyValue, {});
-
-  if (newOrder.offer) {
-    newOrder.offer.properties = newOrder.offer.properties.reduce(keyValue, {});
-  }
-
-  if (newOrder.offers) {
-    newOrder.offers = newOrder.offers.map(offer => {
-      offer.properties = offer.properties.reduce(keyValue, {});
-      return offer;
-    });
-  }
-
-  newOrder.customer = {
-    first_name: order.customer.first_name,
-    last_name: order.customer.last_name,
-    address: order.shipping_address.address1,
-    zip: order.shipping_address.zip,
-    city: order.shipping_address.city
-  };
-
-  return newOrder;
-};
+import { cleanOrder, cleanOffer } from "lib/clean_response";
 
 const cleanUpAllOrders = orders => {
   if (orders.results) {
     return {
       ...orders,
-      results: orders.results.map(cleanUpOrder)
+      results: orders.results.map(cleanOrder)
     };
   }
   return orders;
@@ -82,7 +50,7 @@ const find = (orders, order, orderId) => {
   if (found) return found;
 
   if (order && order.id === orderId) {
-    return cleanUpOrder(order);
+    return cleanOrder(order);
   }
 
   return null;
