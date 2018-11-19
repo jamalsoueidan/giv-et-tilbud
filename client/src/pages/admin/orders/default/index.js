@@ -9,7 +9,13 @@ import {
   actions as OrdersActions,
   selectors as OrdersSelectors
 } from "store/orders";
-import { Panel, PanelListItem, NavigationLayout, Pagination } from "components";
+import {
+  Panel,
+  PanelListItem,
+  NavigationLayout,
+  Pagination,
+  Search
+} from "components";
 import Filters from "./_filters";
 
 const styles = theme => ({
@@ -30,13 +36,7 @@ class Orders extends React.Component {
 
   load() {
     const { route, load } = this.props;
-
-    load({
-      page: route.params.page,
-      limit: route.params.limit,
-      device: route.params.device,
-      issue: route.params.issue
-    });
+    load(route.params);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -50,6 +50,7 @@ class Orders extends React.Component {
     const { route, navigate } = this.props;
     return (
       <Panel title="Navigation">
+        <Search navigate={navigate} route={route} />
         <Filters navigate={navigate} route={route} />
       </Panel>
     );
@@ -80,7 +81,7 @@ class Orders extends React.Component {
 
     return (
       <NavigationLayout title="Alle opgaver" navigation={this.navigation}>
-        <Panel title="Alle opgaver">
+        <Panel title={`Alle opgaver ${orders.count}`}>
           <List component="nav">{this.renderOrders}</List>
           <Divider />
           <Pagination

@@ -1,5 +1,6 @@
 import React from "react";
 import { DeviceFilter, IssueFilter } from "components";
+import FulfillmentFilter from "./_fulfillment_filter";
 
 class Filters extends React.Component {
   navigate = params => {
@@ -11,6 +12,10 @@ class Filters extends React.Component {
     this.navigate({ device: event.target.value });
   };
 
+  handleFulfillment = event => {
+    this.navigate({ fulfillment_status: event.target.value });
+  };
+
   handleIssueChange = event => {
     this.navigate({ issue: event.target.value });
   };
@@ -20,6 +25,10 @@ class Filters extends React.Component {
 
     return (
       <React.Fragment>
+        <FulfillmentFilter
+          value={route.params.fulfillment_status || ""}
+          handleChange={this.handleFulfillment}
+        />
         <DeviceFilter
           value={route.params.device || ""}
           handleChange={this.handleDeviceChange}

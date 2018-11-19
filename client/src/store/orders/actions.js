@@ -1,4 +1,5 @@
 import { RSAA } from "redux-api-middleware";
+import { toParams } from "lib/api_helper";
 
 export const LOAD_INCOMING_REQUEST = "@@orders/LOAD_ORDERS_REQUEST";
 export const LOAD_INCOMING_SUCCESS = "@@orders/LOAD_ORDERS_SUCCESS";
@@ -47,9 +48,7 @@ export const LOAD_ORDERS_FAILURE = "@@orders/LOAD_ORDERS_FAILURE";
 export const loadOrders = (options = {}) => ({
   [RSAA]: {
     types: [LOAD_ORDERS_REQUEST, LOAD_ORDERS_SUCCESS, LOAD_ORDERS_FAILURE],
-    endpoint: `/api/admin/orders?page=${options.page}&limit=${
-      options.limit
-    }&device=${options.device}&issue=${options.issue}`,
+    endpoint: `/api/admin/orders${toParams(options)}`,
     method: "GET"
   }
 });

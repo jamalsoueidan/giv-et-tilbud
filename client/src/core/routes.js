@@ -28,7 +28,8 @@ export default [
       },
       {
         name: "orders",
-        path: "/orders?limit&page&device&issue&zip",
+        path:
+          "/orders?limit&page&device&issue&fulfillment_status&device&issue&search",
         children: [
           {
             name: "view",

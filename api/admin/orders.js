@@ -8,11 +8,72 @@ module.exports = async req => {
   const page = parseInt(req.query.page) || 0; //for next page pass 1 here
   const limit = parseInt(req.query.limit) || 10;
 
+  const isEmpty = value => {
+    if (!value) return true;
+    if (value === "undefined") return true;
+    if (value === "") return true;
+    return false;
+  };
+
   if (!credentials.is_admin) {
     return Boom.badData("Is NOT admin");
   }
 
+  let match = {};
+
+  const device = (device => {
+    if (isEmpty(device)) return;
+    return {
+      "line_items.properties.name": "device",
+      "line_items.properties.value": {
+        $regex: new RegExp(device, "ig")
+      }
+    };
+  })(req.query.device);
+
+  if (device) {
+    match["$and"] = [device];
+  }
+
+  const issue = (issue => {
+    if (isEmpty(issue)) return;
+    return {
+      "line_items.properties.name": "issue",
+      "line_items.properties.value": {
+        $regex: new RegExp(issue, "ig")
+      }
+    };
+  })(req.query.issue);
+
+  if (issue) {
+    if (match["$and"]) match["$and"].push(issue);
+    else match["$and"] = [issue];
+  }
+
+  const fulfillment_status = req.query.fulfillment_status;
+  if (fulfillment_status === "null") {
+    match["fulfillment_status"] = null;
+  } else if (fulfillment_status === "fulfilled") {
+    match["fulfillment_status"] = "fulfilled";
+  }
+
+  const search = req.query.search;
+  if (!isEmpty(search)) {
+    match["$or"] = [];
+    match["$or"].push({
+      "shipping_address.zip": parseInt(search)
+    });
+    match["$or"].push({
+      "shipping_address.city": {
+        $regex: new RegExp(search, "ig")
+      }
+    });
+  }
+
   const aggregate = await Order.aggregate([
+    {
+      $match: match
+    },
     {
       $lookup: {
         from: "offers",
