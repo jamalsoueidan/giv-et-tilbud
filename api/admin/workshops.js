@@ -1,5 +1,6 @@
 const User = require("../../models/user");
 const Boom = require("boom");
+const mongoose = require("mongoose");
 
 module.exports = async req => {
   const credentials = req.auth.credentials;
@@ -45,6 +46,14 @@ module.exports = async req => {
           ]
         }
       },
+      {
+        $lookup: {
+          from: "offers",
+          localField: "_id",
+          foreignField: "workshop_id",
+          as: "offers"
+        }
+      },
       { $sort: { created_at: -1 } },
       {
         $facet: {
@@ -62,8 +71,14 @@ module.exports = async req => {
     const workshops = aggregate[0];
     const count = workshops.count[0] ? workshops.count[0].count : 0;
 
+    const results = workshops.workshops.map(work => {
+      work.offers_length = work.offers.length;
+      work.offers = null;
+      return work;
+    });
+
     return {
-      results: workshops.workshops,
+      results: results,
       count: count,
       page: page,
       limit: limit
