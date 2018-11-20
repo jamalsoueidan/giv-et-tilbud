@@ -11,6 +11,10 @@ import PersonIcon from "@material-ui/icons/Person";
 import StarIcon from "@material-ui/icons/Star";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import BuildIcon from "@material-ui/icons/Build";
+import StoreIcon from "@material-ui/icons/Store";
+import FaceIcon from "@material-ui/icons/Face";
+import AccountIcon from "@material-ui/icons/AccountCircle";
 
 export {
   RemoveIcon,
@@ -25,5 +29,9 @@ export {
   CancelIcon,
   ExpandLessIcon,
   ExpandMoreIcon,
-  PersonIcon
+  PersonIcon,
+  BuildIcon,
+  StoreIcon,
+  FaceIcon,
+  AccountIcon
 };

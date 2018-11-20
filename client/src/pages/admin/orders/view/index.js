@@ -13,6 +13,7 @@ import {
 import { InformationLayout, OrderInfo, Panel } from "components";
 import { actions as RouterActions } from "redux-router5";
 import OffersInfo from "./_offers_info";
+import { BuildIcon } from "components/icons";
 
 import {
   actions as OrderActions,
@@ -33,7 +34,7 @@ class Info extends React.Component {
     const order = this.props.order;
     return (
       <React.Fragment>
-        Resultat af ordre
+        <BuildIcon /> Resultat af ordre
         {order.offer && order.offer.accepted && (
           <Chip
             color="primary"

@@ -1,13 +1,17 @@
 import React from "react";
 import classnames from "classnames";
 import { withStyles, Typography, Chip } from "@material-ui/core";
-import { Panel, FormatDate, Pagination } from "components";
+import { Panel, FormatDate, Pagination, Menu } from "components";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "react-router5";
+import { FaceIcon, BuildIcon } from "components/icons";
 
 const styles = themes => ({
   offer: {
     display: "flex",
     padding: "11px 24px",
     borderBottom: "1px solid #ddd",
+    position: "relative",
     "&:last-child": {
       borderBottom: "0"
     }
@@ -15,20 +19,40 @@ const styles = themes => ({
   company: {
     display: "flex",
     flexDirection: "column",
-    flex: "1 0 calc(25% - 24px)",
+    flex: "1 0 calc(30% - 24px)",
     borderRight: "1px solid #ddd",
     marginRight: "24px"
   },
   offerDetails: {
-    flex: "1 0 75%"
+    flex: "1 0 70%"
+  },
+  actions: {
+    position: "absolute",
+    right: "4px",
+    top: "4px"
   }
 });
 
 class OffersOrderInfo extends React.Component {
+  state = {
+    anchorEl: null
+  };
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
     const { payload, classes, route, navigate } = this.props;
 
     const workshop = payload.results;
+
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
     return (
       <Panel title={`Sidste 5 bud fra ${workshop.name}`}>
@@ -41,7 +65,7 @@ class OffersOrderInfo extends React.Component {
           >
             <div className={classes.company}>
               <Typography variant="h6" gutterBottom>
-                {offer.order.customer.first_name}
+                <FaceIcon /> {offer.order.customer.first_name}
               </Typography>
               <Typography variant="body1">
                 {offer.order.customer.address}
@@ -57,7 +81,7 @@ class OffersOrderInfo extends React.Component {
               </Typography>
             </div>
             <div className={classes.offerDetails}>
-              <Typography variant="body2">Teleofon:</Typography>
+              <Typography variant="body2">Telefon:</Typography>
               <Typography variant="body1" gutterBottom>
                 {offer.order.properties.device} {offer.order.properties.model},{" "}
                 {offer.order.properties.color}
@@ -75,6 +99,19 @@ class OffersOrderInfo extends React.Component {
                 {offer.properties.price} dkk
               </Typography>
               {offer.accepted && <Chip color="primary" label="Accepteret!" />}
+            </div>
+            <div className={classes.actions}>
+              <Menu>
+                <MenuItem
+                  component={Link}
+                  routeName="admin.orders.view"
+                  routeParams={{ id: offer.order.id }}
+                >
+                  <BuildIcon style={{ fontSize: "16px", marginRight: "5px" }} />{" "}
+                  Opgave side
+                </MenuItem>
+                <MenuItem onClick={this.handleClose}>Slet tilbud</MenuItem>
+              </Menu>
             </div>
           </div>
         ))}

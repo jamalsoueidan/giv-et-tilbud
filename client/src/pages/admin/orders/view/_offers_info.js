@@ -1,16 +1,17 @@
 import React from "react";
 import { Link } from "react-router5";
 import classnames from "classnames";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {
   withStyles,
   List,
   Typography,
   Chip,
   ButtonBase,
-  IconButton
+  IconButton,
+  MenuItem
 } from "@material-ui/core";
-import { Panel, FormatDate } from "components";
+import { Panel, FormatDate, Menu } from "components";
+import { StoreIcon } from "components/icons";
 
 const styles = themes => ({
   offer: {
@@ -25,12 +26,12 @@ const styles = themes => ({
   company: {
     display: "flex",
     flexDirection: "column",
-    flex: "1 0 calc(25% - 24px)",
+    flex: "1 0 calc(30% - 24px)",
     borderRight: "1px solid #ddd",
     marginRight: "24px"
   },
   offerDetails: {
-    flex: "1 0 75%"
+    flex: "1 0 70%"
   },
   actions: {
     position: "absolute",
@@ -54,19 +55,14 @@ class OffersInfo extends React.Component {
                 })}
               >
                 <div className={classes.company}>
-                  <ButtonBase
-                    component={Link}
-                    routeName={"admin.workshops.view"}
-                    routeParams={{ id: offer.workshop._id }}
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    style={{ textAlign: "left", width: "100%" }}
                   >
-                    <Typography
-                      variant="h6"
-                      gutterBottom
-                      style={{ textAlign: "left", width: "100%" }}
-                    >
-                      {offer.workshop.name}
-                    </Typography>
-                  </ButtonBase>
+                    <StoreIcon style={{ fontSize: "30px" }} />{" "}
+                    {offer.workshop.name}
+                  </Typography>
 
                   <Typography variant="body1" gutterBottom>
                     {offer.workshop.address}
@@ -98,9 +94,19 @@ class OffersInfo extends React.Component {
                   )}
                 </div>
                 <div className={classes.actions}>
-                  <IconButton className={classes.button} aria-label="Delete">
-                    <DeleteIcon />
-                  </IconButton>
+                  <Menu>
+                    <MenuItem
+                      component={Link}
+                      routeName="admin.workshops.view"
+                      routeParams={{ id: offer.workshop_id }}
+                    >
+                      <StoreIcon
+                        style={{ fontSize: "16px", marginRight: "5px" }}
+                      />{" "}
+                      Værksted side
+                    </MenuItem>
+                    <MenuItem onClick={this.handleClose}>Slet tilbud</MenuItem>
+                  </Menu>
                 </div>
               </div>
             ))}

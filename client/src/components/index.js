@@ -21,6 +21,7 @@ import IssueFilter from "./issue_filter";
 import Pagination from "./pagination";
 import Search from "./search";
 import WorkshopInfo from "./workshop_info";
+import Menu from "./menu";
 
 export {
   DefaultNavigation,
@@ -45,5 +46,6 @@ export {
   IssueFilter,
   Pagination,
   Search,
-  WorkshopInfo
+  WorkshopInfo,
+  Menu
 };

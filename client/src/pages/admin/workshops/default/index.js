@@ -3,6 +3,7 @@ import {
   withStyles,
   Divider,
   List,
+  ListItemIcon,
   ListItemText,
   ListItemSecondaryAction
 } from "@material-ui/core";
@@ -19,6 +20,7 @@ import {
   Pagination,
   Search
 } from "components";
+import { StoreIcon } from "components/icons";
 
 const styles = theme => ({
   root: {
@@ -63,6 +65,9 @@ class Orders extends React.Component {
           routeName="admin.workshops.view"
           routeParams={{ id: workshop._id }}
         >
+          <ListItemIcon>
+            <StoreIcon />
+          </ListItemIcon>
           <ListItemText
             primary={`${workshop.name}`}
             secondary={`${workshop.address}, ${workshop.zip} ${workshop.city}`}

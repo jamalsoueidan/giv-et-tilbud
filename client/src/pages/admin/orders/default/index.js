@@ -4,7 +4,8 @@ import {
   Divider,
   List,
   ListItemText,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  ListItemIcon
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import {
@@ -23,6 +24,7 @@ import {
   Search
 } from "components";
 import Filters from "./_filters";
+import { BuildIcon } from "components/icons";
 
 const styles = theme => ({
   root: {
@@ -72,6 +74,9 @@ class Orders extends React.Component {
           routeName="admin.orders.view"
           routeParams={{ id: order.id }}
         >
+          <ListItemIcon>
+            <BuildIcon />
+          </ListItemIcon>
           <ListItemText
             primary={`${order.properties.device} ${order.properties.model}, ${
               order.properties.color

@@ -4,6 +4,7 @@ import {
   Grid,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
   Divider,
   ListSubheader
@@ -16,6 +17,7 @@ import {
   actions as WorkshopsActions,
   selectors as WorkshopsSelectors
 } from "store/workshops";
+import { StoreIcon, AccountIcon } from "components/icons";
 
 const styles = theme => ({});
 
@@ -41,6 +43,9 @@ class Default extends React.Component {
       <Panel>
         <List>
           <ListItem>
+            <ListItemIcon>
+              <AccountIcon />
+            </ListItemIcon>
             <ListItemText
               primary="Konto oplysninger"
               secondary={`${workshop.user.email}`}
@@ -66,17 +71,26 @@ class Default extends React.Component {
     );
   }
 
+  get title() {
+    const payload = this.props.payload;
+    const workshop = payload.results;
+
+    return (
+      <React.Fragment>
+        <StoreIcon /> {workshop.name} værksted
+      </React.Fragment>
+    );
+  }
+
   render() {
     const { payload, route, navigate } = this.props;
 
     if (!payload) return null;
 
     const workshop = payload.results;
+
     return (
-      <InformationLayout
-        title={`${workshop.name} værksted`}
-        information={this.left}
-      >
+      <InformationLayout title={this.title} information={this.left}>
         <Grid container direction="column" spacing={24}>
           <Grid item>
             <WorkshopInfo workshop={workshop} />
