@@ -7,8 +7,6 @@ export const LOAD_USERS_FAILURE = "@@orders/LOAD_USERS_FAILURE";
 export const loadUsers = (options = {}) => {
   const page = options.page || 0;
   const limit = options.limit || 5;
-  const search = options.search || "";
-
   return {
     [RSAA]: {
       types: [LOAD_USERS_REQUEST, LOAD_USERS_SUCCESS, LOAD_USERS_FAILURE],

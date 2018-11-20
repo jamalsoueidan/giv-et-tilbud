@@ -5,15 +5,18 @@ import {
   List,
   ListSubheader,
   ListItem,
-  ListItemText
+  ListItemText,
+  ListItemIcon
 } from "@material-ui/core";
+import { Link } from "react-router5";
 import { connect } from "react-redux";
 import {
   createRouteNodeSelector,
   actions as RouterActions
 } from "redux-router5";
 import { actions as UsersActions } from "store/users";
-import { Panel, PanelListItem, NavigationLayout, Pagination } from "components";
+import { Panel, NavigationLayout, Pagination } from "components";
+import { AccountIcon } from "components/icons";
 
 const styles = theme => ({
   root: {
@@ -49,7 +52,6 @@ class Orders extends React.Component {
   }
 
   get navigation() {
-    const { route, navigate } = this.props;
     return (
       <Panel>
         <List>
@@ -67,23 +69,29 @@ class Orders extends React.Component {
     return (
       users.results &&
       users.results.map(user => (
-        <PanelListItem
+        <ListItem
           key={user._id}
-          primary={`${user.email}
-          `}
-          secondary={`Antal værksteder tilknyttet dette bruger: ${
-            user.workshops.length
-          }`}
+          component={Link}
           routeName="admin.users.view"
           routeParams={{ id: user._id }}
-        />
+        >
+          <ListItemIcon>
+            <AccountIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={`${user.email}`}
+            secondary={`Antal værksteder tilknyttet dette bruger: ${
+              user.workshops.length
+            }`}
+          />
+        </ListItem>
       ))
     );
   }
 
   render() {
     const { users, route, navigate } = this.props;
-    console.log(users);
+
     return (
       <NavigationLayout title="Alle brugere" navigation={this.navigation}>
         <Panel title="Alle brugere i systemet">

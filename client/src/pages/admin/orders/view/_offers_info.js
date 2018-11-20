@@ -6,8 +6,6 @@ import {
   List,
   Typography,
   Chip,
-  ButtonBase,
-  IconButton,
   MenuItem
 } from "@material-ui/core";
 import { Panel, FormatDate, Menu } from "components";

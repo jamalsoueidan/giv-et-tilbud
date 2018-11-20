@@ -34,25 +34,10 @@ const styles = themes => ({
 });
 
 class OffersOrderInfo extends React.Component {
-  state = {
-    anchorEl: null
-  };
-
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
   render() {
     const { payload, classes, route, navigate } = this.props;
 
     const workshop = payload.results;
-
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
 
     return (
       <Panel title={`Sidste 5 bud fra ${workshop.name}`}>
