@@ -18,7 +18,6 @@ import {
 import {
   Panel,
   ListItem,
-  PanelListItem,
   NavigationLayout,
   Pagination,
   Search

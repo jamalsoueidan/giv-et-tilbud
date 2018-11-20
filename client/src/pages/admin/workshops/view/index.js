@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 import {
   withStyles,
   Grid,
@@ -7,16 +6,11 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  ListSubheader,
-  Typography,
-  Chip
+  ListSubheader
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import {
-  createRouteNodeSelector,
-  actions as RouterActions
-} from "redux-router5";
-import { InformationLayout, WorkshopInfo, Panel, FormatDate } from "components";
+import { actions as RouterActions } from "redux-router5";
+import { InformationLayout, WorkshopInfo, Panel } from "components";
 import OffersOrderInfo from "./_offers_order_info";
 import {
   actions as WorkshopsActions,
@@ -34,7 +28,7 @@ class Default extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { workshop, route, load } = this.props;
+    const { route, load } = this.props;
     if (route !== prevProps.route) {
       load(route.params);
     }
@@ -73,7 +67,7 @@ class Default extends React.Component {
   }
 
   render() {
-    const { payload, classes, route, navigate } = this.props;
+    const { payload, route, navigate } = this.props;
 
     if (!payload) return null;
 

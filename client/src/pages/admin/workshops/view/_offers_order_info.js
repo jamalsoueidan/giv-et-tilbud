@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import { withStyles, List, Typography, Chip } from "@material-ui/core";
+import { withStyles, Typography, Chip } from "@material-ui/core";
 import { Panel, FormatDate, Pagination } from "components";
 
 const styles = themes => ({

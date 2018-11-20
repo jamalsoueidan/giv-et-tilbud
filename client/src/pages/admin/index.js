@@ -5,14 +5,12 @@ import Default from "./default";
 import Orders from "./orders";
 import Users from "./users";
 import Workshops from "./workshops";
-import RouterHelper from "lib/router_helper";
 
 class Index extends React.Component {
   render() {
     const { route } = this.props;
-    const routeObject = RouterHelper.getRoute(route.name);
 
-    if (routeObject.name === "users") {
+    if (route.name.indexOf("admin.users") !== -1) {
       return <Users />;
     } else if (route.name.indexOf("admin.orders") !== -1) {
       return <Orders />;

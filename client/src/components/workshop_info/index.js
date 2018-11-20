@@ -1,6 +1,6 @@
 import React from "react";
 import { Panel, FormatDate } from "components";
-import { Typography, Divider } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 export default ({ workshop }) => {
   return (

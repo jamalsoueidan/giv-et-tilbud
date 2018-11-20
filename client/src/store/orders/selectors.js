@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { cleanOrder, cleanOffer } from "lib/clean_response";
+import { cleanOrder } from "lib/clean_response";
 
 const cleanUpAllOrders = orders => {
   if (orders.results) {

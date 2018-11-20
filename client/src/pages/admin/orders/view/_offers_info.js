@@ -1,14 +1,12 @@
 import React from "react";
 import { Link } from "react-router5";
 import classnames from "classnames";
-import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
   withStyles,
   List,
   Typography,
   Chip,
-  Button,
   ButtonBase,
   IconButton
 } from "@material-ui/core";
@@ -45,7 +43,7 @@ class OffersInfo extends React.Component {
   render() {
     const { order, classes } = this.props;
     return (
-      <Panel title="Alle bud fra værksteder">
+      <Panel title="Bud fra værksteder">
         <List>
           {order.offers &&
             order.offers.map(offer => (
