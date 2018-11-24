@@ -86,7 +86,7 @@ class Orders extends React.Component {
             }, ${order.phone}`}
           />
           <ListItemSecondaryAction style={{ marginRight: "24px" }}>
-            {`${order.offers.length}`} bud
+            {`${order.offers_count}`} bud
           </ListItemSecondaryAction>
         </ListItem>
       ))

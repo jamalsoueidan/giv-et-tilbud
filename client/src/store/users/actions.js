@@ -15,3 +15,17 @@ export const loadUsers = (options = {}) => {
     }
   };
 };
+
+export const LOAD_USER_REQUEST = "@@orders/LOAD_USER_REQUEST";
+export const LOAD_USER_SUCCESS = "@@orders/LOAD_USER_SUCCESS";
+export const LOAD_USER_FAILURE = "@@orders/LOAD_USER_FAILURE";
+
+export const loadById = user_id => {
+  return {
+    [RSAA]: {
+      types: [LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE],
+      endpoint: `/api/admin/users/${user_id}`,
+      method: "GET"
+    }
+  };
+};

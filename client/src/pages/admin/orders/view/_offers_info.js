@@ -43,9 +43,15 @@ class OffersInfo extends React.Component {
     const { order, classes } = this.props;
     return (
       <Panel title="Bud fra værksteder">
-        <List>
-          {order.offers &&
-            order.offers.map(offer => (
+        {order.offers.length === 0 && (
+          <Typography variant="body1" style={{ padding: 12 }}>
+            Ingen bud fra værksteder, evt kontakt værksteder og bede dem om at
+            sende et bud til kunden!
+          </Typography>
+        )}
+        {order.offers && order.offers.length > 0 && (
+          <List>
+            {order.offers.map(offer => (
               <div
                 key={offer._id}
                 className={classnames(classes.offer, {
@@ -108,7 +114,8 @@ class OffersInfo extends React.Component {
                 </div>
               </div>
             ))}
-        </List>
+          </List>
+        )}
       </Panel>
     );
   }

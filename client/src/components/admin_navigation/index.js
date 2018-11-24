@@ -10,7 +10,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import { StarIcon, PersonIcon, MenuIcon, HomeIcon } from "../icons";
+import {
+  BuildIcon,
+  AccountIcon,
+  MenuIcon,
+  HomeIcon,
+  StoreIcon
+} from "../icons";
 
 const styles = theme => ({
   drawerPaper: {
@@ -125,7 +131,7 @@ class Navigation extends React.Component {
             selected={route.name.indexOf("admin.orders") !== -1}
           >
             <ListItemIcon>
-              <StarIcon />
+              <BuildIcon />
             </ListItemIcon>
             <ListItemText
               inset
@@ -141,7 +147,7 @@ class Navigation extends React.Component {
             selected={route.name.indexOf("admin.users") !== -1}
           >
             <ListItemIcon>
-              <PersonIcon />
+              <AccountIcon />
             </ListItemIcon>
             <ListItemText
               primary="Brugere"
@@ -156,7 +162,7 @@ class Navigation extends React.Component {
             selected={route.name.indexOf("admin.workshops") !== -1}
           >
             <ListItemIcon>
-              <PersonIcon />
+              <StoreIcon />
             </ListItemIcon>
             <ListItemText
               primary="Værksteder"

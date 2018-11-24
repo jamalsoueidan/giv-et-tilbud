@@ -64,7 +64,7 @@ class Orders extends React.Component {
     );
   }
 
-  get renderOrders() {
+  get renderUsers() {
     const { users } = this.props;
     return (
       users.results &&
@@ -95,7 +95,7 @@ class Orders extends React.Component {
     return (
       <NavigationLayout title="Alle brugere" navigation={this.navigation}>
         <Panel title="Alle brugere i systemet">
-          <List component="nav">{this.renderOrders}</List>
+          <List component="nav">{this.renderUsers}</List>
           <Divider />
           <Pagination
             count={users.count}
@@ -112,7 +112,7 @@ class Orders extends React.Component {
 
 export default connect(
   state => ({
-    users: state.users,
+    users: state.users.all,
     ...createRouteNodeSelector("admin.users")(state)
   }),
   {

@@ -62,7 +62,7 @@ export default props => {
           disabled={isSubmitting}
         >
           <SaveIcon />
-          Opret værksted
+          Send et tilbud
         </Button>
       </Actions>
     </form>

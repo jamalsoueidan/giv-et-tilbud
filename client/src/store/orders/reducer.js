@@ -62,11 +62,17 @@ const orders = (state = initState, action) => {
   return state;
 };
 
-export default (state = initState, action) => ({
-  incoming: incoming(state.incoming, action),
-  outgoing: outgoing(state.outgoing, action),
-  finished: finished(state.finished, action),
-  accepted: accepted(state.accepted, action),
-  orders: orders(state.orders, action), //admin orders
-  order: order(state.order, action) //current order
-});
+export default (state = initState, action) => {
+  // we need to figure out how to reset all state when user log out
+  if (action.type === "@@user/LOGOUT_SUCCESS") {
+    return {};
+  }
+  return {
+    incoming: incoming(state.incoming, action),
+    outgoing: outgoing(state.outgoing, action),
+    finished: finished(state.finished, action),
+    accepted: accepted(state.accepted, action),
+    orders: orders(state.orders, action), //admin orders
+    order: order(state.order, action) //current order
+  };
+};
