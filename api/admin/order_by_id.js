@@ -3,11 +3,21 @@ const Offer = require("../../models/offer");
 const Boom = require("boom");
 
 module.exports = async req => {
-  const orderId = req.params.orderId;
+  const orderId = parseInt(req.params.orderId);
   const credentials = req.auth.credentials;
 
   if (!credentials.is_admin) {
     return Boom.badData("Is NOT admin");
+  }
+
+  const offerCount = await Offer.count({
+    order_id: orderId
+  });
+
+  if (offerCount === 0) {
+    const order = await Order.findOne({ order_id: orderId }).lean();
+    order.offers = [];
+    return order;
   }
 
   const aggregate = await Order.aggregate([
@@ -19,9 +29,9 @@ module.exports = async req => {
     {
       $lookup: {
         from: "offers",
-        let: { order_id: "$id" },
+        let: { id: "$id" },
         pipeline: [
-          { $match: { $expr: { $eq: ["$order_id", "$$order_id"] } } },
+          { $match: { $expr: { $eq: ["$order_id", "$$id"] } } },
           {
             $lookup: {
               from: "users",

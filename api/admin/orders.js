@@ -85,74 +85,30 @@ module.exports = async req => {
     {
       $match: match
     },
+    { $sort: { created_at: -1 } },
     {
       $lookup: {
         from: "offers",
-        let: { order_id: "$id" },
-        pipeline: [
-          { $match: { $expr: { $eq: ["$order_id", "$$order_id"] } } },
-          {
-            $lookup: {
-              from: "users",
-              let: { customer_id: "$customer_id" },
-              pipeline: [
-                {
-                  $match: {
-                    $expr: { $eq: ["$customer_id", "$$customer_id"] }
-                  }
-                }
-              ],
-              as: "users"
-            }
-          }
-        ],
+        localField: "id",
+        foreignField: "order_id",
         as: "offers"
       }
     },
     {
-      $unwind: "$offers"
-    },
-    {
-      $unwind: "$offers.users"
-    },
-    {
-      $unwind: "$offers.users.workshops"
-    },
-    {
-      $match: {
-        $expr: {
-          $eq: ["$offers.workshop_id", "$offers.users.workshops._id"]
-        }
-      }
-    },
-    {
-      $addFields: {
-        "offers.workshop": "$offers.users.workshops"
-      }
-    },
-    {
-      $group: {
-        _id: "$_id",
-        id: { $first: "$id" },
-        location: { $first: "$location" },
-        email: { $first: "$email" },
-        created_at: { $first: "$created_at" },
-        phone: { $first: "$phone" },
-        fulfillment_status: { $first: "$fulfillment_status" },
-        line_items: { $first: "$line_items" },
-        shipping_address: { $first: "$shipping_address" },
-        token: { $first: "$token" },
-        order_status_url: { $first: "$order_status_url" },
-        customer: { $first: "$customer" },
-        offers: { $push: "$offers" }
-      }
-    },
-    {
       $project: {
-        "offers.users.workshops": 0
+        _id: 1,
+        id: 1,
+        email: 1,
+        location: 1,
+        created_at: 1,
+        line_items: 1,
+        phone: 1,
+        shipping_address: 1,
+        customer: 1,
+        offers: 1,
+        offers_count: { $size: "$offers" }
       }
     },
-    { $sort: { created_at: -1 } },
     {
       $facet: {
         //https://stackoverflow.com/questions/20348093/mongodb-aggregation-how-to-get-total-records-count

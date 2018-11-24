@@ -6,38 +6,13 @@ module.exports = async req => {
 
   const page = parseInt(req.query.page) || 0; //for next page pass 1 here
   const limit = parseInt(req.query.limit) || 10;
-  const search = req.query.search || "";
 
   if (!credentials.is_admin) {
     return Boom.badData("Is NOT admin");
   }
+
   try {
     const aggregate = await User.aggregate([
-      {
-        $match: {
-          $or: [
-            {
-              "workshops.name": {
-                $regex: new RegExp(search, "ig")
-              }
-            },
-            {
-              "workshops.address": {
-                $regex: new RegExp(search, "ig")
-              }
-            },
-            {
-              email: {
-                $regex: new RegExp(search, "ig")
-              }
-            },
-            {
-              "workshops.zip": parseInt(search)
-            }
-          ]
-        }
-      },
-
       { $sort: { created_at: -1 } },
       {
         $facet: {

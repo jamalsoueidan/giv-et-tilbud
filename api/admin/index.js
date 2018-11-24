@@ -1,6 +1,7 @@
-const ById = require("./by_id");
+const OrderById = require("./order_by_id");
 const Orders = require("./orders");
 const Users = require("./users");
+const UserById = require("./user_by_id");
 const Workshops = require("./workshops");
 const WorkshopById = require("./workshop_by_id");
 const Joi = require("joi");
@@ -10,7 +11,7 @@ module.exports = [
   {
     method: "GET",
     path: "/api/admin/orders/{orderId}",
-    handler: ById,
+    handler: OrderById,
     options: {
       validate: {
         params: {
@@ -28,6 +29,18 @@ module.exports = [
     method: "GET",
     path: "/api/admin/users",
     handler: Users
+  },
+  {
+    method: "GET",
+    path: "/api/admin/users/{userId}",
+    handler: UserById,
+    options: {
+      validate: {
+        params: {
+          userId: Joi.objectId()
+        }
+      }
+    }
   },
   {
     method: "GET",
